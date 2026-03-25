@@ -931,10 +931,16 @@
     <div class="att-section">
       <div class="att-sec-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
         <span>📊 Monthly Attendance Summary</span>
-        <div class="att-controls" style="margin:0">
-          <button class="m-btn" onclick="attChangeMonth(-1)">‹</button>
-          <div class="att-date-label" id="attMonthLabel">—</div>
-          <button class="m-btn" onclick="attChangeMonth(1)">›</button>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <div class="att-controls" style="margin:0">
+            <button class="m-btn" onclick="attChangeMonth(-1)">‹</button>
+            <div class="att-date-label" id="attMonthLabel">—</div>
+            <button class="m-btn" onclick="attChangeMonth(1)">›</button>
+          </div>
+          <button onclick="shareAllAttWA()" style="display:inline-flex;align-items:center;gap:6px;background:#25d366;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-family:'Space Grotesk',sans-serif;font-weight:700;cursor:pointer;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Share All
+          </button>
         </div>
       </div>
       <div style="margin-bottom:14px"></div>
@@ -1060,13 +1066,14 @@
 
   function getMemberNames() { return MEMBERS.map(m => m.name); }
 
-  // Save members to Google Sheet
+  // Save members to Google Sheet + local cache
   async function saveMembers() {
+    saveMembersCache(); // instant local update
     try {
       const params = new URLSearchParams();
       params.append('payload', JSON.stringify({action:'saveMembers', members:MEMBERS}));
       await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', body:params});
-      showToast('✅ Members saved to sheet!');
+      showToast('✅ Members saved!');
     } catch(e){
       console.warn('saveMembers error:', e);
       showToast('⚠️ Saved locally — sheet sync may have failed.', true);
@@ -1075,6 +1082,27 @@
 
   // Load members from published CSV (same approach as submissions)
   const MEMBERS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0t6K6i7gIrRcSClFD0CitHurwWaljgUG3nir3lNAmNKZHJLGm61j4gi8XADu-I-XuHVdOmoIra_Bc/pub?gid=447175583&single=true&output=csv";
+  const MEMBERS_CACHE_KEY = 'aarohan_members_cache';
+  const MEMBERS_CACHE_TS  = 'aarohan_members_ts';
+
+  // Save members to local cache immediately after any edit
+  function saveMembersCache() {
+    localStorage.setItem(MEMBERS_CACHE_KEY, JSON.stringify(MEMBERS));
+    localStorage.setItem(MEMBERS_CACHE_TS, Date.now().toString());
+  }
+
+  // Load from local cache (used if cache is fresh < 10 mins)
+  function loadMembersCache() {
+    try {
+      const ts = parseInt(localStorage.getItem(MEMBERS_CACHE_TS)||'0');
+      const age = Date.now() - ts;
+      if(age < 10 * 60 * 1000) { // 10 minutes
+        const d = JSON.parse(localStorage.getItem(MEMBERS_CACHE_KEY)||'[]');
+        if(d && d.length) return d;
+      }
+    } catch(e){}
+    return null;
+  }
 
   async function fetchMembers() {
     try {
@@ -1086,14 +1114,11 @@
       const lines = text.trim().split('\n').map(l => l.trim()).filter(Boolean);
       if(!lines.length) return null;
 
-      // Check if first line looks like headers (contains 'name' or 'Name')
       const firstLine = lines[0].toLowerCase();
       const hasHeaders = firstLine.includes('name');
 
       if(hasHeaders) {
-        // Parse with headers
         const parsed = parseCSV(text);
-        // Normalize keys to lowercase
         const normalized = parsed.map(row => {
           const obj = {};
           Object.keys(row).forEach(k => { obj[k.toLowerCase().trim()] = row[k]; });
@@ -1101,7 +1126,6 @@
         }).filter(m => m.name && m.name.trim());
         if(normalized.length) return normalized;
       } else {
-        // No headers — treat first column as name
         const members = lines.map(line => {
           const cols = line.split(',').map(c => c.trim().replace(/^"|"$/g,''));
           return {
@@ -1728,18 +1752,28 @@
   populateDropdowns();
   updateFProgress(1);
 
-  // Load members from sheet, merge with defaults for any missing names
+  // Load members — use local cache immediately, refresh from CSV in background
   (async () => {
-    const sheetMembers = await fetchMembers();
-    if (sheetMembers && sheetMembers.length) {
-      // Merge: keep sheet members, add any defaults not in sheet
-      const sheetNames = sheetMembers.map(m => m.name.toLowerCase());
-      const missing = MEMBERS.filter(m => !sheetNames.includes(m.name.toLowerCase()));
-      MEMBERS = [...sheetMembers, ...missing];
+    // Step 1: Use local cache instantly (reflects latest admin edits)
+    const cached = loadMembersCache();
+    if(cached && cached.length) {
+      MEMBERS = cached;
+      populateDropdowns();
+      renderMembersPage();
     }
-    populateDropdowns();
+    // Step 2: Fetch from sheet CSV (may be up to 5 mins behind)
+    const sheetMembers = await fetchMembers();
+    if(sheetMembers && sheetMembers.length) {
+      // Only update if cache is older than 10 mins (i.e. sheet is fresher)
+      const cacheAge = Date.now() - parseInt(localStorage.getItem(MEMBERS_CACHE_TS)||'0');
+      if(cacheAge > 10 * 60 * 1000 || !cached) {
+        MEMBERS = sheetMembers;
+        populateDropdowns();
+        renderMembersPage();
+      }
+    }
+    // If neither worked, keep hardcoded defaults
     await loadAttendanceFromSheet();
-    renderMembersPage();
     renderAttendancePage();
     renderCommsPage();
     loadAllData();
@@ -1971,6 +2005,32 @@
     const msg=document.getElementById('attSavedMsg');
     msg.textContent='✅ Saved!';
     setTimeout(()=>{msg.textContent=''; renderAttSummary(); renderAttWarnings();},2000);
+  }
+
+  function shareAllAttWA(){
+    const allAtt=loadAttendance();
+    const y=attMonthDate.getFullYear(), mo=attMonthDate.getMonth();
+    const monthWeeks=Object.keys(allAtt).filter(k=>{
+      const d=new Date(k); return d.getFullYear()===y && d.getMonth()===mo;
+    }).sort();
+    const totalWeeks=monthWeeks.length;
+    if(!totalWeeks){ showToast('No attendance data for this month.',true); return; }
+
+    const month=getMonthLabel(attMonthDate);
+    const lines=MEMBERS.map(m=>{
+      let p=0,s=0,a=0;
+      monthWeeks.forEach(k=>{
+        const st=(allAtt[k]||{})[m.name]||'none';
+        if(st==='present') p++;
+        else if(st==='substitute') s++;
+        else if(st==='absent') a++;
+      });
+      const icon = p===totalWeeks?'🟢': a===totalWeeks?'🔴': s>0&&p===0?'🟡':'🟠';
+      return `${icon} ${m.name.padEnd(22,' ')} ✅${p} 🔄${s} ❌${a}`;
+    }).join('\n');
+
+    const text=`📅 *Aarohan Chapter — Attendance*\n*${month}* (${totalWeeks} meeting${totalWeeks>1?'s':''})\n\n${lines}\n\n🟢 Full Attendance  🟠 Partial  🟡 Substitute only  🔴 Absent all\n\n_EKnot Aarohan Chapter_`;
+    window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
   }
 
   function buildAttWAMessage(name, p, s, a, totalWeeks, monthWeeks, allAtt){
