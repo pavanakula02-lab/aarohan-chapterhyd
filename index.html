@@ -463,8 +463,29 @@
     .wa-preview { background:#f8f9fc; border:1px solid var(--border); border-radius:8px; padding:12px 14px; font-size:12px; color:var(--ink); white-space:pre-wrap; line-height:1.6; max-height:200px; overflow-y:auto; margin-bottom:12px; font-family:'Inter',sans-serif; }
 
     /* ══════════════════════════════════════
-       MEMBER PROFILE MODAL
+       MEMBER LOGIN SCREEN
     ══════════════════════════════════════ */
+    .member-login-screen { position:fixed; inset:0; background:var(--navy); z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+    .member-login-screen.hidden { display:none; }
+    .ml-card { background:var(--navy-light); border:1px solid rgba(201,162,39,0.2); border-radius:var(--radius); padding:40px 36px; width:100%; max-width:400px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.4); }
+    .ml-card::before { content:''; display:block; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--orange)); margin:-40px -36px 32px; border-radius:var(--radius) var(--radius) 0 0; }
+    .ml-logo { font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700; color:var(--white); letter-spacing:-0.02em; margin-bottom:4px; }
+    .ml-logo span { color:var(--gold); }
+    .ml-sub { font-size:13px; color:rgba(255,255,255,0.4); margin-bottom:28px; }
+    .ml-label { display:block; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px; text-align:left; }
+    .ml-select, .ml-input { width:100%; padding:11px 14px; font-family:'Inter',sans-serif; font-size:14px; color:var(--ink); background:#fff; border:1.5px solid rgba(255,255,255,0.1); border-radius:8px; outline:none; margin-bottom:14px; -webkit-appearance:none; appearance:none; }
+    .ml-select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230b1426' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; cursor:pointer; }
+    .ml-input:focus, .ml-select:focus { border-color:var(--gold); }
+    .ml-btn { width:100%; padding:13px; background:var(--gold); color:var(--navy); font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; border:none; border-radius:8px; cursor:pointer; transition:all 0.15s; margin-top:4px; }
+    .ml-btn:hover { background:var(--gold-light); }
+    .ml-err { font-size:12px; color:#ff8080; margin-top:-8px; margin-bottom:12px; display:none; text-align:left; }
+    .ml-err.show { display:block; }
+    .ml-footer { margin-top:20px; font-size:11px; color:rgba(255,255,255,0.2); }
+    .ml-user-badge { display:flex; align-items:center; gap:8px; background:rgba(201,162,39,0.1); border:1px solid rgba(201,162,39,0.2); border-radius:100px; padding:5px 14px 5px 5px; }
+    .ml-user-av { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--navy); flex-shrink:0; }
+    .ml-user-name { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--gold); }
+    .member-logout-btn { background:none; border:1px solid rgba(255,255,255,0.15); border-radius:6px; padding:5px 12px; font-size:11px; color:rgba(255,255,255,0.4); cursor:pointer; font-family:'Space Grotesk',sans-serif; font-weight:600; transition:all 0.15s; }
+    .member-logout-btn:hover { border-color:var(--pink); color:var(--pink); }
     .modal-overlay { position:fixed; inset:0; background:rgba(11,20,38,0.6); z-index:500; display:none; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px); }
     .modal-overlay.open { display:flex; }
     .modal-box { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); width:100%; max-width:640px; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(11,20,38,0.3); animation:slideIn 0.25s ease; }
@@ -507,6 +528,23 @@
 <body>
 
 <!-- NAVBAR -->
+<!-- MEMBER LOGIN SCREEN -->
+<div class="member-login-screen" id="memberLoginScreen">
+  <div class="ml-card">
+    <div class="ml-logo">EKnot <span>Aarohan</span></div>
+    <div class="ml-sub">Chapter Activity Portal</div>
+    <label class="ml-label">Your Name</label>
+    <select class="ml-select" id="mlName">
+      <option value="">— Select your name —</option>
+    </select>
+    <label class="ml-label">Password</label>
+    <input class="ml-input" type="password" id="mlPassword" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doMemberLogin()"/>
+    <div class="ml-err" id="mlErr">Incorrect password. Please try again.</div>
+    <button class="ml-btn" onclick="doMemberLogin()">Sign In →</button>
+    <div class="ml-footer">Contact your chapter admin if you need help logging in.</div>
+  </div>
+</div>
+
 <nav class="navbar">
   <div class="nav-inner">
     <div class="nav-brand">EKnot <span>Aarohan</span></div>
@@ -520,6 +558,11 @@
       <button class="nav-tab admin-tab" onclick="showPage('admin')">🔐 Admin</button>
     </div>
     <div class="nav-right">
+      <div class="ml-user-badge" id="memberBadge" style="display:none">
+        <div class="ml-user-av" id="memberBadgeAv"></div>
+        <span class="ml-user-name" id="memberBadgeName"></span>
+      </div>
+      <button class="member-logout-btn" id="memberLogoutBtn" style="display:none" onclick="doMemberLogout()">Sign out</button>
       <span class="admin-badge" id="adminBadge">ADMIN</span>
       <button class="logout-btn" id="logoutBtn" onclick="adminLogout()">Logout</button>
     </div>
@@ -1158,6 +1201,83 @@
   let adminDate = new Date();
   let isAdmin   = false;
   let fCurSec   = 1;
+  let loggedInMember = null; // currently logged-in member object
+
+  const MEMBER_SESSION_KEY = 'aarohan_member_session';
+
+  // ══════════════════════════════════════════════════════
+  //  MEMBER LOGIN
+  // ══════════════════════════════════════════════════════
+  function populateMemberLoginSelect(){
+    const sel = document.getElementById('mlName');
+    if(!sel) return;
+    sel.innerHTML = '<option value="">— Select your name —</option>'
+      + MEMBERS.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
+  }
+
+  function doMemberLogin(){
+    const name = document.getElementById('mlName').value.trim();
+    const pwd  = document.getElementById('mlPassword').value;
+    const err  = document.getElementById('mlErr');
+    if(!name){ err.textContent='Please select your name.'; err.classList.add('show'); return; }
+    if(!pwd){  err.textContent='Please enter your password.'; err.classList.add('show'); return; }
+    const member = MEMBERS.find(m => m.name === name);
+    if(!member){ err.textContent='Member not found.'; err.classList.add('show'); return; }
+    // Check password — member password field, fallback to default
+    const memberPwd = member.password || 'Aarohan@2025';
+    if(pwd !== memberPwd){ err.classList.add('show'); err.textContent='Incorrect password. Please try again.'; return; }
+    err.classList.remove('show');
+    // Successful login
+    loggedInMember = member;
+    localStorage.setItem(MEMBER_SESSION_KEY, JSON.stringify({name: member.name, ts: Date.now()}));
+    applyMemberSession(member);
+  }
+
+  function applyMemberSession(member){
+    // Hide login screen
+    document.getElementById('memberLoginScreen').classList.add('hidden');
+    // Show member badge
+    const badge = document.getElementById('memberBadge');
+    const badgeAv = document.getElementById('memberBadgeAv');
+    const badgeName = document.getElementById('memberBadgeName');
+    if(badge){ badge.style.display='flex'; badgeAv.style.background=getAvColor(member.name); badgeAv.textContent=getInitials(member.name); badgeName.textContent=member.name.split(' ')[0]; }
+    document.getElementById('memberLogoutBtn').style.display='inline-block';
+    // Auto-select name in form and lock it
+    const sel = document.getElementById('fMember');
+    if(sel){ sel.value = member.name; sel.disabled = true; }
+    // Auto-fill email if available
+    const emailFld = document.getElementById('fEmail');
+    if(emailFld && member.email){ emailFld.value = member.email; }
+  }
+
+  function doMemberLogout(){
+    loggedInMember = null;
+    localStorage.removeItem(MEMBER_SESSION_KEY);
+    document.getElementById('memberLoginScreen').classList.remove('hidden');
+    document.getElementById('memberBadge').style.display='none';
+    document.getElementById('memberLogoutBtn').style.display='none';
+    document.getElementById('mlPassword').value='';
+    document.getElementById('mlErr').classList.remove('show');
+    // Re-enable name select
+    const sel = document.getElementById('fMember');
+    if(sel){ sel.value=''; sel.disabled=false; }
+    // Also logout admin if was logged in
+    if(isAdmin) adminLogout();
+  }
+
+  function restoreMemberSession(){
+    try{
+      const s = JSON.parse(localStorage.getItem(MEMBER_SESSION_KEY)||'null');
+      if(!s || !s.name) return false;
+      // Session valid for 7 days
+      if(Date.now() - s.ts > 7 * 24 * 60 * 60 * 1000){ localStorage.removeItem(MEMBER_SESSION_KEY); return false; }
+      const member = MEMBERS.find(m => m.name === s.name);
+      if(!member) return false;
+      loggedInMember = member;
+      applyMemberSession(member);
+      return true;
+    } catch(e){ return false; }
+  }
 
   // ══════════════════════════════════════════════════════
   //  UTILITIES
@@ -1582,6 +1702,7 @@
           <div><label class="mef-label">Phone Number</label><input class="mef-input" id="mefPhone${i}" value="${m.phone||''}" placeholder="+91 XXXXX XXXXX"/></div>
           <div><label class="mef-label">Date of Birth</label><input class="mef-input" type="date" id="mefDob${i}" value="${m.dob||''}"/></div>
           <div style="grid-column:1/-1"><label class="mef-label">Business Category Tags <span style="font-weight:400;text-transform:none">(comma separated)</span></label><input class="mef-input" id="mefCat${i}" value="${m.category||''}" placeholder="e.g. Education, IT, Finance"/></div>
+          <div style="grid-column:1/-1"><label class="mef-label">Login Password <span style="font-weight:400;text-transform:none">(member uses this to sign in)</span></label><input class="mef-input" type="password" id="mefPwd${i}" value="${m.password||''}" placeholder="Set member password"/></div>
         </div>
         <button class="mef-save" onclick="saveMemberProfile(${i})">✅ Save Profile</button>
         <button class="mef-cancel" onclick="toggleMemberEdit(${i})">Cancel</button>
@@ -1599,8 +1720,9 @@
       phone:    document.getElementById('mefPhone'+i).value.trim(),
       dob:      document.getElementById('mefDob'+i).value,
       category: document.getElementById('mefCat'+i).value.trim(),
+      password: document.getElementById('mefPwd'+i).value.trim(),
     };
-    saveMembers(); populateDropdowns(); renderAdminMemberList(); renderMembersPage();
+    saveMembers(); populateDropdowns(); populateMemberLoginSelect(); renderAdminMemberList(); renderMembersPage();
     showToast('✅ Profile saved for '+MEMBERS[i].name+'!');
   }
 
@@ -1762,20 +1884,25 @@
     if(cached && cached.length) {
       MEMBERS = cached;
       populateDropdowns();
+      populateMemberLoginSelect();
       renderMembersPage();
     }
     // Step 2: Fetch from sheet CSV (may be up to 5 mins behind)
     const sheetMembers = await fetchMembers();
     if(sheetMembers && sheetMembers.length) {
-      // Only update if cache is older than 10 mins (i.e. sheet is fresher)
       const cacheAge = Date.now() - parseInt(localStorage.getItem(MEMBERS_CACHE_TS)||'0');
       if(cacheAge > 10 * 60 * 1000 || !cached) {
         MEMBERS = sheetMembers;
         populateDropdowns();
+        populateMemberLoginSelect();
         renderMembersPage();
       }
     }
-    // If neither worked, keep hardcoded defaults
+    // Restore session or show login screen
+    if(!restoreMemberSession()){
+      populateMemberLoginSelect();
+      // Login screen is already visible by default
+    }
     await loadAttendanceFromSheet();
     renderAttendancePage();
     renderCommsPage();
