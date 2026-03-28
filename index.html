@@ -523,6 +523,91 @@
     .email-input:focus { border-color:var(--blue); }
     .email-btn { padding:9px 18px; background:var(--teal); color:#fff; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; border:none; border-radius:8px; cursor:pointer; white-space:nowrap; }
     .email-btn:hover { background:#167a68; }
+
+    /* ══════════════════════════════════════
+       FINANCES PAGE
+    ══════════════════════════════════════ */
+    .finances-page { background:var(--bg); min-height:100vh; padding:32px 24px; }
+    .finances-inner { max-width:1000px; margin:0 auto; }
+    .fin-header { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:20px; }
+    .fin-title { font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700; color:var(--ink); letter-spacing:-0.02em; }
+    .fin-title span { color:var(--gold); }
+    .fin-month-sel { display:flex; align-items:center; gap:8px; }
+
+    /* Summary stat cards */
+    .fin-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin-bottom:20px; }
+    .fin-stat { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:18px 20px; position:relative; overflow:hidden; box-shadow:var(--shadow); }
+    .fin-stat::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+    .fsc-green::after { background:var(--teal); }
+    .fsc-red::after { background:var(--pink); }
+    .fsc-gold::after { background:var(--gold); }
+    .fsc-blue::after { background:var(--blue); }
+    .fin-stat-lbl { font-size:10px; font-weight:600; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; font-family:'Space Grotesk',sans-serif; }
+    .fin-stat-val { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--ink); }
+    .fin-stat-sub { font-size:11px; color:var(--text-soft); margin-top:4px; }
+
+    /* Section card reuse */
+    .fin-section { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; box-shadow:var(--shadow); margin-bottom:16px; }
+    .fin-sec-title { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--ink); margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+
+    /* Fee settings (admin) */
+    .fee-setting-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .fee-input-wrap { display:flex; align-items:center; gap:8px; background:#f8f9fc; border:1.5px solid var(--border); border-radius:8px; padding:8px 14px; }
+    .fee-input-wrap span { font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--text-muted); font-size:14px; }
+    .fee-amt-input { background:none; border:none; outline:none; font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; color:var(--ink); width:100px; }
+    .fee-save-btn { padding:9px 18px; background:var(--navy); color:var(--gold); font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; border:1px solid rgba(201,162,39,0.25); border-radius:8px; cursor:pointer; transition:all 0.15s; }
+    .fee-save-btn:hover { background:var(--navy-light); }
+
+    /* Member fee list */
+    .fee-member-list { display:flex; flex-direction:column; gap:8px; }
+    .fee-member-row { display:flex; align-items:center; gap:12px; padding:11px 14px; background:#f8f9fc; border:1px solid var(--border); border-radius:10px; transition:all 0.15s; }
+    .fee-member-row:hover { border-color:var(--blue); }
+    .fee-av { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--navy); flex-shrink:0; }
+    .fee-name { flex:1; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; color:var(--ink); }
+    .fee-phone { font-size:11px; color:var(--text-soft); margin-top:2px; }
+    .fee-status-pill { padding:3px 10px; border-radius:4px; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; border:1px solid; white-space:nowrap; cursor:pointer; transition:all 0.15s; }
+    .fee-paid { background:rgba(26,138,120,0.1); border-color:rgba(26,138,120,0.3); color:var(--teal); }
+    .fee-unpaid { background:rgba(192,65,90,0.1); border-color:rgba(192,65,90,0.3); color:var(--pink); }
+    .fee-wa-btn { display:inline-flex; align-items:center; gap:5px; background:#25d366; color:#fff; border:none; border-radius:6px; padding:6px 12px; font-size:11px; font-family:'Space Grotesk',sans-serif; font-weight:700; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+    .fee-wa-btn:hover { background:#20b858; }
+    .fee-amt-due { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--pink); min-width:60px; text-align:right; }
+    .fee-amt-paid { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--teal); min-width:60px; text-align:right; }
+
+    /* Transactions */
+    .txn-controls { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+    .txn-type-sel { padding:7px 12px; background:#f8f9fc; border:1.5px solid var(--border); border-radius:7px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink); outline:none; cursor:pointer; }
+    .txn-type-sel:focus { border-color:var(--blue); }
+    .txn-desc-input { flex:1; min-width:140px; padding:8px 12px; background:#f8f9fc; border:1.5px solid var(--border); border-radius:7px; font-family:'Inter',sans-serif; font-size:13px; color:var(--ink); outline:none; transition:border-color 0.2s; }
+    .txn-desc-input:focus { border-color:var(--blue); }
+    .txn-amt-input { width:110px; padding:8px 12px; background:#f8f9fc; border:1.5px solid var(--border); border-radius:7px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; color:var(--ink); outline:none; transition:border-color 0.2s; }
+    .txn-amt-input:focus { border-color:var(--blue); }
+    .txn-add-btn { padding:8px 16px; background:var(--navy); color:var(--gold); font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; border:1px solid rgba(201,162,39,0.25); border-radius:7px; cursor:pointer; white-space:nowrap; }
+    .txn-add-btn:hover { background:var(--navy-light); }
+    .txn-list { display:flex; flex-direction:column; gap:6px; max-height:320px; overflow-y:auto; }
+    .txn-list::-webkit-scrollbar { width:4px; }
+    .txn-list::-webkit-scrollbar-thumb { background:#d0d5e0; border-radius:100px; }
+    .txn-item { display:flex; align-items:center; gap:12px; padding:10px 14px; background:#f8f9fc; border:1px solid var(--border); border-radius:9px; }
+    .txn-type-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .txn-type-dot.income { background:var(--teal); }
+    .txn-type-dot.expense { background:var(--pink); }
+    .txn-desc { flex:1; font-size:13px; color:var(--ink); }
+    .txn-date { font-size:11px; color:var(--text-soft); white-space:nowrap; }
+    .txn-amount { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; white-space:nowrap; }
+    .txn-amount.income { color:var(--teal); }
+    .txn-amount.expense { color:var(--pink); }
+    .txn-del { background:none; border:none; color:var(--text-soft); cursor:pointer; font-size:13px; padding:2px 5px; border-radius:4px; transition:all 0.15s; }
+    .txn-del:hover { color:var(--pink); background:rgba(192,65,90,0.08); }
+    .fin-empty { text-align:center; padding:28px; font-size:13px; color:var(--text-soft); font-style:italic; }
+
+    /* WhatsApp reminder bulk button */
+    .fin-wa-all-btn { display:inline-flex; align-items:center; gap:8px; background:#25d366; color:#fff; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; padding:9px 18px; border:none; border-radius:6px; cursor:pointer; transition:all 0.15s; }
+    .fin-wa-all-btn:hover { background:#20b858; }
+
+    @media(max-width:640px){
+      .fin-stats { grid-template-columns:1fr 1fr; }
+      .txn-controls { flex-direction:column; align-items:stretch; }
+      .txn-amt-input, .txn-desc-input { width:100%; }
+    }
   </style>
 </head>
 <body>
@@ -555,6 +640,7 @@
       <button class="nav-tab" onclick="showPage('attendance')">📅 Attendance</button>
       <button class="nav-tab" onclick="showPage('comms')">📣 Comms</button>
       <button class="nav-tab" onclick="showPage('members')">👥 Members</button>
+      <button class="nav-tab" onclick="showPage('finances')">💰 Finances</button>
       <button class="nav-tab admin-tab" onclick="showPage('admin')">🔐 Admin</button>
     </div>
     <div class="nav-right">
@@ -904,6 +990,115 @@
 </div>
 </div>
 
+<!-- ══════════════ PAGE: FINANCES ══════════════ -->
+<div class="page" id="page-finances">
+<div class="finances-page">
+  <div class="finances-inner">
+
+    <div class="fin-header">
+      <div class="fin-title">💰 <span>Finances</span></div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <div class="fin-month-sel">
+          <button class="m-btn" onclick="finChangeMonth(-1)">‹</button>
+          <div class="m-label" id="finMonthLabel">—</div>
+          <button class="m-btn" onclick="finChangeMonth(1)">›</button>
+        </div>
+        <button class="ref-btn" onclick="renderFinancesPage()">↻ Refresh</button>
+      </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="fin-stats">
+      <div class="fin-stat fsc-gold">
+        <div class="fin-stat-lbl">Monthly Fee</div>
+        <div class="fin-stat-val">₹<span id="finFeeAmt">—</span></div>
+        <div class="fin-stat-sub" id="finFeeSub">per member</div>
+      </div>
+      <div class="fin-stat fsc-green">
+        <div class="fin-stat-lbl">Fees Collected</div>
+        <div class="fin-stat-val">₹<span id="finCollected">0</span></div>
+        <div class="fin-stat-sub" id="finCollectedSub">0 of 0 members paid</div>
+      </div>
+      <div class="fin-stat fsc-red">
+        <div class="fin-stat-lbl">Fees Pending</div>
+        <div class="fin-stat-val">₹<span id="finPending">0</span></div>
+        <div class="fin-stat-sub" id="finPendingSub">0 members pending</div>
+      </div>
+      <div class="fin-stat fsc-blue">
+        <div class="fin-stat-lbl">Net Balance</div>
+        <div class="fin-stat-val" id="finBalance">₹0</div>
+        <div class="fin-stat-sub">Income − Expenses</div>
+      </div>
+    </div>
+
+    <!-- Fee Settings (Admin only) -->
+    <div class="fin-section" id="finAdminSettings" style="display:none">
+      <div class="fin-sec-title">
+        ⚙️ Fee Settings <span style="font-size:11px;color:var(--gold);font-weight:400">(Admin Only)</span>
+      </div>
+      <div class="fee-setting-row">
+        <div class="fee-input-wrap">
+          <span>₹</span>
+          <input class="fee-amt-input" type="number" id="finFeeInput" placeholder="0" min="0"/>
+        </div>
+        <button class="fee-save-btn" onclick="saveMonthlyFee()">Set Monthly Fee</button>
+        <span style="font-size:12px;color:var(--text-soft)">This amount will be used for WhatsApp reminders and tracking.</span>
+      </div>
+    </div>
+
+    <!-- Member Fee Status -->
+    <div class="fin-section">
+      <div class="fin-sec-title">
+        <span>👥 Member Fee Status</span>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="fin-wa-all-btn" id="finWaAllBtn" onclick="sendFeeReminderAll()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Remind All Unpaid
+          </button>
+        </div>
+      </div>
+      <div class="fee-member-list" id="feeMemberList">
+        <div class="fin-empty">Loading…</div>
+      </div>
+    </div>
+
+    <!-- Accounts: Income & Expenses -->
+    <div class="fin-section">
+      <div class="fin-sec-title">
+        <span>📒 Accounts — Income & Expenses</span>
+        <span style="font-size:11px;color:var(--text-soft);font-weight:400" id="finTxnAdminNote" style="display:none"></span>
+      </div>
+
+      <!-- Add transaction (admin only) -->
+      <div id="finTxnForm" style="display:none">
+        <div class="txn-controls">
+          <select class="txn-type-sel" id="txnType">
+            <option value="income">💚 Income</option>
+            <option value="expense">🔴 Expense</option>
+          </select>
+          <input class="txn-desc-input" id="txnDesc" placeholder="Description (e.g. Venue rent, Catering…)"/>
+          <input class="txn-amt-input" id="txnAmt" type="number" placeholder="₹ Amount" min="0"/>
+          <button class="txn-add-btn" onclick="addTransaction()">+ Add</button>
+        </div>
+      </div>
+
+      <!-- Income list -->
+      <div style="margin-bottom:14px">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">💚 Income</div>
+        <div class="txn-list" id="txnIncomeList"><div class="fin-empty">No income recorded.</div></div>
+      </div>
+
+      <!-- Expense list -->
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">🔴 Expenses</div>
+        <div class="txn-list" id="txnExpenseList"><div class="fin-empty">No expenses recorded.</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
 <!-- Chart.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 
@@ -1079,7 +1274,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwpLZxxQWT_FrS6hWUWDZMO7N-5rIgoYEl34xqCA8MF0VGnf-I3aPUSN1AGayeyqaRU/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdUY9-HgR8Ym7SWamiTSAlrCp4e7OCuICx_gwaOQWRTYAEhEY00AijwxP27xfGntSv/exec";
   const ADMIN_PWD_KEY  = "aarohan_admin_pwd";
   const MEMBERS_KEY    = "aarohan_members";
   const DEFAULT_PWD    = "Aarohan@2025";
@@ -1199,6 +1394,7 @@
   let allRows   = [];
   let lbDate    = new Date();
   let adminDate = new Date();
+  let finDate   = new Date();
   let isAdmin   = false;
   let fCurSec   = 1;
   let loggedInMember = null; // currently logged-in member object
@@ -1317,7 +1513,7 @@
     document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
     document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
     document.getElementById('page-'+p).classList.add('active');
-    const pageOrder=['form','leaderboard','analytics','attendance','comms','members','admin'];
+    const pageOrder=['form','leaderboard','analytics','attendance','comms','members','finances','admin'];
     const idx=pageOrder.indexOf(p);
     const tabs=document.querySelectorAll('.nav-tab');
     if(tabs[idx]) tabs[idx].classList.add('active');
@@ -1326,6 +1522,7 @@
     if(p==='analytics'){ loadAllData().then(()=>renderAnalytics()); }
     if(p==='attendance'){ renderAttendancePage(); }
     if(p==='comms'){ renderCommsPage(); }
+    if(p==='finances'){ renderFinancesPage(); }
     if(p==='admin' && isAdmin) renderAdminDash();
   }
 
@@ -1661,6 +1858,11 @@
       const noteInput=document.getElementById('meetingNoteInput');
       if(noteInput) noteInput.style.display='block';
       renderAdminAttGrid();
+      // Show finances admin elements if on finances page
+      const finSettings=document.getElementById('finAdminSettings');
+      if(finSettings) finSettings.style.display='block';
+      const txnForm=document.getElementById('finTxnForm');
+      if(txnForm) txnForm.style.display='block';
     } else {
       document.getElementById('loginErr').classList.add('show');
     }
@@ -1874,6 +2076,7 @@
   document.getElementById('fDate').value=new Date().toISOString().split('T')[0];
   document.getElementById('lbMonthLabel').textContent=getMonthLabel(lbDate);
   document.getElementById('adminMonthLabel').textContent=getMonthLabel(adminDate);
+  document.getElementById('finMonthLabel').textContent=getMonthLabel(finDate);
   populateDropdowns();
   updateFProgress(1);
 
@@ -1904,6 +2107,7 @@
       // Login screen is already visible by default
     }
     await loadAttendanceFromSheet();
+    await loadFinancesFromSheet();
     renderAttendancePage();
     renderCommsPage();
     loadAllData();
@@ -2465,8 +2669,250 @@
   });
 
   // ══════════════════════════════════════════════════════
-  //  PDF EXPORT
+  //  FINANCES
   // ══════════════════════════════════════════════════════
+  const FIN_FEE_KEY   = 'aarohan_fin_fee';
+  const FIN_STATUS_KEY= 'aarohan_fin_status';
+  const FIN_TXN_KEY   = 'aarohan_fin_txn';
+  const FINANCES_CSV  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0t6K6i7gIrRcSClFD0CitHurwWaljgUG3nir3lNAmNKZHJLGm61j4gi8XADu-I-XuHVdOmoIra_Bc/pub?gid=591561772&single=true&output=csv";
+
+  // finDate declared at top-level above
+
+  // Load all finances data from sheet CSV into localStorage on startup
+  async function loadFinancesFromSheet(){
+    try{
+      const res = await fetch(FINANCES_CSV + '&t=' + Date.now());
+      if(!res.ok) return;
+      const text = await res.text();
+      if(!text || !text.trim()) return;
+      const rows = parseCSV(text);
+      if(!rows.length) return;
+
+      const feeMap={}, statusMap={}, txnMap={};
+      rows.forEach(r=>{
+        const mk   = r.monthKey || r.monthkey || '';
+        const type = r.type     || '';
+        const key  = r.key      || '';
+        const val  = r.value    || '';
+        if(!mk || !type) return;
+        if(type==='fee'){
+          feeMap[mk] = parseFloat(val)||0;
+        } else if(type==='status'){
+          if(!statusMap[mk]) statusMap[mk]={};
+          statusMap[mk][key] = val;
+        } else if(type==='txn'){
+          if(!txnMap[mk]) txnMap[mk]=[];
+          try{ txnMap[mk].push(JSON.parse(val)); }catch(e){}
+        }
+      });
+      if(Object.keys(feeMap).length)    localStorage.setItem(FIN_FEE_KEY,    JSON.stringify(feeMap));
+      if(Object.keys(statusMap).length) localStorage.setItem(FIN_STATUS_KEY, JSON.stringify(statusMap));
+      if(Object.keys(txnMap).length)    localStorage.setItem(FIN_TXN_KEY,    JSON.stringify(txnMap));
+    } catch(e){ console.warn('loadFinancesFromSheet error:', e); }
+  }
+
+  function finMonthKey(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
+
+  // ── Local storage helpers ──
+  function finGetFee(monthKey){
+    try{ const d=JSON.parse(localStorage.getItem(FIN_FEE_KEY)||'{}'); return d[monthKey]||0; }catch(e){return 0;}
+  }
+  function finSetFee(monthKey,amt){
+    try{ const d=JSON.parse(localStorage.getItem(FIN_FEE_KEY)||'{}'); d[monthKey]=amt; localStorage.setItem(FIN_FEE_KEY,JSON.stringify(d)); }catch(e){}
+  }
+  function finGetStatus(monthKey){
+    try{ const d=JSON.parse(localStorage.getItem(FIN_STATUS_KEY)||'{}'); return d[monthKey]||{}; }catch(e){return {};}
+  }
+  function finSetStatus(monthKey,status){
+    try{ const d=JSON.parse(localStorage.getItem(FIN_STATUS_KEY)||'{}'); d[monthKey]=status; localStorage.setItem(FIN_STATUS_KEY,JSON.stringify(d));
+      // Sync to sheet
+      const params=new URLSearchParams();
+      params.append('payload',JSON.stringify({action:'saveFinanceStatus',monthKey,status}));
+      fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:params}).catch(e=>console.warn(e));
+    }catch(e){}
+  }
+  function finGetTxns(monthKey){
+    try{ const d=JSON.parse(localStorage.getItem(FIN_TXN_KEY)||'{}'); return d[monthKey]||[]; }catch(e){return [];}
+  }
+  function finSetTxns(monthKey,txns){
+    try{ const d=JSON.parse(localStorage.getItem(FIN_TXN_KEY)||'{}'); d[monthKey]=txns; localStorage.setItem(FIN_TXN_KEY,JSON.stringify(d));
+      // Sync to sheet
+      const params=new URLSearchParams();
+      params.append('payload',JSON.stringify({action:'saveFinanceTxns',monthKey,txns}));
+      fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:params}).catch(e=>console.warn(e));
+    }catch(e){}
+  }
+
+  function finChangeMonth(dir){
+    finDate.setMonth(finDate.getMonth()+dir);
+    renderFinancesPage();
+  }
+
+  function saveMonthlyFee(){
+    const amt=parseFloat(document.getElementById('finFeeInput').value)||0;
+    const mk=finMonthKey(finDate);
+    finSetFee(mk,amt);
+    showToast('✅ Monthly fee set to ₹'+amt);
+    renderFinancesPage();
+    // Sync to sheet
+    const params=new URLSearchParams();
+    params.append('payload',JSON.stringify({action:'saveFinanceFee',monthKey:mk,amount:amt}));
+    fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:params}).catch(e=>console.warn(e));
+  }
+
+  function toggleFeeStatus(memberName){
+    if(!isAdmin){ showToast('Only admin can update fee status.',true); return; }
+    const mk=finMonthKey(finDate);
+    const status=finGetStatus(mk);
+    status[memberName]= status[memberName]==='paid' ? 'unpaid' : 'paid';
+    finSetStatus(mk,status);
+    renderFinancesPage();
+    showToast(status[memberName]==='paid'?`✅ ${memberName.split(' ')[0]} marked as Paid`:`↩ ${memberName.split(' ')[0]} marked as Unpaid`);
+  }
+
+  function sendFeeReminderWA(memberName){
+    const mk=finMonthKey(finDate);
+    const fee=finGetFee(mk);
+    const month=getMonthLabel(finDate);
+    const member=MEMBERS.find(m=>m.name===memberName);
+    const phone=(member&&member.phone)?member.phone.replace(/[^0-9]/g,''):'';
+    const firstName=memberName.split(' ')[0];
+    const text=`Hi ${firstName} 👋,\n\nThis is a friendly reminder that your *EKnot Aarohan Chapter* meeting fee for *${month}* is due.\n\n💰 Amount: ₹${fee}\n\nKindly make the payment at the earliest.\n\nThank you! 🙏\n_EKnot Aarohan Chapter_`;
+    const url=phone
+      ?`https://wa.me/${phone.startsWith('91')?phone:'91'+phone}?text=${encodeURIComponent(text)}`
+      :`https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url,'_blank');
+  }
+
+  function sendFeeReminderAll(){
+    const mk=finMonthKey(finDate);
+    const status=finGetStatus(mk);
+    const fee=finGetFee(mk);
+    const month=getMonthLabel(finDate);
+    const unpaid=MEMBERS.filter(m=>status[m.name]!=='paid');
+    if(!unpaid.length){ showToast('All members have paid! 🎉'); return; }
+    const names=unpaid.map(m=>m.name.split(' ')[0]).join(', ');
+    const text=`📢 *EKnot Aarohan Chapter — Fee Reminder*\n\n*Month:* ${month}\n*Amount Due:* ₹${fee} per member\n\nThe following members have *not yet paid*:\n${unpaid.map((m,i)=>`${i+1}. ${m.name}`).join('\n')}\n\nKindly make the payment at the earliest. Thank you! 🙏\n_EKnot Aarohan Chapter_`;
+    window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+  }
+
+  function addTransaction(){
+    if(!isAdmin){ showToast('Only admin can add transactions.',true); return; }
+    const type=document.getElementById('txnType').value;
+    const desc=document.getElementById('txnDesc').value.trim();
+    const amt=parseFloat(document.getElementById('txnAmt').value)||0;
+    if(!desc){ showToast('Please enter a description.',true); return; }
+    if(!amt){ showToast('Please enter an amount.',true); return; }
+    const mk=finMonthKey(finDate);
+    const txns=finGetTxns(mk);
+    txns.unshift({type,desc,amt,date:new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short'})});
+    finSetTxns(mk,txns);
+    document.getElementById('txnDesc').value='';
+    document.getElementById('txnAmt').value='';
+    renderFinancesPage();
+    showToast(type==='income'?'💚 Income added!':'🔴 Expense added!');
+  }
+
+  function deleteTransaction(mk,idx){
+    if(!isAdmin){ showToast('Only admin can delete transactions.',true); return; }
+    if(!confirm('Delete this transaction?')) return;
+    const txns=finGetTxns(mk);
+    txns.splice(idx,1);
+    finSetTxns(mk,txns);
+    renderFinancesPage();
+    showToast('🗑 Transaction deleted.');
+  }
+
+  function renderFinancesPage(){
+    document.getElementById('finMonthLabel').textContent=getMonthLabel(finDate);
+    const mk=finMonthKey(finDate);
+    const fee=finGetFee(mk);
+    const status=finGetStatus(mk);
+    const txns=finGetTxns(mk);
+
+    // Admin only elements
+    const adminSettings=document.getElementById('finAdminSettings');
+    const txnForm=document.getElementById('finTxnForm');
+    if(adminSettings) adminSettings.style.display=isAdmin?'block':'none';
+    if(txnForm) txnForm.style.display=isAdmin?'block':'none';
+
+    // Fee input prefill
+    if(isAdmin){
+      const fi=document.getElementById('finFeeInput');
+      if(fi && !fi.value) fi.value=fee||'';
+    }
+
+    // Stats
+    const paidCount=MEMBERS.filter(m=>status[m.name]==='paid').length;
+    const unpaidCount=MEMBERS.length-paidCount;
+    const totalFeeCollected=paidCount*fee;
+    const totalPending=unpaidCount*fee;
+
+    const totalIncome=txns.filter(t=>t.type==='income').reduce((s,t)=>s+t.amt,0);
+    const totalExpense=txns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amt,0);
+    const netBalance=(totalFeeCollected+totalIncome)-totalExpense;
+
+    document.getElementById('finFeeAmt').textContent=fee||'—';
+    document.getElementById('finFeeSub').textContent=fee?`₹${fee} × ${MEMBERS.length} members = ₹${fee*MEMBERS.length} total`:'Set the fee above';
+    document.getElementById('finCollected').textContent=totalFeeCollected.toLocaleString('en-IN');
+    document.getElementById('finCollectedSub').textContent=`${paidCount} of ${MEMBERS.length} members paid`;
+    document.getElementById('finPending').textContent=totalPending.toLocaleString('en-IN');
+    document.getElementById('finPendingSub').textContent=`${unpaidCount} member${unpaidCount!==1?'s':''} pending`;
+    const balEl=document.getElementById('finBalance');
+    balEl.textContent=(netBalance>=0?'₹':'-₹')+Math.abs(netBalance).toLocaleString('en-IN');
+    balEl.style.color=netBalance>=0?'var(--teal)':'var(--pink)';
+
+    // Member fee list
+    const list=document.getElementById('feeMemberList');
+    list.innerHTML=MEMBERS.map(m=>{
+      const paid=status[m.name]==='paid';
+      const phone=m.phone?m.phone.replace(/[^0-9]/g,''):'';
+      const safeName=m.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      return `<div class="fee-member-row">
+        <div class="fee-av" style="background:${getAvColor(m.name)}">${getInitials(m.name)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="fee-name">${m.name}</div>
+          <div class="fee-phone">${m.phone||'No phone set'}</div>
+        </div>
+        ${fee?`<div class="${paid?'fee-amt-paid':'fee-amt-due'}">₹${fee.toLocaleString('en-IN')}</div>`:''}
+        <span class="fee-status-pill ${paid?'fee-paid':'fee-unpaid'}" onclick="toggleFeeStatus('${safeName}')" title="${isAdmin?'Click to toggle':''}">
+          ${paid?'✅ Paid':'❌ Unpaid'}
+        </span>
+        <button class="fee-wa-btn" onclick="sendFeeReminderWA('${safeName}')" title="${phone?'Send to '+m.phone:'No phone set'}">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Remind
+        </button>
+      </div>`;
+    }).join('');
+
+    // Transactions
+    const income=txns.filter(t=>t.type==='income');
+    const expenses=txns.filter(t=>t.type==='expense');
+
+    const incomeEl=document.getElementById('txnIncomeList');
+    incomeEl.innerHTML=income.length
+      ?income.map((t,i)=>`<div class="txn-item">
+          <div class="txn-type-dot income"></div>
+          <div class="txn-desc">${t.desc}</div>
+          <div class="txn-date">${t.date}</div>
+          <div class="txn-amount income">+₹${t.amt.toLocaleString('en-IN')}</div>
+          ${isAdmin?`<button class="txn-del" onclick="deleteTransaction('${mk}',${txns.indexOf(t)})" title="Delete">🗑</button>`:''}
+        </div>`).join('')
+      :'<div class="fin-empty">No income recorded this month.</div>';
+
+    const expenseEl=document.getElementById('txnExpenseList');
+    expenseEl.innerHTML=expenses.length
+      ?expenses.map((t,i)=>`<div class="txn-item">
+          <div class="txn-type-dot expense"></div>
+          <div class="txn-desc">${t.desc}</div>
+          <div class="txn-date">${t.date}</div>
+          <div class="txn-amount expense">-₹${t.amt.toLocaleString('en-IN')}</div>
+          ${isAdmin?`<button class="txn-del" onclick="deleteTransaction('${mk}',${txns.indexOf(t)})" title="Delete">🗑</button>`:''}
+        </div>`).join('')
+      :'<div class="fin-empty">No expenses recorded this month.</div>';
+  }
+
+
   function exportPDF(){
     const rows=filterByMonth(allRows,adminDate);
     const mData={};
