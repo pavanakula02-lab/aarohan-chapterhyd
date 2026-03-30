@@ -608,6 +608,73 @@
       .txn-controls { flex-direction:column; align-items:stretch; }
       .txn-amt-input, .txn-desc-input { width:100%; }
     }
+
+    /* EPL — EDUCATION PREMIUM LEAGUE */
+    .epl-toggle-bar { display:flex; gap:8px; margin-bottom:20px; background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:5px; box-shadow:var(--shadow); }
+    .epl-toggle-btn { flex:1; padding:9px 14px; border:none; border-radius:7px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.15s; background:none; color:var(--text-muted); }
+    .epl-toggle-btn.active { background:var(--navy); color:var(--gold); box-shadow:0 2px 8px rgba(11,20,38,0.15); }
+    .epl-section { display:none; }
+    .epl-section.active { display:block; }
+    .epl-h2h { display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:center; margin-bottom:20px; }
+    .epl-team-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:20px 16px; text-align:center; box-shadow:var(--shadow); position:relative; overflow:hidden; transition:all 0.2s; }
+    .epl-team-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+    .epl-team-a::before { background:linear-gradient(90deg,#c9a227,#f5d66a); }
+    .epl-team-b::before { background:linear-gradient(90deg,#1e4fa3,#5ac8fa); }
+    .epl-team-card.winner { transform:translateY(-3px); box-shadow:0 8px 24px rgba(11,20,38,0.15); }
+    .epl-team-name { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; color:var(--ink); margin-bottom:6px; }
+    .epl-team-pts { font-family:'Space Grotesk',sans-serif; font-size:42px; font-weight:700; line-height:1; margin-bottom:4px; }
+    .epl-team-a .epl-team-pts { color:var(--gold); }
+    .epl-team-b .epl-team-pts { color:var(--blue); }
+    .epl-team-members-count { font-size:11px; color:var(--text-soft); }
+    .epl-vs { font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700; color:var(--text-soft); text-align:center; }
+    .epl-winner-badge { display:inline-block; background:rgba(201,162,39,0.15); color:var(--gold); border:1px solid rgba(201,162,39,0.3); border-radius:4px; font-size:10px; font-weight:700; font-family:'Space Grotesk',sans-serif; padding:2px 8px; margin-top:6px; letter-spacing:0.06em; }
+    .epl-breakdown { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px; }
+    .epl-breakdown-card { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; box-shadow:var(--shadow); }
+    .epl-bd-title { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:10px; }
+    .epl-bd-row { display:flex; justify-content:space-between; align-items:center; font-size:12px; padding:4px 0; border-bottom:1px solid #f0f2f8; }
+    .epl-bd-row:last-child { border-bottom:none; }
+    .epl-bd-label { color:var(--text-muted); }
+    .epl-bd-val { font-family:'Space Grotesk',sans-serif; font-weight:700; }
+    .epl-bd-val.a { color:var(--gold); }
+    .epl-bd-val.b { color:var(--blue); }
+    .epl-members-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+    .epl-team-section { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow); }
+    .epl-team-section-title { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--ink); margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; }
+    .epl-member-row { display:flex; align-items:center; gap:8px; padding:7px 0; border-bottom:1px solid #f5f7fb; }
+    .epl-member-row:last-child { border-bottom:none; }
+    .epl-member-av { width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--navy); flex-shrink:0; }
+    .epl-member-name { font-size:12px; color:var(--ink); flex:1; font-weight:500; }
+    .epl-member-pts { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--text-soft); }
+    .epl-bonus-list { display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto; margin-bottom:10px; }
+    .epl-bonus-item { display:flex; align-items:center; gap:10px; padding:8px 12px; background:#f8f9fc; border:1px solid var(--border); border-radius:8px; font-size:12px; }
+    .epl-bonus-team { padding:2px 8px; border-radius:4px; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; white-space:nowrap; }
+    .epl-bonus-team.a { background:rgba(201,162,39,0.15); color:var(--gold); border:1px solid rgba(201,162,39,0.3); }
+    .epl-bonus-team.b { background:rgba(30,79,163,0.1); color:var(--blue); border:1px solid rgba(30,79,163,0.2); }
+    .epl-bonus-desc { flex:1; color:var(--ink); }
+    .epl-bonus-pts { font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--teal); white-space:nowrap; }
+    .epl-bonus-del { background:none; border:none; color:var(--text-soft); cursor:pointer; font-size:12px; padding:2px 5px; border-radius:4px; }
+    .epl-bonus-del:hover { color:var(--pink); }
+    .epl-admin-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .epl-admin-section { background:#f8f9fc; border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+    .epl-admin-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; display:block; }
+    .epl-input { width:100%; padding:8px 12px; background:#fff; border:1.5px solid var(--border); border-radius:7px; font-family:'Inter',sans-serif; font-size:13px; color:var(--ink); outline:none; transition:border-color 0.2s; margin-bottom:6px; }
+    .epl-input:focus { border-color:var(--blue); }
+    .epl-save-btn { padding:7px 16px; background:var(--navy); color:var(--gold); font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; border:1px solid rgba(201,162,39,0.25); border-radius:6px; cursor:pointer; }
+    .epl-save-btn:hover { background:var(--navy-light); }
+    .epl-member-assign { display:flex; flex-direction:column; gap:5px; max-height:200px; overflow-y:auto; }
+    .epl-assign-row { display:flex; align-items:center; gap:8px; padding:5px 0; }
+    .epl-assign-name { font-size:12px; color:var(--ink); flex:1; }
+    .epl-assign-sel { padding:4px 8px; border:1.5px solid var(--border); border-radius:5px; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:var(--ink); background:#fff; outline:none; cursor:pointer; }
+    .epl-season-info { background:var(--navy); border:1px solid rgba(201,162,39,0.2); border-radius:10px; padding:12px 16px; margin-bottom:16px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .epl-season-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.08em; }
+    .epl-season-val { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--gold); }
+    .epl-progress-bar { flex:1; min-width:120px; }
+    .epl-progress-track { height:6px; background:rgba(255,255,255,0.1); border-radius:100px; overflow:hidden; margin-top:4px; }
+    .epl-progress-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:100px; }
+    @media(max-width:640px){
+      .epl-breakdown,.epl-members-grid,.epl-admin-grid { grid-template-columns:1fr; }
+      .epl-team-pts { font-size:30px; }
+    }
   </style>
 </head>
 <body>
@@ -875,27 +942,182 @@
 <div class="page" id="page-leaderboard">
 <div class="lb-page">
   <div class="lb-inner">
-    <div class="lb-top">
-      <div class="lb-title">🏆 <span>Aarohan</span> Leaderboard</div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <div class="month-sel">
-          <button class="m-btn" onclick="lbChangeMonth(-1)">‹</button>
-          <div class="m-label" id="lbMonthLabel">—</div>
-          <button class="m-btn" onclick="lbChangeMonth(1)">›</button>
+
+    <!-- Toggle bar: Leaderboard vs EPL -->
+    <div class="epl-toggle-bar">
+      <button class="epl-toggle-btn active" id="lbToggleLeaderboard" onclick="switchLbView('leaderboard')">🏆 Leaderboard</button>
+      <button class="epl-toggle-btn" id="lbToggleEPL" onclick="switchLbView('epl')">⚽ Education Premium League</button>
+    </div>
+
+    <!-- ── LEADERBOARD SECTION ── -->
+    <div class="epl-section active" id="lbSectionLeaderboard">
+      <div class="lb-top">
+        <div class="lb-title">🏆 <span>Aarohan</span> Leaderboard</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <div class="month-sel">
+            <button class="m-btn" onclick="lbChangeMonth(-1)">‹</button>
+            <div class="m-label" id="lbMonthLabel">—</div>
+            <button class="m-btn" onclick="lbChangeMonth(1)">›</button>
+          </div>
+          <button class="ref-btn" onclick="loadAllData()">↻ Refresh</button>
         </div>
-        <button class="ref-btn" onclick="loadAllData()">↻ Refresh</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card sc1"><div class="stat-lbl">Submissions</div><div class="stat-val sv-yellow" id="lbStatSub">—</div></div>
+        <div class="stat-card sc2"><div class="stat-lbl">Total Points</div><div class="stat-val sv-teal" id="lbStatPts">—</div></div>
+        <div class="stat-card sc3"><div class="stat-lbl">Active Members</div><div class="stat-val sv-orange" id="lbStatMem">—</div></div>
+        <div class="stat-card sc4"><div class="stat-lbl">Top Scorer</div><div class="stat-val" id="lbStatTop" style="font-size:15px">—</div></div>
+        <div class="stat-card sc5"><div class="stat-lbl">Top Activity</div><div class="stat-val" id="lbStatAct" style="font-size:13px">—</div></div>
+      </div>
+      <div class="lb-list" id="lbList">
+        <div class="empty-lb"><div class="spinner"></div><div class="et" style="margin-top:14px">Loading…</div></div>
       </div>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card sc1"><div class="stat-lbl">Submissions</div><div class="stat-val sv-yellow" id="lbStatSub">—</div></div>
-      <div class="stat-card sc2"><div class="stat-lbl">Total Points</div><div class="stat-val sv-teal" id="lbStatPts">—</div></div>
-      <div class="stat-card sc3"><div class="stat-lbl">Active Members</div><div class="stat-val sv-orange" id="lbStatMem">—</div></div>
-      <div class="stat-card sc4"><div class="stat-lbl">Top Scorer</div><div class="stat-val" id="lbStatTop" style="font-size:15px">—</div></div>
-      <div class="stat-card sc5"><div class="stat-lbl">Top Activity</div><div class="stat-val" id="lbStatAct" style="font-size:13px">—</div></div>
-    </div>
-    <div class="lb-list" id="lbList">
-      <div class="empty-lb"><div class="spinner"></div><div class="et" style="margin-top:14px">Loading…</div></div>
-    </div>
+
+    <!-- ── EPL SECTION ── -->
+    <div class="epl-section" id="lbSectionEPL">
+
+      <!-- Season info bar -->
+      <div class="epl-season-info" id="eplSeasonInfo">
+        <div>
+          <div class="epl-season-label">Season</div>
+          <div class="epl-season-val" id="eplSeasonName">Education Premium League</div>
+        </div>
+        <div>
+          <div class="epl-season-label">Duration</div>
+          <div class="epl-season-val" id="eplSeasonDates">Not set</div>
+        </div>
+        <div class="epl-progress-bar">
+          <div class="epl-season-label">Progress</div>
+          <div class="epl-progress-track"><div class="epl-progress-fill" id="eplProgressFill" style="width:0%"></div></div>
+        </div>
+        <div>
+          <div class="epl-season-label">Days Left</div>
+          <div class="epl-season-val" id="eplDaysLeft">—</div>
+        </div>
+      </div>
+
+      <!-- Head-to-head -->
+      <div class="epl-h2h">
+        <div class="epl-team-card epl-team-a" id="eplCardA">
+          <div class="epl-team-name" id="eplNameA">Team A</div>
+          <div class="epl-team-pts" id="eplPtsA">0</div>
+          <div class="epl-team-members-count" id="eplCountA">0 members</div>
+          <div id="eplBadgeA"></div>
+        </div>
+        <div class="epl-vs">VS</div>
+        <div class="epl-team-card epl-team-b" id="eplCardB">
+          <div class="epl-team-name" id="eplNameB">Team B</div>
+          <div class="epl-team-pts" id="eplPtsB">0</div>
+          <div class="epl-team-members-count" id="eplCountB">0 members</div>
+          <div id="eplBadgeB"></div>
+        </div>
+      </div>
+
+      <!-- Points breakdown -->
+      <div class="epl-breakdown">
+        <div class="epl-breakdown-card">
+          <div class="epl-bd-title">📊 Points Breakdown</div>
+          <div class="epl-bd-row"><span class="epl-bd-label">Activity Points</span><span style="display:flex;gap:10px"><span class="epl-bd-val a" id="eplBdActA">0</span><span style="color:#ddd">|</span><span class="epl-bd-val b" id="eplBdActB">0</span></span></div>
+          <div class="epl-bd-row"><span class="epl-bd-label">Attendance Pts</span><span style="display:flex;gap:10px"><span class="epl-bd-val a" id="eplBdAttA">0</span><span style="color:#ddd">|</span><span class="epl-bd-val b" id="eplBdAttB">0</span></span></div>
+          <div class="epl-bd-row"><span class="epl-bd-label">Bonus Points</span><span style="display:flex;gap:10px"><span class="epl-bd-val a" id="eplBdBonA">0</span><span style="color:#ddd">|</span><span class="epl-bd-val b" id="eplBdBonB">0</span></span></div>
+          <div class="epl-bd-row" style="font-weight:700"><span class="epl-bd-label" style="color:var(--ink);font-weight:700">Total</span><span style="display:flex;gap:10px"><span class="epl-bd-val a" id="eplBdTotA">0</span><span style="color:#ddd">|</span><span class="epl-bd-val b" id="eplBdTotB">0</span></span></div>
+        </div>
+        <div class="epl-breakdown-card">
+          <div class="epl-bd-title">🎯 Activity Breakdown</div>
+          <div class="epl-bd-row"><span class="epl-bd-label">Quality Leads</span><span style="display:flex;gap:10px"><span class="epl-bd-val a" id="eplActQL_A">0</span><span style="color:#ddd">|</span><span class="epl-bd-val b" id="eplActQL_B">0</span></span></div>
+          <div class="epl-bd-row"><span class="epl-bd-label">Guest Invites</span><span style="display:flex;gap:10px"><span class="epl-bd-val a" id="eplActGI_A">0</span><span style="color:#ddd">|</span><span class="epl-bd-val b" id="eplActGI_B">0</span></span></div>
+          <div class="epl-bd-row"><span class="epl-bd-label">Inductions</span><span style="display:flex;gap:10px"><span class="epl-bd-val a" id="eplActIN_A">0</span><span style="color:#ddd">|</span><span class="epl-bd-val b" id="eplActIN_B">0</span></span></div>
+          <div class="epl-bd-row"><span class="epl-bd-label">KYM / JM / Others</span><span style="display:flex;gap:10px"><span class="epl-bd-val a" id="eplActOT_A">0</span><span style="color:#ddd">|</span><span class="epl-bd-val b" id="eplActOT_B">0</span></span></div>
+        </div>
+      </div>
+
+      <!-- Member-wise breakdown -->
+      <div class="epl-members-grid">
+        <div class="epl-team-section">
+          <div class="epl-team-section-title">
+            <span id="eplMemberTitleA" style="color:var(--gold)">⚡ Team A Members</span>
+            <span style="font-size:11px;color:var(--text-soft)" id="eplMemberSubA"></span>
+          </div>
+          <div id="eplMemberListA"></div>
+        </div>
+        <div class="epl-team-section">
+          <div class="epl-team-section-title">
+            <span id="eplMemberTitleB" style="color:var(--blue)">🔵 Team B Members</span>
+            <span style="font-size:11px;color:var(--text-soft)" id="eplMemberSubB"></span>
+          </div>
+          <div id="eplMemberListB"></div>
+        </div>
+      </div>
+
+      <!-- Bonus Points log -->
+      <div class="epl-breakdown-card" style="margin-bottom:16px">
+        <div class="epl-bd-title" style="margin-bottom:12px">⭐ Manual Bonus Points Log</div>
+        <div class="epl-bonus-list" id="eplBonusList"></div>
+        <!-- Admin only: Add bonus -->
+        <div id="eplBonusForm" style="display:none">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+            <select id="eplBonusTeam" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--ink);background:#fff;outline:none;cursor:pointer;">
+              <option value="a">Team A</option>
+              <option value="b">Team B</option>
+            </select>
+            <input id="eplBonusDesc" class="epl-input" style="flex:1;min-width:140px;margin:0" placeholder="Reason (e.g. Best presentation)"/>
+            <input id="eplBonusPts" type="number" class="epl-input" style="width:80px;margin:0" placeholder="Pts" min="0"/>
+            <button class="epl-save-btn" onclick="addEplBonus()">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Settings -->
+      <div id="eplAdminPanel" style="display:none">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:12px;">🔐 EPL Admin Settings</div>
+        <div class="epl-admin-grid">
+
+          <!-- Season setup -->
+          <div class="epl-admin-section">
+            <span class="epl-admin-label">Season Setup</span>
+            <input class="epl-input" id="eplInputSeasonName" placeholder="Season name (e.g. EPL Season 1)"/>
+            <div style="display:flex;gap:6px;margin-bottom:6px">
+              <input class="epl-input" type="date" id="eplInputStart" style="margin:0;flex:1" placeholder="Start date"/>
+              <input class="epl-input" type="date" id="eplInputEnd" style="margin:0;flex:1" placeholder="End date"/>
+            </div>
+            <button class="epl-save-btn" onclick="saveEplSeason()">💾 Save Season</button>
+          </div>
+
+          <!-- Team names -->
+          <div class="epl-admin-section">
+            <span class="epl-admin-label">Team Names</span>
+            <input class="epl-input" id="eplInputNameA" placeholder="Team A name"/>
+            <input class="epl-input" id="eplInputNameB" placeholder="Team B name"/>
+            <button class="epl-save-btn" onclick="saveEplTeamNames()">💾 Save Names</button>
+          </div>
+
+          <!-- Attendance point values -->
+          <div class="epl-admin-section">
+            <span class="epl-admin-label">Attendance Points Per Meeting</span>
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+              <span style="font-size:12px;color:var(--text-muted);width:80px">✅ Present</span>
+              <input class="epl-input" type="number" id="eplPtsPresent" style="margin:0;flex:1" placeholder="e.g. 2" min="0"/>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+              <span style="font-size:12px;color:var(--text-muted);width:80px">🔄 Substitute</span>
+              <input class="epl-input" type="number" id="eplPtsSubstitute" style="margin:0;flex:1" placeholder="e.g. 1" min="0"/>
+            </div>
+            <button class="epl-save-btn" onclick="saveEplAttPts()">💾 Save</button>
+          </div>
+
+          <!-- Member assignment -->
+          <div class="epl-admin-section">
+            <span class="epl-admin-label">Assign Members to Teams</span>
+            <div class="epl-member-assign" id="eplAssignList"></div>
+            <button class="epl-save-btn" style="margin-top:8px" onclick="saveEplAssignments()">💾 Save Teams</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- end EPL section -->
+
   </div>
 </div>
 </div>
@@ -2912,6 +3134,250 @@
       :'<div class="fin-empty">No expenses recorded this month.</div>';
   }
 
+
+  // ══════════════════════════════════════════════════════
+  //  EPL — EDUCATION PREMIUM LEAGUE
+  // ══════════════════════════════════════════════════════
+  const EPL_KEY = 'aarohan_epl';
+
+  function eplGet(){ try{ return JSON.parse(localStorage.getItem(EPL_KEY)||'{}'); }catch(e){ return {}; } }
+  function eplSet(d){ localStorage.setItem(EPL_KEY, JSON.stringify(d)); }
+
+  function eplGetData(){
+    const d = eplGet();
+    return {
+      seasonName:    d.seasonName    || 'EPL Season 1',
+      startDate:     d.startDate     || '',
+      endDate:       d.endDate       || '',
+      teamA:         d.teamA         || 'Team A',
+      teamB:         d.teamB         || 'Team B',
+      assignments:   d.assignments   || {},
+      bonuses:       d.bonuses       || [],
+      ptsPresent:    d.ptsPresent    !== undefined ? d.ptsPresent    : 2,
+      ptsSubstitute: d.ptsSubstitute !== undefined ? d.ptsSubstitute : 1,
+    };
+  }
+
+  function switchLbView(view){
+    document.getElementById('lbSectionLeaderboard').classList.toggle('active', view==='leaderboard');
+    document.getElementById('lbSectionEPL').classList.toggle('active', view==='epl');
+    document.getElementById('lbToggleLeaderboard').classList.toggle('active', view==='leaderboard');
+    document.getElementById('lbToggleEPL').classList.toggle('active', view==='epl');
+    if(view==='epl') renderEPL();
+  }
+
+  function saveEplSeason(){
+    const d=eplGet();
+    d.seasonName = document.getElementById('eplInputSeasonName').value.trim() || d.seasonName;
+    d.startDate  = document.getElementById('eplInputStart').value;
+    d.endDate    = document.getElementById('eplInputEnd').value;
+    eplSet(d); renderEPL(); showToast('✅ Season saved!');
+  }
+
+  function saveEplTeamNames(){
+    const d=eplGet();
+    d.teamA = document.getElementById('eplInputNameA').value.trim() || d.teamA || 'Team A';
+    d.teamB = document.getElementById('eplInputNameB').value.trim() || d.teamB || 'Team B';
+    eplSet(d); renderEPL(); showToast('✅ Team names saved!');
+  }
+
+  function saveEplAttPts(){
+    const d=eplGet();
+    d.ptsPresent    = parseFloat(document.getElementById('eplPtsPresent').value)    || 2;
+    d.ptsSubstitute = parseFloat(document.getElementById('eplPtsSubstitute').value) || 1;
+    eplSet(d); renderEPL(); showToast('✅ Attendance points saved!');
+  }
+
+  function saveEplAssignments(){
+    const d=eplGet();
+    if(!d.assignments) d.assignments={};
+    MEMBERS.forEach(m=>{
+      const sel=document.getElementById('eplAssign_'+m.name.replace(/[^a-zA-Z0-9]/g,'_'));
+      if(sel) d.assignments[m.name]=sel.value;
+    });
+    eplSet(d); renderEPL(); showToast('✅ Team assignments saved!');
+  }
+
+  function addEplBonus(){
+    const team = document.getElementById('eplBonusTeam').value;
+    const desc = document.getElementById('eplBonusDesc').value.trim();
+    const pts  = parseFloat(document.getElementById('eplBonusPts').value)||0;
+    if(!desc){ showToast('Please enter a reason.',true); return; }
+    if(!pts){  showToast('Please enter points.',true); return; }
+    const d=eplGet();
+    if(!d.bonuses) d.bonuses=[];
+    d.bonuses.unshift({team, desc, pts, date: new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short'})});
+    eplSet(d);
+    document.getElementById('eplBonusDesc').value='';
+    document.getElementById('eplBonusPts').value='';
+    renderEPL(); showToast('⭐ Bonus points added!');
+  }
+
+  function deleteEplBonus(idx){
+    if(!confirm('Delete this bonus entry?')) return;
+    const d=eplGet();
+    d.bonuses.splice(idx,1);
+    eplSet(d); renderEPL(); showToast('🗑 Deleted.');
+  }
+
+  function renderEPL(){
+    const epl = eplGetData();
+    const att = loadAttendance();
+
+    // Season progress
+    document.getElementById('eplSeasonName').textContent = epl.seasonName;
+    if(epl.startDate && epl.endDate){
+      const start=new Date(epl.startDate), end=new Date(epl.endDate), now=new Date();
+      const total=end-start, elapsed=Math.min(now-start,total);
+      const pct=Math.max(0,Math.min(100,Math.round((elapsed/total)*100)));
+      const daysLeft=Math.max(0,Math.round((end-now)/(1000*60*60*24)));
+      document.getElementById('eplSeasonDates').textContent=
+        start.toLocaleDateString('en-IN',{day:'numeric',month:'short'})+' – '+
+        end.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+      document.getElementById('eplProgressFill').style.width=pct+'%';
+      document.getElementById('eplDaysLeft').textContent=daysLeft===0?'Last day!':daysLeft+' days';
+    } else {
+      document.getElementById('eplSeasonDates').textContent='Not set — configure in Admin Settings below';
+      document.getElementById('eplDaysLeft').textContent='—';
+      document.getElementById('eplProgressFill').style.width='0%';
+    }
+
+    function inSeason(dateStr){
+      if(!dateStr) return !epl.startDate; // if no season set, include everything
+      const d=new Date(dateStr);
+      if(epl.startDate && d < new Date(epl.startDate)) return false;
+      if(epl.endDate   && d > new Date(epl.endDate))   return false;
+      return true;
+    }
+
+    const teamANames = new Set(MEMBERS.filter(m=>epl.assignments[m.name]==='a').map(m=>m.name));
+    const teamBNames = new Set(MEMBERS.filter(m=>epl.assignments[m.name]==='b').map(m=>m.name));
+    const teamAMembers = MEMBERS.filter(m=>teamANames.has(m.name));
+    const teamBMembers = MEMBERS.filter(m=>teamBNames.has(m.name));
+
+    // Activity points
+    const memberActPts={};
+    const actCount={QL:{a:0,b:0},GI:{a:0,b:0},IN:{a:0,b:0},OT:{a:0,b:0}};
+    allRows.filter(r=>inSeason(r['Activity Date'])).forEach(r=>{
+      const n=r['Member Name']; if(!n) return;
+      memberActPts[n]=(memberActPts[n]||0)+(parseInt(r['Points Earned'])||0);
+      const team=teamANames.has(n)?'a':teamBNames.has(n)?'b':null; if(!team) return;
+      const type=r['Activity Type']||'';
+      if(type==='Quality lead') actCount.QL[team]++;
+      else if(type==='Guest invite'||type==='Guest Of Honour') actCount.GI[team]++;
+      else if(type==='Member Induction') actCount.IN[team]++;
+      else actCount.OT[team]++;
+    });
+    let actPtsA=0,actPtsB=0;
+    Object.entries(memberActPts).forEach(([n,p])=>{ if(teamANames.has(n)) actPtsA+=p; else if(teamBNames.has(n)) actPtsB+=p; });
+
+    // Attendance points
+    const memberAttPts={};
+    let attPtsA=0,attPtsB=0;
+    Object.keys(att).filter(k=>inSeason(k)).forEach(wk=>{
+      Object.entries(att[wk]||{}).forEach(([name,status])=>{
+        const pts=status==='present'?epl.ptsPresent:status==='substitute'?epl.ptsSubstitute:0;
+        memberAttPts[name]=(memberAttPts[name]||0)+pts;
+        if(teamANames.has(name)) attPtsA+=pts;
+        else if(teamBNames.has(name)) attPtsB+=pts;
+      });
+    });
+
+    // Bonus points
+    let bonPtsA=0,bonPtsB=0;
+    (epl.bonuses||[]).forEach(b=>{ if(b.team==='a') bonPtsA+=b.pts; else bonPtsB+=b.pts; });
+
+    const totalA=actPtsA+attPtsA+bonPtsA;
+    const totalB=actPtsB+attPtsB+bonPtsB;
+
+    // H2H
+    document.getElementById('eplNameA').textContent  = epl.teamA;
+    document.getElementById('eplNameB').textContent  = epl.teamB;
+    document.getElementById('eplPtsA').textContent   = totalA;
+    document.getElementById('eplPtsB').textContent   = totalB;
+    document.getElementById('eplCountA').textContent = teamAMembers.length+' members';
+    document.getElementById('eplCountB').textContent = teamBMembers.length+' members';
+    document.getElementById('eplCardA').classList.toggle('winner', totalA>totalB);
+    document.getElementById('eplCardB').classList.toggle('winner', totalB>totalA);
+    document.getElementById('eplBadgeA').innerHTML = totalA>totalB?'<div class="epl-winner-badge">🏆 LEADING</div>':(totalA===totalB&&totalA>0?'<div class="epl-winner-badge">🤝 TIED</div>':'');
+    document.getElementById('eplBadgeB').innerHTML = totalB>totalA?'<div class="epl-winner-badge">🏆 LEADING</div>':(totalA===totalB&&totalB>0?'<div class="epl-winner-badge">🤝 TIED</div>':'');
+
+    // Breakdown
+    ['ActA','ActB','AttA','AttB','BonA','BonB','TotA','TotB'].forEach((k,i)=>{
+      const vals=[actPtsA,actPtsB,attPtsA,attPtsB,bonPtsA,bonPtsB,totalA,totalB];
+      document.getElementById('eplBd'+k).textContent=vals[i];
+    });
+    document.getElementById('eplActQL_A').textContent=actCount.QL.a;
+    document.getElementById('eplActQL_B').textContent=actCount.QL.b;
+    document.getElementById('eplActGI_A').textContent=actCount.GI.a;
+    document.getElementById('eplActGI_B').textContent=actCount.GI.b;
+    document.getElementById('eplActIN_A').textContent=actCount.IN.a;
+    document.getElementById('eplActIN_B').textContent=actCount.IN.b;
+    document.getElementById('eplActOT_A').textContent=actCount.OT.a;
+    document.getElementById('eplActOT_B').textContent=actCount.OT.b;
+
+    // Member lists
+    document.getElementById('eplMemberTitleA').textContent='⚡ '+epl.teamA;
+    document.getElementById('eplMemberTitleB').textContent='🔵 '+epl.teamB;
+    document.getElementById('eplMemberSubA').textContent=totalA+' pts total';
+    document.getElementById('eplMemberSubB').textContent=totalB+' pts total';
+
+    function mkMemberRows(members){
+      if(!members.length) return '<div style="font-size:12px;color:var(--text-soft);font-style:italic;padding:8px 0">No members assigned yet.</div>';
+      return [...members].sort((a,b)=>((memberActPts[b.name]||0)+(memberAttPts[b.name]||0))-((memberActPts[a.name]||0)+(memberAttPts[a.name]||0)))
+        .map(m=>{
+          const tp=(memberActPts[m.name]||0)+(memberAttPts[m.name]||0);
+          return `<div class="epl-member-row">
+            <div class="epl-member-av" style="background:${getAvColor(m.name)}">${getInitials(m.name)}</div>
+            <div class="epl-member-name">${m.name}</div>
+            <div class="epl-member-pts">${tp} pts</div>
+          </div>`;
+        }).join('');
+    }
+    document.getElementById('eplMemberListA').innerHTML=mkMemberRows(teamAMembers);
+    document.getElementById('eplMemberListB').innerHTML=mkMemberRows(teamBMembers);
+
+    // Bonus list
+    const bonEl=document.getElementById('eplBonusList');
+    bonEl.innerHTML=(epl.bonuses||[]).length
+      ?(epl.bonuses||[]).map((b,i)=>`<div class="epl-bonus-item">
+          <span class="epl-bonus-team ${b.team}">${b.team==='a'?epl.teamA:epl.teamB}</span>
+          <span class="epl-bonus-desc">${b.desc}</span>
+          <span class="epl-bonus-pts">+${b.pts} pts</span>
+          <span style="font-size:11px;color:var(--text-soft)">${b.date}</span>
+          ${isAdmin?`<button class="epl-bonus-del" onclick="deleteEplBonus(${i})">🗑</button>`:''}
+        </div>`).join('')
+      :'<div style="font-size:12px;color:var(--text-soft);font-style:italic;padding:8px 0">No bonus points yet.</div>';
+
+    // Admin panel
+    document.getElementById('eplAdminPanel').style.display = isAdmin?'block':'none';
+    document.getElementById('eplBonusForm').style.display  = isAdmin?'block':'none';
+
+    if(isAdmin){
+      document.getElementById('eplInputSeasonName').value = epl.seasonName;
+      document.getElementById('eplInputStart').value      = epl.startDate;
+      document.getElementById('eplInputEnd').value        = epl.endDate;
+      document.getElementById('eplInputNameA').value      = epl.teamA;
+      document.getElementById('eplInputNameB').value      = epl.teamB;
+      document.getElementById('eplPtsPresent').value      = epl.ptsPresent;
+      document.getElementById('eplPtsSubstitute').value   = epl.ptsSubstitute;
+      document.getElementById('eplAssignList').innerHTML  = MEMBERS.map(m=>{
+        const sid='eplAssign_'+m.name.replace(/[^a-zA-Z0-9]/g,'_');
+        const cur=epl.assignments[m.name]||'';
+        return `<div class="epl-assign-row">
+          <div class="epl-member-av" style="background:${getAvColor(m.name)}">${getInitials(m.name)}</div>
+          <span class="epl-assign-name">${m.name}</span>
+          <select class="epl-assign-sel" id="${sid}">
+            <option value="" ${cur===''?'selected':''}>— Unassigned —</option>
+            <option value="a" ${cur==='a'?'selected':''}>${epl.teamA}</option>
+            <option value="b" ${cur==='b'?'selected':''}>${epl.teamB}</option>
+          </select>
+        </div>`;
+      }).join('');
+      const bts=document.getElementById('eplBonusTeam');
+      if(bts){ bts.options[0].text=epl.teamA; bts.options[1].text=epl.teamB; }
+    }
+  }
 
   function exportPDF(){
     const rows=filterByMonth(allRows,adminDate);
