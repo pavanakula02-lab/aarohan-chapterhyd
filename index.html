@@ -1496,7 +1496,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwgeCaCJgzbBvmZHttAWFec5bBYSV6RoufwNaDMet3PMLNKVOlkon3GLkM-KoUlYCE0/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZRt6EqHgCpYCPaHCpW31MGP9p2-ZmE1-3PLdNglcqXPrjp01n3bs9Gmy15M7DAvvX/exec";
   const ADMIN_PWD_KEY  = "aarohan_admin_pwd";
   const MEMBERS_KEY    = "aarohan_members";
   const DEFAULT_PWD    = "Aarohan@2025";
@@ -1963,6 +1963,7 @@
   const ATTENDANCE_CSV   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0t6K6i7gIrRcSClFD0CitHurwWaljgUG3nir3lNAmNKZHJLGm61j4gi8XADu-I-XuHVdOmoIra_Bc/pub?gid=158143059&single=true&output=csv";
   const NOTES_CSV        = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0t6K6i7gIrRcSClFD0CitHurwWaljgUG3nir3lNAmNKZHJLGm61j4gi8XADu-I-XuHVdOmoIra_Bc/pub?gid=324489959&single=true&output=csv";
   const ANNOUNCEMENTS_CSV= "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0t6K6i7gIrRcSClFD0CitHurwWaljgUG3nir3lNAmNKZHJLGm61j4gi8XADu-I-XuHVdOmoIra_Bc/pub?gid=116196960&single=true&output=csv";
+  const EPL_CSV          = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0t6K6i7gIrRcSClFD0CitHurwWaljgUG3nir3lNAmNKZHJLGm61j4gi8XADu-I-XuHVdOmoIra_Bc/pub?gid=EPL_GID&single=true&output=csv";
 
   function parseCSV(text){
     const lines = text.trim().split('\n');
@@ -2330,6 +2331,7 @@
     }
     await loadAttendanceFromSheet();
     await loadFinancesFromSheet();
+    await loadEplFromSheet();
     renderAttendancePage();
     renderCommsPage();
     loadAllData();
@@ -3138,10 +3140,48 @@
   // ══════════════════════════════════════════════════════
   //  EPL — EDUCATION PREMIUM LEAGUE
   // ══════════════════════════════════════════════════════
-  const EPL_KEY = 'aarohan_epl';
+  const EPL_KEY = 'aarohan_epl'; // local cache key
 
   function eplGet(){ try{ return JSON.parse(localStorage.getItem(EPL_KEY)||'{}'); }catch(e){ return {}; } }
-  function eplSet(d){ localStorage.setItem(EPL_KEY, JSON.stringify(d)); }
+
+  // Save to localStorage AND sync to Google Sheet
+  function eplSet(d){
+    localStorage.setItem(EPL_KEY, JSON.stringify(d));
+    syncEplToSheet(d);
+  }
+
+  // Push full EPL object to Apps Script as a single JSON blob
+  function syncEplToSheet(d){
+    try{
+      const params = new URLSearchParams();
+      params.append('payload', JSON.stringify({ action:'saveEpl', data: d }));
+      fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body: params })
+        .catch(e => console.warn('EPL sync error:', e));
+    } catch(e){ console.warn('EPL sync error:', e); }
+  }
+
+  // Load EPL data from Google Sheet CSV on startup
+  async function loadEplFromSheet(){
+    // EPL_CSV not yet set — skip until admin shares the GID
+    if(EPL_CSV.includes('EPL_GID')) return;
+    try{
+      const res = await fetch(EPL_CSV + '&t=' + Date.now());
+      if(!res.ok) return;
+      const text = await res.text();
+      if(!text || !text.trim()) return;
+      const rows = parseCSV(text);
+      if(!rows.length) return;
+      // Sheet stores one row per key: key | value (JSON)
+      const merged = eplGet(); // start from local cache
+      rows.forEach(r => {
+        const key = (r.key || r.Key || '').trim();
+        const val = (r.value || r.Value || r.val || '').trim();
+        if(!key || !val) return;
+        try{ merged[key] = JSON.parse(val); } catch(e){ merged[key] = val; }
+      });
+      localStorage.setItem(EPL_KEY, JSON.stringify(merged));
+    } catch(e){ console.warn('loadEplFromSheet error:', e); }
+  }
 
   function eplGetData(){
     const d = eplGet();
