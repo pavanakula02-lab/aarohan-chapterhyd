@@ -486,6 +486,37 @@
     .ml-user-name { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--gold); }
     .member-logout-btn { background:none; border:1px solid rgba(255,255,255,0.15); border-radius:6px; padding:5px 12px; font-size:11px; color:rgba(255,255,255,0.4); cursor:pointer; font-family:'Space Grotesk',sans-serif; font-weight:600; transition:all 0.15s; }
     .member-logout-btn:hover { border-color:var(--pink); color:var(--pink); }
+    .member-edit-profile-btn { background:rgba(201,162,39,0.12); border:1px solid rgba(201,162,39,0.3); border-radius:6px; padding:5px 12px; font-size:11px; color:var(--gold); cursor:pointer; font-family:'Space Grotesk',sans-serif; font-weight:600; transition:all 0.15s; }
+    .member-edit-profile-btn:hover { background:rgba(201,162,39,0.22); }
+
+    /* Member self-edit modal */
+    .medit-overlay { position:fixed; inset:0; background:rgba(11,20,38,0.65); z-index:600; display:none; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px); }
+    .medit-overlay.open { display:flex; }
+    .medit-box { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); width:100%; max-width:520px; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(11,20,38,0.3); animation:slideIn 0.25s ease; }
+    .medit-header { display:flex; align-items:center; gap:14px; padding:20px 24px 16px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--card-bg); z-index:1; }
+    .medit-header::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:var(--radius) var(--radius) 0 0; }
+    .medit-av { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; color:var(--navy); flex-shrink:0; }
+    .medit-title { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; color:var(--ink); }
+    .medit-sub { font-size:12px; color:var(--text-muted); margin-top:2px; }
+    .medit-close { margin-left:auto; background:none; border:1px solid var(--border); border-radius:6px; width:30px; height:30px; cursor:pointer; font-size:14px; color:var(--text-soft); display:flex; align-items:center; justify-content:center; transition:all 0.15s; flex-shrink:0; }
+    .medit-close:hover { border-color:var(--pink); color:var(--pink); }
+    .medit-body { padding:22px 24px 28px; }
+    .medit-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+    .medit-field { display:flex; flex-direction:column; gap:5px; }
+    .medit-field.full { grid-column:1/-1; }
+    .medit-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.08em; }
+    .medit-input { padding:9px 12px; background:#f8f9fc; border:1.5px solid var(--border); border-radius:8px; font-family:'Inter',sans-serif; font-size:13px; color:var(--ink); outline:none; transition:border-color 0.2s; width:100%; }
+    .medit-input:focus { border-color:var(--blue); box-shadow:0 0 0 3px rgba(37,99,168,0.08); background:#fff; }
+    .medit-input::placeholder { color:#c0c8d8; }
+    .medit-divider { border:none; border-top:1px solid var(--border); margin:18px 0; }
+    .medit-pwd-label { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+    .medit-save-btn { width:100%; padding:12px; background:var(--navy); color:var(--gold); font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; border:1px solid rgba(201,162,39,0.25); border-radius:8px; cursor:pointer; transition:all 0.15s; margin-top:4px; }
+    .medit-save-btn:hover { background:var(--navy-light); }
+    .medit-save-btn:active { transform:scale(0.99); }
+    .medit-msg { text-align:center; font-size:12px; margin-top:10px; display:none; font-family:'Space Grotesk',sans-serif; font-weight:600; }
+    .medit-msg.ok { color:var(--teal); display:block; }
+    .medit-msg.fail { color:var(--pink); display:block; }
+    @media(max-width:500px){ .medit-grid { grid-template-columns:1fr; } }
     .modal-overlay { position:fixed; inset:0; background:rgba(11,20,38,0.6); z-index:500; display:none; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px); }
     .modal-overlay.open { display:flex; }
     .modal-box { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); width:100%; max-width:640px; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(11,20,38,0.3); animation:slideIn 0.25s ease; }
@@ -715,6 +746,7 @@
         <div class="ml-user-av" id="memberBadgeAv"></div>
         <span class="ml-user-name" id="memberBadgeName"></span>
       </div>
+      <button class="member-edit-profile-btn" id="memberEditProfileBtn" style="display:none" onclick="openMemberProfileEdit()">✏️ Edit Profile</button>
       <button class="member-logout-btn" id="memberLogoutBtn" style="display:none" onclick="doMemberLogout()">Sign out</button>
       <span class="admin-badge" id="adminBadge">ADMIN</span>
       <button class="logout-btn" id="logoutBtn" onclick="adminLogout()">Logout</button>
@@ -1660,6 +1692,9 @@
     const badgeName = document.getElementById('memberBadgeName');
     if(badge){ badge.style.display='flex'; badgeAv.style.background=getAvColor(member.name); badgeAv.textContent=getInitials(member.name); badgeName.textContent=member.name.split(' ')[0]; }
     document.getElementById('memberLogoutBtn').style.display='inline-block';
+    // Show edit profile button
+    const editBtn = document.getElementById('memberEditProfileBtn');
+    if(editBtn) editBtn.style.display='inline-block';
     // Auto-select name in form and lock it
     const sel = document.getElementById('fMember');
     if(sel){ sel.value = member.name; sel.disabled = true; }
@@ -1674,6 +1709,8 @@
     document.getElementById('memberLoginScreen').classList.remove('hidden');
     document.getElementById('memberBadge').style.display='none';
     document.getElementById('memberLogoutBtn').style.display='none';
+    const editBtn = document.getElementById('memberEditProfileBtn');
+    if(editBtn) editBtn.style.display='none';
     document.getElementById('mlPassword').value='';
     document.getElementById('mlErr').classList.remove('show');
     // Re-enable name select
@@ -3452,5 +3489,170 @@
   }
 
 </script>
+
+<!-- MEMBER SELF-EDIT PROFILE MODAL -->
+<div class="medit-overlay" id="memberEditModal">
+  <div class="medit-box">
+    <div class="medit-header">
+      <div class="medit-av" id="meditAv"></div>
+      <div>
+        <div class="medit-title">Edit My Profile</div>
+        <div class="medit-sub" id="meditSub">Update your details visible to chapter members</div>
+      </div>
+      <button class="medit-close" onclick="closeMemberProfileEdit()">✕</button>
+    </div>
+    <div class="medit-body">
+
+      <!-- Basic Info -->
+      <div class="medit-grid">
+        <div class="medit-field full">
+          <label class="medit-label">Full Name</label>
+          <input class="medit-input" id="meditName" placeholder="Your full name" readonly style="background:#f0f2f8;color:var(--text-muted);cursor:not-allowed"/>
+          <span style="font-size:11px;color:var(--text-soft);margin-top:3px">Name can only be changed by admin</span>
+        </div>
+        <div class="medit-field">
+          <label class="medit-label">Company / Institute</label>
+          <input class="medit-input" id="meditCompany" placeholder="e.g. ABC School"/>
+        </div>
+        <div class="medit-field">
+          <label class="medit-label">Position / Designation</label>
+          <input class="medit-input" id="meditPosition" placeholder="e.g. Director, Principal"/>
+        </div>
+        <div class="medit-field">
+          <label class="medit-label">Email ID</label>
+          <input class="medit-input" id="meditEmail" type="email" placeholder="your@email.com"/>
+        </div>
+        <div class="medit-field">
+          <label class="medit-label">Phone Number</label>
+          <input class="medit-input" id="meditPhone" type="tel" placeholder="+91 XXXXX XXXXX"/>
+        </div>
+        <div class="medit-field">
+          <label class="medit-label">Date of Birth</label>
+          <input class="medit-input" id="meditDob" type="date"/>
+        </div>
+        <div class="medit-field full">
+          <label class="medit-label">Business Category Tags <span style="font-weight:400;text-transform:none;font-family:'Inter',sans-serif">(comma separated)</span></label>
+          <input class="medit-input" id="meditCategory" placeholder="e.g. Education, IT, Finance"/>
+        </div>
+      </div>
+
+      <hr class="medit-divider"/>
+
+      <!-- Change Password -->
+      <div class="medit-pwd-label">🔑 Change Password <span style="font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(leave blank to keep current)</span></div>
+      <div class="medit-grid">
+        <div class="medit-field">
+          <label class="medit-label">New Password</label>
+          <input class="medit-input" id="meditPwd1" type="password" placeholder="New password"/>
+        </div>
+        <div class="medit-field">
+          <label class="medit-label">Confirm Password</label>
+          <input class="medit-input" id="meditPwd2" type="password" placeholder="Confirm new password"/>
+        </div>
+      </div>
+
+      <button class="medit-save-btn" onclick="saveMemberProfileEdit()">✅ Save My Profile</button>
+      <div class="medit-msg" id="meditMsg"></div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // ══════════════════════════════════════════════════════
+  //  MEMBER SELF-EDIT PROFILE
+  // ══════════════════════════════════════════════════════
+  function openMemberProfileEdit(){
+    if(!loggedInMember){ showToast('Please log in first.',true); return; }
+    const m = MEMBERS.find(x => x.name === loggedInMember.name);
+    if(!m) return;
+
+    // Populate fields
+    document.getElementById('meditAv').textContent      = getInitials(m.name);
+    document.getElementById('meditAv').style.background = getAvColor(m.name);
+    document.getElementById('meditSub').textContent     = m.name;
+    document.getElementById('meditName').value          = m.name;
+    document.getElementById('meditCompany').value       = m.company   || '';
+    document.getElementById('meditPosition').value      = m.position  || '';
+    document.getElementById('meditEmail').value         = m.email     || '';
+    document.getElementById('meditPhone').value         = m.phone     || '';
+    document.getElementById('meditDob').value           = m.dob       || '';
+    document.getElementById('meditCategory').value      = m.category  || '';
+    document.getElementById('meditPwd1').value          = '';
+    document.getElementById('meditPwd2').value          = '';
+
+    const msg = document.getElementById('meditMsg');
+    msg.textContent = ''; msg.className = 'medit-msg';
+
+    document.getElementById('memberEditModal').classList.add('open');
+  }
+
+  function closeMemberProfileEdit(){
+    document.getElementById('memberEditModal').classList.remove('open');
+  }
+
+  async function saveMemberProfileEdit(){
+    if(!loggedInMember) return;
+    const msg = document.getElementById('meditMsg');
+    msg.textContent = ''; msg.className = 'medit-msg';
+
+    const idx = MEMBERS.findIndex(x => x.name === loggedInMember.name);
+    if(idx === -1){ msg.textContent='Member not found.'; msg.className='medit-msg fail'; return; }
+
+    // Password validation
+    const pwd1 = document.getElementById('meditPwd1').value;
+    const pwd2 = document.getElementById('meditPwd2').value;
+    if(pwd1 || pwd2){
+      if(pwd1 !== pwd2){ msg.textContent='Passwords do not match.'; msg.className='medit-msg fail'; return; }
+      if(pwd1.length < 6){ msg.textContent='Password must be at least 6 characters.'; msg.className='medit-msg fail'; return; }
+    }
+
+    // Update member object — keep existing name & password if not changing
+    MEMBERS[idx] = {
+      ...MEMBERS[idx],
+      company:  document.getElementById('meditCompany').value.trim(),
+      position: document.getElementById('meditPosition').value.trim(),
+      email:    document.getElementById('meditEmail').value.trim(),
+      phone:    document.getElementById('meditPhone').value.trim(),
+      dob:      document.getElementById('meditDob').value,
+      category: document.getElementById('meditCategory').value.trim(),
+      password: pwd1 ? pwd1 : (MEMBERS[idx].password || 'Aarohan@2025'),
+    };
+
+    // Update loggedInMember reference
+    loggedInMember = MEMBERS[idx];
+
+    // Update session
+    localStorage.setItem(MEMBER_SESSION_KEY, JSON.stringify({ name: loggedInMember.name, ts: Date.now() }));
+
+    // Save to sheet
+    const btn = document.querySelector('.medit-save-btn');
+    btn.textContent = '⏳ Saving…'; btn.disabled = true;
+    try {
+      await saveMembers();
+      // Refresh UI
+      populateDropdowns();
+      populateMemberLoginSelect();
+      renderMembersPage();
+      // Update navbar badge email in form
+      const emailFld = document.getElementById('fEmail');
+      if(emailFld && MEMBERS[idx].email) emailFld.value = MEMBERS[idx].email;
+      msg.textContent = '✅ Profile updated successfully!';
+      msg.className = 'medit-msg ok';
+      showToast('✅ Profile saved!');
+      setTimeout(() => closeMemberProfileEdit(), 1800);
+    } catch(e){
+      msg.textContent = '⚠️ Saved locally. Sheet sync may have failed.';
+      msg.className = 'medit-msg fail';
+    }
+    btn.textContent = '✅ Save My Profile'; btn.disabled = false;
+  }
+
+  // Close on backdrop click
+  document.getElementById('memberEditModal').addEventListener('click', function(e){
+    if(e.target === this) closeMemberProfileEdit();
+  });
+</script>
+
 </body>
 </html>
