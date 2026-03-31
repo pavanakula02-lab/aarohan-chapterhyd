@@ -813,7 +813,7 @@
           <div class="act-grid">
             <div class="act-pill"><input type="radio" name="actType" id="at1" value="Quality lead" onchange="onActChange()"/><label for="at1">⭐ Quality Lead <span class="act-pts-tag">10 pts</span></label></div>
             <div class="act-pill"><input type="radio" name="actType" id="at2" value="KYM" onchange="onActChange()"/><label for="at2">🤝 KYM Meeting <span class="act-pts-tag">5 pts</span></label></div>
-            <div class="act-pill"><input type="radio" name="actType" id="at3" value="Joint meeting" onchange="onActChange()"/><label for="at3">🏫 Joint Meeting <span class="act-pts-tag">5 pts</span></label></div>
+            <div class="act-pill"><input type="radio" name="actType" id="at3" value="Joint meeting" onchange="onActChange()"/><label for="at3">🏫 Joint Meeting <span class="act-pts-tag" id="jmPtsTag">5 pts/member</span></label></div>
             <div class="act-pill"><input type="radio" name="actType" id="at4" value="Appreciation letter" onchange="onActChange()"/><label for="at4">💌 Appreciation Letter <span class="act-pts-tag">10 pts</span></label></div>
             <div class="act-pill"><input type="radio" name="actType" id="at5" value="Guest invite" onchange="onActChange()"/><label for="at5">🎟 Guest Invite <span class="act-pts-tag">15 pts</span></label></div>
             <div class="act-pill"><input type="radio" name="actType" id="at6" value="Member Induction" onchange="onActChange()"/><label for="at6">🎓 Member Induction <span class="act-pts-tag">25 pts</span></label></div>
@@ -857,7 +857,7 @@
     <!-- Sec 5: Joint Meeting -->
     <div class="section-card" id="fsec5">
       <div class="sec-header"><div class="sec-num">Section 5 of 11</div><div class="sec-title">Joint Meeting</div></div>
-      <div class="earn-banner">You earn <span class="earn-pts">+5 Points</span> ✦</div>
+      <div class="earn-banner">You earn <span class="earn-pts" id="jmEarnPts">5 Points</span> per member selected ✦</div>
       <div class="sec-body">
         <div class="fg"><label class="fl">Who all attended? <span class="req">*</span><span class="hint">Do not add members already connected to the school by you.</span></label>
           <div id="jmAttList"></div>
@@ -1804,7 +1804,7 @@
     if(jmList){
       const checked=[...document.querySelectorAll('input[name="jmAtt"]:checked')].map(e=>e.value);
       jmList.innerHTML=withCross.map(m=>`
-        <label class="checkbox-option"><input type="checkbox" name="jmAtt" value="${m}"${checked.includes(m)?' checked':''}/><div class="check-box"></div><span class="option-text">${m}</span></label>`).join('');
+        <label class="checkbox-option"><input type="checkbox" name="jmAtt" value="${m}"${checked.includes(m)?' checked':''} onchange="calcJmPts()"/><div class="check-box"></div><span class="option-text">${m}</span></label>`).join('');
     }
   }
 
@@ -1832,9 +1832,27 @@
 
   function onActChange(){
     const type=(document.querySelector('input[name="actType"]:checked')||{}).value||'';
-    const pts=type==='Business received'?0:(BASE_PTS[type]||0);
+    let pts = type==='Business received' ? 0 : (BASE_PTS[type]||0);
+    if(type==='Joint meeting'){
+      const n = document.querySelectorAll('input[name="jmAtt"]:checked').length;
+      pts = 5 * (n || 1);
+    }
     document.getElementById('ptsBadge').classList.toggle('show',!!type);
     updatePtsBadge(pts,type);
+  }
+
+  function calcJmPts(){
+    const type=(document.querySelector('input[name="actType"]:checked')||{}).value||'';
+    if(type!=='Joint meeting') return;
+    const n = document.querySelectorAll('input[name="jmAtt"]:checked').length;
+    const pts = 5 * (n||0);
+    // Update earn banner
+    const earnEl = document.getElementById('jmEarnPts');
+    if(earnEl) earnEl.textContent = n>0 ? `+${pts} Points (${n} × 5)` : '5 Points';
+    // Update pill tag
+    const tagEl = document.getElementById('jmPtsTag');
+    if(tagEl) tagEl.textContent = n>0 ? `${pts} pts` : '5 pts/member';
+    updatePtsBadge(pts, 'Joint meeting');
   }
 
   function updatePtsBadge(pts,type){
@@ -1903,7 +1921,10 @@
   function fCollect(){
     const actType=(document.querySelector('input[name="actType"]:checked')||{}).value||'';
     const bizAmt=parseFloat(document.getElementById('bizAmt').value)||0;
-    const pts=actType==='Business received'?getBizPts():(BASE_PTS[actType]||0);
+    const jmAttendees = [...document.querySelectorAll('input[name="jmAtt"]:checked')].map(e=>e.value);
+    const pts = actType==='Business received' ? getBizPts()
+              : actType==='Joint meeting'     ? 5 * (jmAttendees.length || 1)
+              : (BASE_PTS[actType]||0);
     return {
       'Timestamp':new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
       'Email':document.getElementById('fEmail').value.trim(),
@@ -1917,7 +1938,7 @@
       'KYM - Met With':document.getElementById('kymWith').value,
       'KYM - Topics':document.getElementById('kymTopics').value,
       'KYM - Referral':(document.querySelector('input[name="kymRefR"]:checked')||{}).value||'',
-      'JM - Attendees':[...document.querySelectorAll('input[name="jmAtt"]:checked')].map(e=>e.value).join(', '),
+      'JM - Attendees':jmAttendees.join(', '),
       'JM - Mode':(document.querySelector('input[name="jmModeR"]:checked')||{}).value||'',
       'JM - Institute':document.getElementById('jmInst').value,
       'AL - Member':document.getElementById('alMember').value,
