@@ -1983,12 +1983,13 @@
     try{
       const s = JSON.parse(localStorage.getItem(MEMBER_SESSION_KEY)||'null');
       if(!s || !s.name) return false;
-      // Session valid for 7 days
       if(Date.now() - s.ts > 7 * 24 * 60 * 60 * 1000){ localStorage.removeItem(MEMBER_SESSION_KEY); return false; }
       const member = MEMBERS.find(m => m.name === s.name);
       if(!member) return false;
       loggedInMember = member;
       applyMemberSession(member);
+      // Start at section 2 — no need to enter email again
+      fShowSec(2);
       return true;
     } catch(e){ return false; }
   }
@@ -2175,7 +2176,11 @@
     fSubmit();
   }
 
-  function fGoBack(){ if(fCurSec>=3)fShowSec(2); else if(fCurSec===2)fShowSec(1); }
+  // Go back — if logged in skip section 1 (email already known)
+  function fGoBack(){
+    if(fCurSec>=3) fShowSec(2);
+    else if(fCurSec===2){ if(loggedInMember) fShowSec(2); else fShowSec(1); }
+  }
 
   function fCollect(){
     const actType=(document.querySelector('input[name="actType"]:checked')||{}).value||'';
@@ -2256,7 +2261,16 @@
     btn.classList.remove('submitting'); btn.disabled=false;
     document.getElementById('fNavWrap').style.display='';
     document.getElementById('fDate').value=new Date().toISOString().split('T')[0];
-    fShowSec(1);
+    // Re-apply logged-in member — lock name & prefill email
+    if(loggedInMember){
+      const sel = document.getElementById('fMember');
+      if(sel){ sel.value = loggedInMember.name; sel.disabled = true; }
+      const emailFld = document.getElementById('fEmail');
+      if(emailFld && loggedInMember.email) emailFld.value = loggedInMember.email;
+      fShowSec(2); // skip email section, go straight to activity
+    } else {
+      fShowSec(1);
+    }
   }
 
   function fClearSec(){
