@@ -1879,6 +1879,9 @@
             phone:    cols[4] || '',
             dob:      cols[5] || '',
             category: cols[6] || '',
+            password: cols[7] || '',
+            photo:    cols[8] || '',
+            logo:     cols[9] || '',
           };
         }).filter(m => m.name);
         if(members.length) return members;
@@ -3922,22 +3925,35 @@
 
 <script>
   // ══════════════════════════════════════════════════════
-  //  MEMBER PHOTOS — localStorage key-value store
-  //  Keys: "photo_<memberName>" and "logo_<memberName>"
-  //  Values: base64 data URLs
+  //  MEMBER PHOTOS — stored in MEMBERS array (syncs to Google Sheet)
+  //  Fields: member.photo  (profile photo base64)
+  //          member.logo   (company logo base64)
   // ══════════════════════════════════════════════════════
-  const PHOTO_PREFIX = 'aarohan_photo_';
-  const LOGO_PREFIX  = 'aarohan_logo_';
 
-  function getPhotoKey(name){ return PHOTO_PREFIX + name; }
-  function getLogoKey(name){  return LOGO_PREFIX  + name; }
-
-  function getMemberPhoto(name){ return localStorage.getItem(getPhotoKey(name)) || null; }
-  function getMemberLogo(name){  return localStorage.getItem(getLogoKey(name))  || null; }
-  function setMemberPhoto(name, dataUrl){ localStorage.setItem(getPhotoKey(name), dataUrl); }
-  function setMemberLogo(name, dataUrl){  localStorage.setItem(getLogoKey(name),  dataUrl); }
-  function clearMemberPhoto(name){ localStorage.removeItem(getPhotoKey(name)); }
-  function clearMemberLogo(name){  localStorage.removeItem(getLogoKey(name)); }
+  function getMemberPhoto(name){
+    const m = MEMBERS.find(x => x.name === name);
+    return (m && m.photo) ? m.photo : null;
+  }
+  function getMemberLogo(name){
+    const m = MEMBERS.find(x => x.name === name);
+    return (m && m.logo) ? m.logo : null;
+  }
+  function setMemberPhoto(name, dataUrl){
+    const m = MEMBERS.find(x => x.name === name);
+    if(m) m.photo = dataUrl;
+  }
+  function setMemberLogo(name, dataUrl){
+    const m = MEMBERS.find(x => x.name === name);
+    if(m) m.logo = dataUrl;
+  }
+  function clearMemberPhoto(name){
+    const m = MEMBERS.find(x => x.name === name);
+    if(m) m.photo = '';
+  }
+  function clearMemberLogo(name){
+    const m = MEMBERS.find(x => x.name === name);
+    if(m) m.logo = '';
+  }
 
   // Helper: render an avatar element — shows photo if available, else initials
   function renderAvatar(el, name, size=40, radius='9px'){
@@ -4083,19 +4099,19 @@
       if(pwd1.length < 6){ msg.textContent='Password must be at least 6 characters.'; msg.className='medit-msg fail'; return; }
     }
 
-    // Save photos to localStorage
+    // Save photos into the member object (will be included in saveMembers() call)
     const photoSrc = document.getElementById('meditPhotoPreview').src;
     const logoSrc  = document.getElementById('meditLogoPreview').src;
     const name = MEMBERS[idx].name;
     if(document.getElementById('meditPhotoPreview').style.display !== 'none' && photoSrc && photoSrc.startsWith('data:')){
-      setMemberPhoto(name, photoSrc);
+      MEMBERS[idx].photo = photoSrc;
     } else if(document.getElementById('meditPhotoClear').style.display === 'none'){
-      clearMemberPhoto(name);
+      MEMBERS[idx].photo = '';
     }
     if(document.getElementById('meditLogoPreview').style.display !== 'none' && logoSrc && logoSrc.startsWith('data:')){
-      setMemberLogo(name, logoSrc);
+      MEMBERS[idx].logo = logoSrc;
     } else if(document.getElementById('meditLogoClear').style.display === 'none'){
-      clearMemberLogo(name);
+      MEMBERS[idx].logo = '';
     }
 
     // Update member object
