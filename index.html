@@ -463,24 +463,133 @@
     .wa-preview { background:#f8f9fc; border:1px solid var(--border); border-radius:8px; padding:12px 14px; font-size:12px; color:var(--ink); white-space:pre-wrap; line-height:1.6; max-height:200px; overflow-y:auto; margin-bottom:12px; font-family:'Inter',sans-serif; }
 
     /* ══════════════════════════════════════
-       MEMBER LOGIN SCREEN
+       LANDING / LOGIN SCREEN
     ══════════════════════════════════════ */
-    .member-login-screen { position:fixed; inset:0; background:var(--navy); z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+    .member-login-screen { position:fixed; inset:0; z-index:1000; display:flex; overflow:hidden; }
     .member-login-screen.hidden { display:none; }
-    .ml-card { background:var(--navy-light); border:1px solid rgba(201,162,39,0.2); border-radius:var(--radius); padding:40px 36px; width:100%; max-width:400px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.4); }
-    .ml-card::before { content:''; display:block; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--orange)); margin:-40px -36px 32px; border-radius:var(--radius) var(--radius) 0 0; }
-    .ml-logo { font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700; color:var(--white); letter-spacing:-0.02em; margin-bottom:4px; }
-    .ml-logo span { color:var(--gold); }
-    .ml-sub { font-size:13px; color:rgba(255,255,255,0.4); margin-bottom:28px; }
-    .ml-label { display:block; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px; text-align:left; }
-    .ml-select, .ml-input { width:100%; padding:11px 14px; font-family:'Inter',sans-serif; font-size:14px; color:var(--ink); background:#fff; border:1.5px solid rgba(255,255,255,0.1); border-radius:8px; outline:none; margin-bottom:14px; -webkit-appearance:none; appearance:none; }
-    .ml-select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230b1426' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; cursor:pointer; }
-    .ml-input:focus, .ml-select:focus { border-color:var(--gold); }
-    .ml-btn { width:100%; padding:13px; background:var(--gold); color:var(--navy); font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; border:none; border-radius:8px; cursor:pointer; transition:all 0.15s; margin-top:4px; }
-    .ml-btn:hover { background:var(--gold-light); }
-    .ml-err { font-size:12px; color:#ff8080; margin-top:-8px; margin-bottom:12px; display:none; text-align:left; }
+
+    /* Left panel — branding & info */
+    .lp-left {
+      flex:1; background:var(--navy); display:flex; flex-direction:column;
+      padding:48px 52px; position:relative; overflow:hidden; min-width:0;
+    }
+    .lp-left::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(201,162,39,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, rgba(30,79,163,0.15) 0%, transparent 55%);
+      pointer-events:none;
+    }
+    /* Animated orbs */
+    .lp-orb { position:absolute; border-radius:50%; filter:blur(70px); opacity:0.07; animation:lp-drift 12s ease-in-out infinite alternate; pointer-events:none; }
+    .lp-orb-1 { width:380px; height:380px; background:var(--gold); top:-80px; left:-80px; }
+    .lp-orb-2 { width:280px; height:280px; background:#1e4fa3; bottom:-60px; right:-40px; animation-delay:-6s; }
+    .lp-orb-3 { width:200px; height:200px; background:var(--teal); top:50%; left:50%; animation-delay:-3s; }
+    @keyframes lp-drift { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(20px,16px) scale(1.08)} }
+
+    /* Grid pattern overlay */
+    .lp-left::after {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background-image: linear-gradient(rgba(201,162,39,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(201,162,39,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .lp-brand { position:relative; z-index:1; margin-bottom:auto; }
+    .lp-brand-logo { display:flex; align-items:center; gap:12px; margin-bottom:40px; }
+    .lp-brand-icon { width:44px; height:44px; background:linear-gradient(135deg,var(--gold),var(--orange)); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 4px 16px rgba(201,162,39,0.3); flex-shrink:0; }
+    .lp-brand-name { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:#fff; letter-spacing:-0.02em; line-height:1.1; }
+    .lp-brand-name span { color:var(--gold); }
+    .lp-brand-tagline { font-size:11px; color:rgba(255,255,255,0.35); font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; }
+
+    .lp-hero-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,3.5vw,46px); font-weight:700; color:#fff; line-height:1.12; letter-spacing:-0.03em; margin-bottom:20px; }
+    .lp-hero-title .accent { color:var(--gold); }
+    .lp-hero-title .accent2 { color:#7ab8f5; }
+    .lp-hero-sub { font-size:15px; color:rgba(255,255,255,0.5); line-height:1.7; max-width:420px; margin-bottom:36px; }
+
+    /* Feature pills */
+    .lp-features { display:flex; flex-direction:column; gap:14px; margin-bottom:40px; }
+    .lp-feature { display:flex; align-items:flex-start; gap:14px; position:relative; z-index:1; }
+    .lp-feature-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+    .lp-feature-icon.gold { background:rgba(201,162,39,0.15); border:1px solid rgba(201,162,39,0.25); }
+    .lp-feature-icon.teal { background:rgba(26,138,120,0.15); border:1px solid rgba(26,138,120,0.25); }
+    .lp-feature-icon.blue { background:rgba(30,79,163,0.2); border:1px solid rgba(30,79,163,0.3); }
+    .lp-feature-icon.pink { background:rgba(192,65,90,0.15); border:1px solid rgba(192,65,90,0.25); }
+    .lp-feature-text { flex:1; }
+    .lp-feature-title { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:#fff; margin-bottom:2px; }
+    .lp-feature-desc { font-size:12px; color:rgba(255,255,255,0.4); line-height:1.5; }
+
+    /* Stats row */
+    .lp-stats { display:flex; gap:24px; position:relative; z-index:1; flex-wrap:wrap; }
+    .lp-stat { text-align:left; }
+    .lp-stat-val { font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700; color:var(--gold); line-height:1; }
+    .lp-stat-lbl { font-size:11px; color:rgba(255,255,255,0.35); margin-top:3px; font-family:'Space Grotesk',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; }
+    .lp-stat-divider { width:1px; background:rgba(255,255,255,0.08); }
+
+    /* Divider line */
+    .lp-divider { height:1px; background:linear-gradient(90deg,transparent,rgba(201,162,39,0.2),transparent); margin:28px 0; position:relative; z-index:1; }
+
+    /* Quote / about block */
+    .lp-about { position:relative; z-index:1; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:18px 20px; margin-bottom:28px; }
+    .lp-about-quote { font-size:13px; color:rgba(255,255,255,0.55); line-height:1.7; font-style:italic; }
+    .lp-about-quote::before { content:'❝ '; color:var(--gold); font-style:normal; }
+    .lp-about-who { margin-top:8px; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.08em; }
+
+    /* Right panel — login form */
+    .lp-right {
+      width:420px; flex-shrink:0; background:#f2f4f8;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding:48px 40px; position:relative; overflow-y:auto;
+    }
+    .lp-right::before { content:''; position:absolute; top:0; left:0; bottom:0; width:1px; background:linear-gradient(180deg,transparent,rgba(201,162,39,0.3),transparent); }
+
+    .lp-form-wrap { width:100%; max-width:340px; }
+    .lp-welcome { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--ink); letter-spacing:-0.02em; margin-bottom:4px; }
+    .lp-welcome-sub { font-size:13px; color:var(--text-muted); margin-bottom:32px; line-height:1.5; }
+    .lp-welcome-sub span { color:var(--gold); font-weight:600; }
+
+    .ml-label { display:block; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px; text-align:left; }
+    .ml-field-wrap { position:relative; margin-bottom:16px; }
+    .ml-field-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); font-size:14px; pointer-events:none; }
+    .ml-select, .ml-input {
+      width:100%; padding:12px 14px;
+      font-family:'Inter',sans-serif; font-size:14px; color:var(--ink);
+      background:#fff; border:1.5px solid var(--border); border-radius:10px;
+      outline:none; transition:all 0.2s;
+      box-shadow:0 1px 4px rgba(11,20,38,0.06);
+    }
+    .ml-select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230b1426' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; cursor:pointer; -webkit-appearance:none; appearance:none; }
+    .ml-input { -webkit-appearance:none; appearance:none; }
+    .ml-input:focus, .ml-select:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,162,39,0.12); background:#fffef8; }
+    .ml-btn {
+      width:100%; padding:14px; background:var(--navy); color:var(--gold);
+      font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700;
+      border:1px solid rgba(201,162,39,0.3); border-radius:10px; cursor:pointer;
+      transition:all 0.2s; margin-top:4px; letter-spacing:0.02em;
+      box-shadow:0 4px 14px rgba(11,20,38,0.2);
+    }
+    .ml-btn:hover { background:var(--navy-light); transform:translateY(-1px); box-shadow:0 6px 20px rgba(11,20,38,0.25); }
+    .ml-btn:active { transform:translateY(0); }
+    .ml-err { font-size:12px; color:var(--pink); margin-bottom:12px; display:none; text-align:left; padding:9px 12px; background:rgba(192,65,90,0.08); border:1px solid rgba(192,65,90,0.2); border-radius:7px; font-family:'Space Grotesk',sans-serif; font-weight:600; }
     .ml-err.show { display:block; }
-    .ml-footer { margin-top:20px; font-size:11px; color:rgba(255,255,255,0.2); }
+    .ml-footer { margin-top:22px; font-size:11px; color:var(--text-soft); text-align:center; line-height:1.6; }
+
+    /* Testimonial / trust strip */
+    .lp-trust { margin-top:28px; padding-top:22px; border-top:1px solid var(--border); }
+    .lp-trust-title { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px; text-align:center; }
+    .lp-trust-chips { display:flex; flex-wrap:wrap; gap:7px; justify-content:center; }
+    .lp-trust-chip { padding:5px 12px; background:#f0f2f8; border:1px solid var(--border); border-radius:100px; font-size:11px; color:var(--text-muted); font-family:'Space Grotesk',sans-serif; font-weight:600; }
+
+    /* Mobile: stack vertically */
+    @media(max-width:768px){
+      .member-login-screen { flex-direction:column; overflow-y:auto; }
+      .lp-left { padding:32px 24px; min-height:auto; flex:none; }
+      .lp-right { width:100%; padding:32px 24px; }
+      .lp-hero-title { font-size:26px; }
+      .lp-stats { gap:16px; }
+      .lp-right::before { display:none; }
+    }
+
     .ml-user-badge { display:flex; align-items:center; gap:8px; background:rgba(201,162,39,0.1); border:1px solid rgba(201,162,39,0.2); border-radius:100px; padding:5px 14px 5px 5px; }
     .ml-user-av { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--navy); flex-shrink:0; }
     .ml-user-name { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--gold); }
@@ -710,22 +819,148 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
-<!-- MEMBER LOGIN SCREEN -->
+<!-- LANDING + LOGIN SCREEN -->
 <div class="member-login-screen" id="memberLoginScreen">
-  <div class="ml-card">
-    <div class="ml-logo">EKnot <span>Aarohan</span></div>
-    <div class="ml-sub">Chapter Activity Portal</div>
-    <label class="ml-label">Your Name</label>
-    <select class="ml-select" id="mlName">
-      <option value="">— Select your name —</option>
-    </select>
-    <label class="ml-label">Password</label>
-    <input class="ml-input" type="password" id="mlPassword" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doMemberLogin()"/>
-    <div class="ml-err" id="mlErr">Incorrect password. Please try again.</div>
-    <button class="ml-btn" onclick="doMemberLogin()">Sign In →</button>
-    <div class="ml-footer">Contact your chapter admin if you need help logging in.</div>
+
+  <!-- LEFT: Branding & Info -->
+  <div class="lp-left">
+    <div class="lp-orb lp-orb-1"></div>
+    <div class="lp-orb lp-orb-2"></div>
+    <div class="lp-orb lp-orb-3"></div>
+
+    <div class="lp-brand" style="position:relative;z-index:1">
+      <!-- Logo -->
+      <div class="lp-brand-logo">
+        <div class="lp-brand-icon">🎓</div>
+        <div>
+          <div class="lp-brand-name">Education<span>Knot</span></div>
+          <div class="lp-brand-tagline">Aarohan Chapter · Hyderabad</div>
+        </div>
+      </div>
+
+      <!-- Hero headline -->
+      <div class="lp-hero-title">
+        Where <span class="accent">Educators</span><br/>
+        Connect, Grow &<br/>
+        <span class="accent2">Lead Together</span>
+      </div>
+      <div class="lp-hero-sub">
+        EducationKnot is a professional networking organisation for educators and education entrepreneurs. The <strong style="color:rgba(255,255,255,0.8)">Aarohan Chapter</strong> is our Hyderabad hub — driving collaboration, referrals, and growth across the city's education ecosystem.
+      </div>
+
+      <!-- What we do -->
+      <div class="lp-features">
+        <div class="lp-feature">
+          <div class="lp-feature-icon gold">🤝</div>
+          <div class="lp-feature-text">
+            <div class="lp-feature-title">Member Networking</div>
+            <div class="lp-feature-desc">Weekly meetings, 1-on-1 KYMs and joint meetings to build meaningful professional relationships</div>
+          </div>
+        </div>
+        <div class="lp-feature">
+          <div class="lp-feature-icon teal">📈</div>
+          <div class="lp-feature-text">
+            <div class="lp-feature-title">Business Referrals</div>
+            <div class="lp-feature-desc">Structured quality lead passing so every member grows their institution and network</div>
+          </div>
+        </div>
+        <div class="lp-feature">
+          <div class="lp-feature-icon blue">🏆</div>
+          <div class="lp-feature-text">
+            <div class="lp-feature-title">Activity Leaderboard</div>
+            <div class="lp-feature-desc">Gamified points system rewarding contributions — from guest invites to member inductions</div>
+          </div>
+        </div>
+        <div class="lp-feature">
+          <div class="lp-feature-icon pink">⚽</div>
+          <div class="lp-feature-text">
+            <div class="lp-feature-title">Education Premium League</div>
+            <div class="lp-feature-desc">Team-based competition that makes chapter participation exciting and rewarding</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="lp-divider"></div>
+
+      <!-- Stats -->
+      <div class="lp-stats">
+        <div class="lp-stat">
+          <div class="lp-stat-val" id="lpStatMembers">17</div>
+          <div class="lp-stat-lbl">Active Members</div>
+        </div>
+        <div class="lp-stat-divider"></div>
+        <div class="lp-stat">
+          <div class="lp-stat-val" id="lpStatActivities">—</div>
+          <div class="lp-stat-lbl">Activities Logged</div>
+        </div>
+        <div class="lp-stat-divider"></div>
+        <div class="lp-stat">
+          <div class="lp-stat-val" id="lpStatPts">—</div>
+          <div class="lp-stat-lbl">Points Earned</div>
+        </div>
+        <div class="lp-stat-divider"></div>
+        <div class="lp-stat">
+          <div class="lp-stat-val">📍</div>
+          <div class="lp-stat-lbl">Hyderabad</div>
+        </div>
+      </div>
+
+    </div>
   </div>
+
+  <!-- RIGHT: Login Form -->
+  <div class="lp-right">
+    <div class="lp-form-wrap">
+
+      <!-- Form header -->
+      <div style="text-align:center;margin-bottom:32px">
+        <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--navy),var(--navy-light));border:2px solid rgba(201,162,39,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 16px;box-shadow:0 4px 16px rgba(11,20,38,0.15)">🎓</div>
+        <div class="lp-welcome">Welcome back</div>
+        <div class="lp-welcome-sub">Sign in to your <span>Aarohan</span> portal</div>
+      </div>
+
+      <!-- Name select -->
+      <label class="ml-label">👤 &nbsp;Your Name</label>
+      <div class="ml-field-wrap">
+        <select class="ml-select" id="mlName">
+          <option value="">— Select your name —</option>
+        </select>
+      </div>
+
+      <!-- Password -->
+      <label class="ml-label">🔑 &nbsp;Password</label>
+      <div class="ml-field-wrap">
+        <input class="ml-input" type="password" id="mlPassword" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doMemberLogin()"/>
+      </div>
+
+      <!-- Error -->
+      <div class="ml-err" id="mlErr">Incorrect password. Please try again.</div>
+
+      <!-- Submit -->
+      <button class="ml-btn" onclick="doMemberLogin()">Sign In to Portal →</button>
+
+      <div class="ml-footer">
+        🔒 Your data is secure and only visible to chapter members.<br/>
+        Contact your chapter admin if you need help logging in.
+      </div>
+
+      <!-- Trust strip -->
+      <div class="lp-trust">
+        <div class="lp-trust-title">What's inside</div>
+        <div class="lp-trust-chips">
+          <span class="lp-trust-chip">📝 Activity Log</span>
+          <span class="lp-trust-chip">🏆 Leaderboard</span>
+          <span class="lp-trust-chip">📅 Attendance</span>
+          <span class="lp-trust-chip">💰 Finances</span>
+          <span class="lp-trust-chip">⚽ EPL</span>
+          <span class="lp-trust-chip">📣 Comms</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <nav class="navbar">
@@ -2054,6 +2289,13 @@
     try { allRows = await fetchSheetData(); } catch(e){ console.warn('CSV fetch error:', e); allRows=[]; }
     renderLeaderboard();
     if(isAdmin) renderAdminDash();
+    // Update landing page live stats
+    const lpAct = document.getElementById('lpStatActivities');
+    const lpPts = document.getElementById('lpStatPts');
+    if(lpAct) lpAct.textContent = allRows.length || '—';
+    if(lpPts) lpPts.textContent = allRows.reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0) || '—';
+    const lpMem = document.getElementById('lpStatMembers');
+    if(lpMem) lpMem.textContent = MEMBERS.length;
   }
 
   // ══════════════════════════════════════════════════════
