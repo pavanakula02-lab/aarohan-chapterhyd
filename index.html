@@ -31,21 +31,88 @@
       box-shadow: 0 2px 20px rgba(0,0,0,0.25);
     }
     .navbar::before { content:''; display:block; height:3px; background:linear-gradient(90deg,var(--gold),var(--orange),var(--gold-light),var(--gold)); }
-    .nav-inner { max-width:1100px; margin:0 auto; padding:12px 28px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-    .nav-brand { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; color:var(--white); letter-spacing:-0.02em; }
+    .nav-inner { max-width:1100px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .nav-brand { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; color:var(--white); letter-spacing:-0.02em; white-space:nowrap; }
     .nav-brand span { color:var(--gold); }
-    .nav-tabs { display:flex; gap:4px; }
-    .nav-tab { background:none; border:1px solid transparent; border-radius:8px; padding:8px 16px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; color:rgba(255,255,255,0.5); cursor:pointer; transition:all 0.15s; letter-spacing:0.01em; }
+
+    /* Desktop tabs */
+    .nav-tabs { display:flex; gap:4px; flex-wrap:nowrap; }
+    .nav-tab { background:none; border:1px solid transparent; border-radius:8px; padding:8px 16px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; color:rgba(255,255,255,0.5); cursor:pointer; transition:all 0.15s; letter-spacing:0.01em; white-space:nowrap; }
     .nav-tab:hover { color:rgba(255,255,255,0.85); background:rgba(255,255,255,0.06); }
     .nav-tab.active { background:rgba(201,162,39,0.15); color:var(--gold); border-color:rgba(201,162,39,0.3); }
     .nav-tab.admin-tab { color:rgba(255,255,255,0.4); }
     .nav-tab.admin-tab.active { background:rgba(201,162,39,0.15); color:var(--gold); border-color:rgba(201,162,39,0.3); }
-    .nav-right { display:flex; align-items:center; gap:10px; }
+
+    .nav-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
     .admin-badge { display:none; background:var(--gold); color:var(--navy); font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; padding:3px 10px; border-radius:4px; letter-spacing:0.08em; text-transform:uppercase; }
     .admin-badge.show { display:inline-block; }
     .logout-btn { background:none; border:1px solid rgba(255,255,255,0.15); border-radius:6px; padding:6px 14px; font-size:12px; color:rgba(255,255,255,0.4); cursor:pointer; transition:all 0.15s; display:none; font-family:'Space Grotesk',sans-serif; font-weight:600; }
     .logout-btn.show { display:inline-block; }
     .logout-btn:hover { border-color:rgba(201,162,39,0.5); color:var(--gold); }
+
+    /* Hamburger button — mobile only */
+    .nav-hamburger { display:none; flex-direction:column; justify-content:center; gap:5px; background:none; border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:7px 10px; cursor:pointer; flex-shrink:0; }
+    .nav-hamburger span { display:block; width:20px; height:2px; background:rgba(255,255,255,0.7); border-radius:2px; transition:all 0.25s; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer menu */
+    .nav-drawer {
+      display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:199;
+    }
+    .nav-drawer.open { display:block; }
+    .nav-drawer-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.5); }
+    .nav-drawer-panel {
+      position:absolute; top:0; right:0; bottom:0; width:280px;
+      background:var(--navy); box-shadow:-4px 0 24px rgba(0,0,0,0.4);
+      display:flex; flex-direction:column; overflow-y:auto;
+      transform:translateX(100%); transition:transform 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+    .nav-drawer.open .nav-drawer-panel { transform:translateX(0); }
+    .nav-drawer-header {
+      padding:20px 20px 14px; border-bottom:1px solid rgba(255,255,255,0.08);
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .nav-drawer-title { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; color:#fff; }
+    .nav-drawer-title span { color:var(--gold); }
+    .nav-drawer-close { background:none; border:1px solid rgba(255,255,255,0.15); border-radius:6px; width:30px; height:30px; color:rgba(255,255,255,0.5); cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; }
+    .nav-drawer-body { flex:1; padding:10px 12px; }
+    .nav-drawer-item {
+      display:flex; align-items:center; gap:12px; width:100%; padding:13px 14px;
+      background:none; border:none; border-radius:10px; text-align:left;
+      font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600;
+      color:rgba(255,255,255,0.6); cursor:pointer; transition:all 0.15s; margin-bottom:4px;
+    }
+    .nav-drawer-item:hover { background:rgba(255,255,255,0.06); color:#fff; }
+    .nav-drawer-item.active { background:rgba(201,162,39,0.12); color:var(--gold); border:1px solid rgba(201,162,39,0.2); }
+    .nav-drawer-item .ditem-icon { font-size:18px; width:28px; text-align:center; flex-shrink:0; }
+    .nav-drawer-item .ditem-label { flex:1; }
+    .nav-drawer-divider { height:1px; background:rgba(255,255,255,0.06); margin:8px 0; }
+    .nav-drawer-footer { padding:14px 16px; border-top:1px solid rgba(255,255,255,0.08); }
+    .nav-drawer-user { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .nav-drawer-av { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--navy); flex-shrink:0; }
+    .nav-drawer-uname { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; color:#fff; }
+    .nav-drawer-urole { font-size:11px; color:rgba(255,255,255,0.35); margin-top:1px; }
+    .nav-drawer-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .nav-drawer-btn { flex:1; padding:9px 12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:8px; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:rgba(255,255,255,0.5); cursor:pointer; text-align:center; transition:all 0.15s; }
+    .nav-drawer-btn:hover { background:rgba(255,255,255,0.1); color:#fff; }
+    .nav-drawer-btn.gold { background:rgba(201,162,39,0.12); border-color:rgba(201,162,39,0.3); color:var(--gold); }
+
+    /* Show hamburger & hide desktop tabs on mobile */
+    @media(max-width:768px){
+      .nav-tabs { display:none; }
+      .nav-hamburger { display:flex; }
+      .nav-right .logout-btn,
+      .nav-right .member-logout-btn,
+      .nav-right .member-edit-profile-btn,
+      .nav-right .admin-badge { display:none !important; }
+      .nav-inner { padding:8px 14px; }
+      .nav-brand { font-size:15px; }
+      /* Add bottom padding so content isn't hidden behind mobile browser chrome */
+      body { padding-bottom: env(safe-area-inset-bottom); }
+    }
+
 
     /* ══════════════════════════════════════
        PAGES
@@ -181,7 +248,7 @@
     /* ══════════════════════════════════════
        PAGE 2 — LEADERBOARD
     ══════════════════════════════════════ */
-    .lb-page { background:var(--bg); min-height:100vh; padding:32px; }
+    .lb-page { background:var(--bg); min-height:100vh; padding:24px 16px; }
     .lb-inner { max-width:1000px; margin:0 auto; }
     .lb-top { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:24px; }
     .lb-title { font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700; color:var(--ink); letter-spacing:-0.02em; }
@@ -303,23 +370,148 @@
     td { padding:9px 13px; color:#374151; border-bottom:1px solid #f0f2f8; font-size:13px; }
     tr:hover td { background:#f8f9ff; }
     .td-pts { font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--blue); }
-    .no-data { text-align:center; padding:30px; color:#c0c8d8; font-style:italic; }
+    .hide-mobile { } /* shown by default */
+    @media(max-width:640px){ .hide-mobile { display:none; } }
 
     /* Toasts */
     .toast { position:fixed; bottom:24px; right:24px; background:var(--navy); color:var(--white); border:1px solid rgba(201,162,39,0.25); border-radius:8px; padding:11px 18px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; z-index:9999; transform:translateY(80px); opacity:0; transition:all 0.3s; box-shadow:var(--shadow); }
     .toast.show { transform:translateY(0); opacity:1; }
     .toast.error { border-color:rgba(192,65,90,0.4); }
 
-    @media(max-width:640px){
-      .lb-page,.admin-page{padding:16px}
-      .sec-header,.sec-body,.nav-wrap{padding-left:18px;padding-right:18px}
-      .earn-banner{margin-left:18px;margin-right:18px}
-      .header-card{padding:22px 18px}
-      .act-grid{grid-template-columns:1fr 1fr}
-      .lb-bar-wrap{display:none}
-      .nav-tabs{gap:2px}
-      .nav-tab{padding:7px 10px;font-size:12px}
+    /* ══════════════════════════════════════
+       MOBILE — COMPREHENSIVE OVERHAUL
+    ══════════════════════════════════════ */
+
+    /* ── Navbar: scrollable tab bar ── */
+    @media(max-width:768px){
+      .nav-inner { padding:8px 12px; gap:8px; flex-wrap:nowrap; }
+      .nav-brand { font-size:14px; white-space:nowrap; }
+      .nav-tabs {
+        gap:2px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+        scrollbar-width:none; flex-wrap:nowrap; padding-bottom:2px;
+        max-width:calc(100vw - 120px);
+      }
+      .nav-tabs::-webkit-scrollbar { display:none; }
+      .nav-tab { padding:6px 10px; font-size:11px; white-space:nowrap; flex-shrink:0; }
+      .nav-right { gap:6px; flex-shrink:0; }
+      .admin-badge { font-size:9px; padding:2px 7px; }
+      .logout-btn, .member-logout-btn { padding:5px 9px; font-size:10px; }
+      .member-edit-profile-btn { padding:5px 9px; font-size:10px; }
+      .ml-user-name { display:none; } /* hide name text, keep avatar */
     }
+
+    /* ── All pages: reduce padding ── */
+    @media(max-width:640px){
+      .lb-page, .admin-page, .members-page,
+      .analytics-page, .attendance-page, .comms-page,
+      .finances-page { padding:14px 12px; }
+
+      /* Form */
+      .form-page { padding:16px 12px 60px; }
+      .sec-header, .sec-body, .nav-wrap { padding-left:14px; padding-right:14px; }
+      .earn-banner { margin-left:14px; margin-right:14px; font-size:12px; }
+      .header-card { padding:18px 14px; }
+      .hc-title { font-size:22px; }
+      .progress-wrap { padding:8px 12px; gap:8px; }
+      .progress-label { display:none; }
+
+      /* Activity type grid — 1 col on very small screens */
+      .act-grid { grid-template-columns:1fr 1fr; gap:6px; }
+      .act-pill label { padding:8px 10px; font-size:12px; }
+
+      /* Nav buttons */
+      .nav-wrap { padding:12px 14px; }
+      .next-btn { padding:10px 18px; font-size:13px; }
+      .back-btn { padding:8px 14px; font-size:12px; }
+
+      /* Leaderboard */
+      .lb-bar-wrap { display:none; }
+      .lb-pts { font-size:15px; min-width:40px; }
+      .lb-row { padding:10px 12px; gap:8px; }
+      .lb-av { width:32px; height:32px; font-size:11px; }
+      .stats-grid { grid-template-columns:1fr 1fr; gap:8px; }
+      .stat-val { font-size:20px; }
+
+      /* Members grid — single column */
+      .members-grid { grid-template-columns:1fr; }
+      .members-search { width:140px; font-size:12px; }
+
+      /* Analytics charts */
+      .analytics-grid { grid-template-columns:1fr; }
+      .chart-wrap { height:180px; }
+
+      /* Attendance grid */
+      .att-grid { grid-template-columns:1fr 1fr; gap:6px; }
+      .att-member { padding:8px 10px; gap:8px; }
+      .att-summary-grid { grid-template-columns:1fr 1fr; gap:8px; }
+
+      /* Comms */
+      .comms-grid { grid-template-columns:1fr; }
+
+      /* Finances */
+      .fin-stats { grid-template-columns:1fr 1fr; gap:8px; }
+      .fin-stat { padding:12px 14px; }
+      .fin-stat-val { font-size:18px; }
+      .fee-member-row { flex-wrap:wrap; gap:8px; }
+      .fee-wa-btn { font-size:10px; padding:5px 8px; }
+      .txn-controls { flex-direction:column; gap:6px; }
+      .txn-amt-input, .txn-desc-input, .txn-type-sel { width:100%; }
+
+      /* Admin */
+      .mef-grid { grid-template-columns:1fr; }
+      .pwd-row { flex-direction:column; }
+      .add-member-row { flex-direction:column; }
+      .report-controls { gap:6px; }
+      table { font-size:11px; }
+      th, td { padding:7px 8px; }
+      .adminSummaryTbody td:nth-child(3),
+      .adminSummaryTbody td:nth-child(4) { display:none; }
+
+      /* EPL */
+      .epl-breakdown { grid-template-columns:1fr; }
+      .epl-members-grid { grid-template-columns:1fr; }
+      .epl-admin-grid { grid-template-columns:1fr; }
+      .epl-team-pts { font-size:28px; }
+      .epl-h2h { gap:8px; }
+      .epl-toggle-btn { font-size:11px; padding:8px 10px; }
+
+      /* Member edit modal */
+      .medit-box { margin:8px; border-radius:10px; }
+      .medit-header { padding:16px 16px 12px; }
+      .medit-body { padding:14px 16px 20px; }
+      .medit-grid { grid-template-columns:1fr; }
+      .photo-upload-row { gap:20px; justify-content:center; }
+
+      /* Profile modal */
+      .modal-box { margin:8px; border-radius:10px; }
+      .modal-header { padding:16px 16px 12px; }
+      .modal-body { padding:14px 16px; }
+
+      /* Page titles */
+      .page-title, .fin-title, .members-title, .lb-title { font-size:17px; }
+
+      /* Section cards */
+      .section-card { border-radius:8px; }
+    }
+
+    /* ── Extra small (< 380px) ── */
+    @media(max-width:380px){
+      .act-grid { grid-template-columns:1fr; }
+      .att-grid { grid-template-columns:1fr; }
+      .att-summary-grid { grid-template-columns:1fr; }
+      .fin-stats { grid-template-columns:1fr; }
+      .stats-grid { grid-template-columns:1fr 1fr; }
+      .epl-h2h { grid-template-columns:1fr auto 1fr; }
+      .nav-tab { font-size:10px; padding:5px 8px; }
+    }
+
+    /* ── Sticky bottom nav for mobile ── */
+    @media(max-width:640px){
+      .navbar { position:sticky; top:0; }
+      /* Make nav tabs look like a bottom tab bar feel when scrolled */
+      .nav-tabs { padding:0 2px 4px; }
+    }
+
 
     /* ══════════════════════════════════════
        MEMBERS PAGE
@@ -761,8 +953,6 @@
       .txn-controls { flex-direction:column; align-items:stretch; }
       .txn-amt-input, .txn-desc-input { width:100%; }
     }
-
-    /* EPL — EDUCATION PREMIUM LEAGUE */
     .epl-toggle-bar { display:flex; gap:8px; margin-bottom:20px; background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:5px; box-shadow:var(--shadow); }
     .epl-toggle-btn { flex:1; padding:9px 14px; border:none; border-radius:7px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.15s; background:none; color:var(--text-muted); }
     .epl-toggle-btn.active { background:var(--navy); color:var(--gold); box-shadow:0 2px 8px rgba(11,20,38,0.15); }
@@ -998,9 +1188,66 @@
       <button class="member-logout-btn" id="memberLogoutBtn" style="display:none" onclick="doMemberLogout()">Sign out</button>
       <span class="admin-badge" id="adminBadge">ADMIN</span>
       <button class="logout-btn" id="logoutBtn" onclick="adminLogout()">Logout</button>
+      <!-- Hamburger — mobile only -->
+      <button class="nav-hamburger" id="navHamburger" onclick="toggleDrawer()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-backdrop" onclick="closeDrawer()"></div>
+  <div class="nav-drawer-panel">
+    <div class="nav-drawer-header">
+      <div class="nav-drawer-title">EKnot <span>Aarohan</span></div>
+      <button class="nav-drawer-close" onclick="closeDrawer()">✕</button>
+    </div>
+    <div class="nav-drawer-body">
+      <button class="nav-drawer-item active" id="ditem-form" onclick="drawerNav('form')">
+        <span class="ditem-icon">📝</span><span class="ditem-label">Log Activity</span>
+      </button>
+      <button class="nav-drawer-item" id="ditem-leaderboard" onclick="drawerNav('leaderboard')">
+        <span class="ditem-icon">🏆</span><span class="ditem-label">Leaderboard</span>
+      </button>
+      <button class="nav-drawer-item" id="ditem-analytics" onclick="drawerNav('analytics')">
+        <span class="ditem-icon">📊</span><span class="ditem-label">Analytics</span>
+      </button>
+      <button class="nav-drawer-item" id="ditem-attendance" onclick="drawerNav('attendance')">
+        <span class="ditem-icon">📅</span><span class="ditem-label">Attendance</span>
+      </button>
+      <button class="nav-drawer-item" id="ditem-comms" onclick="drawerNav('comms')">
+        <span class="ditem-icon">📣</span><span class="ditem-label">Communications</span>
+      </button>
+      <button class="nav-drawer-item" id="ditem-members" onclick="drawerNav('members')">
+        <span class="ditem-icon">👥</span><span class="ditem-label">Members</span>
+      </button>
+      <button class="nav-drawer-item" id="ditem-finances" onclick="drawerNav('finances')">
+        <span class="ditem-icon">💰</span><span class="ditem-label">Finances</span>
+      </button>
+      <div class="nav-drawer-divider"></div>
+      <button class="nav-drawer-item" id="ditem-admin" onclick="drawerNav('admin')">
+        <span class="ditem-icon">🔐</span><span class="ditem-label">Admin</span>
+      </button>
+    </div>
+    <div class="nav-drawer-footer">
+      <!-- User info shown when logged in -->
+      <div class="nav-drawer-user" id="drawerUserInfo" style="display:none">
+        <div class="nav-drawer-av" id="drawerUserAv"></div>
+        <div>
+          <div class="nav-drawer-uname" id="drawerUserName"></div>
+          <div class="nav-drawer-urole">Chapter Member</div>
+        </div>
+      </div>
+      <div class="nav-drawer-actions">
+        <button class="nav-drawer-btn gold" id="drawerEditProfileBtn" style="display:none" onclick="closeDrawer();openMemberProfileEdit()">✏️ Edit Profile</button>
+        <button class="nav-drawer-btn" id="drawerLogoutBtn" style="display:none" onclick="closeDrawer();doMemberLogout()">Sign Out</button>
+        <button class="nav-drawer-btn" id="drawerAdminLogoutBtn" style="display:none" onclick="closeDrawer();adminLogout()">Admin Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
@@ -1473,7 +1720,7 @@
         <!-- Member summary table -->
         <div class="table-wrap" style="margin-bottom:20px">
           <table>
-            <thead><tr><th>#</th><th>Member</th><th>Company</th><th>Position</th><th>Submissions</th><th>Points</th><th>Tier</th></tr></thead>
+            <thead><tr><th>#</th><th>Member</th><th class="hide-mobile">Company</th><th class="hide-mobile">Position</th><th>Submissions</th><th>Points</th><th>Tier</th></tr></thead>
             <tbody id="adminSummaryTbody"></tbody>
           </table>
         </div>
@@ -2039,6 +2286,10 @@
     const idx=pageOrder.indexOf(p);
     const tabs=document.querySelectorAll('.nav-tab');
     if(tabs[idx]) tabs[idx].classList.add('active');
+    // Sync drawer items
+    document.querySelectorAll('.nav-drawer-item').forEach(el=>el.classList.remove('active'));
+    const ditem=document.getElementById('ditem-'+p);
+    if(ditem) ditem.classList.add('active');
     if(p==='leaderboard'){ loadAllData(); renderLeaderboard(); }
     if(p==='members'){ loadAllData(); renderMembersPage(); }
     if(p==='analytics'){ loadAllData().then(()=>renderAnalytics()); }
@@ -2047,6 +2298,66 @@
     if(p==='finances'){ renderFinancesPage(); }
     if(p==='admin' && isAdmin) renderAdminDash();
   }
+
+  // ── Drawer helpers ──
+  function toggleDrawer(){
+    const drawer = document.getElementById('navDrawer');
+    const burger = document.getElementById('navHamburger');
+    const isOpen = drawer.classList.contains('open');
+    if(isOpen){ closeDrawer(); } else { openDrawer(); }
+  }
+
+  function openDrawer(){
+    document.getElementById('navDrawer').classList.add('open');
+    document.getElementById('navHamburger').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    updateDrawerUser();
+  }
+
+  function closeDrawer(){
+    document.getElementById('navDrawer').classList.remove('open');
+    document.getElementById('navHamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function drawerNav(p){
+    closeDrawer();
+    showPage(p);
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function updateDrawerUser(){
+    const userInfo = document.getElementById('drawerUserInfo');
+    const userName = document.getElementById('drawerUserName');
+    const userAv   = document.getElementById('drawerUserAv');
+    const editBtn  = document.getElementById('drawerEditProfileBtn');
+    const logoutBtn= document.getElementById('drawerLogoutBtn');
+    const adminLo  = document.getElementById('drawerAdminLogoutBtn');
+
+    if(loggedInMember){
+      userInfo.style.display='flex';
+      userName.textContent = loggedInMember.name;
+      const photo = getMemberPhoto(loggedInMember.name);
+      if(photo){
+        userAv.innerHTML=`<img src="${photo}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" alt="${loggedInMember.name}"/>`;
+        userAv.style.background='transparent';
+      } else {
+        userAv.textContent = getInitials(loggedInMember.name);
+        userAv.style.background = getAvColor(loggedInMember.name);
+      }
+      editBtn.style.display='block';
+      logoutBtn.style.display='block';
+    } else {
+      userInfo.style.display='none';
+      editBtn.style.display='none';
+      logoutBtn.style.display='none';
+    }
+    adminLo.style.display = isAdmin ? 'block' : 'none';
+  }
+
+  // Close drawer on Escape key
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
+
 
   // ══════════════════════════════════════════════════════
   //  POPULATE DROPDOWNS FROM MEMBERS LIST
@@ -2546,8 +2857,8 @@
       return `<tr>
         <td>${i+1}</td>
         <td><strong style="color:var(--ink)">${name}</strong></td>
-        <td style="color:#6b7280">${mem.company||'—'}</td>
-        <td style="color:#6b7280">${mem.position||'—'}</td>
+        <td class="hide-mobile" style="color:#6b7280">${mem.company||'—'}</td>
+        <td class="hide-mobile" style="color:#6b7280">${mem.position||'—'}</td>
         <td>${d.count}</td>
         <td class="td-pts">${d.pts}</td>
         <td><span class="tier-tag ${ti.cls}">${ti.label}</span></td>
