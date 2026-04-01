@@ -900,6 +900,61 @@
     .modal-meta { font-size:12px; color:var(--text-muted); margin-top:2px; }
     .modal-close { margin-left:auto; background:none; border:1px solid var(--border); border-radius:6px; width:30px; height:30px; cursor:pointer; font-size:14px; color:var(--text-soft); display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
     .modal-close:hover { border-color:var(--pink); color:var(--pink); }
+
+    /* ── Digital Visiting Card ── */
+    .vcard-overlay { position:fixed; inset:0; background:rgba(11,20,38,0.7); z-index:700; display:none; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(6px); }
+    .vcard-overlay.open { display:flex; }
+    .vcard-box { background:#fff; border-radius:20px; width:100%; max-width:400px; overflow:hidden; box-shadow:0 24px 64px rgba(11,20,38,0.35); animation:slideIn 0.3s ease; position:relative; }
+    .vcard-close { position:absolute; top:12px; right:12px; background:rgba(255,255,255,0.2); border:none; border-radius:50%; width:30px; height:30px; font-size:14px; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:1; transition:all 0.15s; }
+    .vcard-close:hover { background:rgba(255,255,255,0.35); }
+    /* Card header */
+    .vcard-header { background:linear-gradient(135deg,var(--navy),var(--navy-light)); padding:32px 24px 24px; text-align:center; position:relative; overflow:hidden; }
+    .vcard-header::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--orange)); }
+    .vcard-header-orb { position:absolute; width:160px; height:160px; border-radius:50%; background:rgba(201,162,39,0.08); top:-40px; right:-40px; }
+    .vcard-av { width:80px; height:80px; border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; color:var(--navy); border:3px solid rgba(201,162,39,0.5); box-shadow:0 4px 16px rgba(0,0,0,0.2); overflow:hidden; position:relative; z-index:1; }
+    .vcard-name { font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700; color:#fff; letter-spacing:-0.02em; margin-bottom:4px; }
+    .vcard-position { font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:2px; }
+    .vcard-company-row { display:flex; align-items:center; justify-content:center; gap:7px; margin-top:6px; }
+    .vcard-logo { width:22px; height:22px; border-radius:5px; object-fit:contain; background:#fff; border:1px solid rgba(255,255,255,0.2); }
+    .vcard-company { font-size:12px; color:rgba(255,255,255,0.5); }
+    .vcard-tier { display:inline-block; background:rgba(201,162,39,0.15); border:1px solid rgba(201,162,39,0.3); border-radius:100px; padding:3px 12px; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--gold); margin-top:10px; letter-spacing:0.06em; }
+    /* Card body */
+    .vcard-body { padding:20px 24px; }
+    .vcard-info-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid #f0f2f8; }
+    .vcard-info-row:last-child { border-bottom:none; }
+    .vcard-info-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+    .vcard-info-icon.teal { background:rgba(26,138,120,0.1); }
+    .vcard-info-icon.blue { background:rgba(30,79,163,0.1); }
+    .vcard-info-icon.gold { background:rgba(201,162,39,0.1); }
+    .vcard-info-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.06em; }
+    .vcard-info-val { font-size:13px; color:var(--ink); font-weight:500; }
+    .vcard-info-val a { color:var(--teal); text-decoration:none; }
+    /* Tags */
+    .vcard-tags { display:flex; flex-wrap:wrap; gap:5px; padding:12px 0 4px; }
+    .vcard-tag { padding:3px 10px; background:#f0f2f8; border:1px solid var(--border); border-radius:4px; font-size:11px; color:var(--text-muted); font-family:'Space Grotesk',sans-serif; font-weight:500; }
+    /* Stats strip */
+    .vcard-stats { display:flex; background:#f8f9fc; border-top:1px solid var(--border); }
+    .vcard-stat { flex:1; padding:12px 8px; text-align:center; border-right:1px solid var(--border); }
+    .vcard-stat:last-child { border-right:none; }
+    .vcard-stat-val { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; color:var(--ink); }
+    .vcard-stat-lbl { font-size:9px; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.06em; font-family:'Space Grotesk',sans-serif; margin-top:2px; }
+    /* Actions */
+    .vcard-actions { display:flex; gap:8px; padding:14px 20px; border-top:1px solid var(--border); }
+    .vcard-action-btn { flex:1; padding:10px; border-radius:8px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.15s; display:flex; align-items:center; justify-content:center; gap:6px; border:none; }
+    .vcard-action-btn.primary { background:var(--navy); color:var(--gold); border:1px solid rgba(201,162,39,0.25); }
+    .vcard-action-btn.primary:hover { background:var(--navy-light); }
+    .vcard-action-btn.wa { background:#25d366; color:#fff; }
+    .vcard-action-btn.wa:hover { background:#20b858; }
+    .vcard-action-btn.copy { background:#f0f2f8; color:var(--ink); }
+    .vcard-action-btn.copy:hover { background:#e8eaf0; }
+
+    /* Profile modal — add share button */
+    .modal-share-btn { display:inline-flex; align-items:center; gap:6px; background:rgba(201,162,39,0.1); border:1px solid rgba(201,162,39,0.25); border-radius:6px; padding:5px 12px; font-size:11px; font-family:'Space Grotesk',sans-serif; font-weight:600; color:var(--gold); cursor:pointer; transition:all 0.15s; margin-left:auto; margin-right:8px; }
+    .modal-share-btn:hover { background:rgba(201,162,39,0.2); }
+
+    /* Attendance PDF export button */
+    .att-pdf-btn { display:inline-flex; align-items:center; gap:6px; background:var(--navy); color:var(--gold); font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; padding:7px 14px; border:1px solid rgba(201,162,39,0.25); border-radius:6px; cursor:pointer; transition:all 0.15s; }
+    .att-pdf-btn:hover { background:var(--navy-light); }
     .modal-body { padding:20px 24px; }
     .modal-section { margin-bottom:20px; }
     .modal-sec-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
@@ -1930,6 +1985,7 @@
         <div class="modal-name" id="profileName"></div>
         <div class="modal-meta" id="profileMeta"></div>
       </div>
+      <button class="modal-share-btn" id="profileShareBtn" onclick="openVCard(currentProfileName)" title="View Digital Card">🪪 Card</button>
       <button class="modal-close" onclick="closeProfile()">✕</button>
     </div>
     <div class="modal-body">
@@ -1945,6 +2001,34 @@
         <div class="modal-sec-label">Referral Network</div>
         <div class="referral-list" id="profileReferrals"></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIGITAL VISITING CARD MODAL -->
+<div class="vcard-overlay" id="vcardOverlay">
+  <div class="vcard-box">
+    <button class="vcard-close" onclick="closeVCard()">✕</button>
+    <div class="vcard-header">
+      <div class="vcard-header-orb"></div>
+      <div class="vcard-av" id="vcardAv"></div>
+      <div class="vcard-name" id="vcardName"></div>
+      <div class="vcard-position" id="vcardPosition"></div>
+      <div class="vcard-company-row" id="vcardCompanyRow"></div>
+      <div class="vcard-tier" id="vcardTier"></div>
+    </div>
+    <div class="vcard-body">
+      <div id="vcardInfoRows"></div>
+      <div class="vcard-tags" id="vcardTags"></div>
+    </div>
+    <div class="vcard-stats" id="vcardStats"></div>
+    <div class="vcard-actions">
+      <button class="vcard-action-btn wa" onclick="shareVCardWA()" id="vcardWaBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Share via WA
+      </button>
+      <button class="vcard-action-btn copy" onclick="copyVCardText()" id="vcardCopyBtn">📋 Copy Info</button>
+      <button class="vcard-action-btn primary" onclick="printVCard()">🖨 Print Card</button>
     </div>
   </div>
 </div>
@@ -1995,6 +2079,7 @@
             <button class="m-btn" onclick="attChangeMonth(1)">›</button>
           </div>
           <div id="attAdminBtns" style="display:none;align-items:center;gap:8px">
+            <button onclick="exportAttendancePDF()" class="att-pdf-btn">📄 Export PDF</button>
             <button onclick="shareAllAttWA()" style="display:inline-flex;align-items:center;gap:6px;background:#25d366;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-family:'Space Grotesk',sans-serif;font-weight:700;cursor:pointer;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               Share All
@@ -3110,6 +3195,7 @@
             <div style="display:flex;align-items:center;gap:7px">
               <span class="tier-tag ${ti.cls}">${ti.label}</span>
               <span class="mpc-ft-pts">${pts} pts</span>
+              <button onclick="event.stopPropagation();openVCard('${m.name.replace(/'/g,"\\'")}');" style="padding:3px 8px;background:rgba(201,162,39,0.1);border:1px solid rgba(201,162,39,0.25);border-radius:4px;font-size:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--gold);cursor:pointer;">🪪</button>
             </div>
           </div>
         </div>`;
@@ -3680,7 +3766,10 @@
   // ══════════════════════════════════════════════════════
   //  MEMBER PROFILE MODAL
   // ══════════════════════════════════════════════════════
+  let currentProfileName = '';
+
   function openProfile(name){
+    currentProfileName = name;
     const m=MEMBERS.find(x=>x.name===name);
     if(!m)return;
 
@@ -3710,7 +3799,6 @@
     // Tags
     const tagEl=document.getElementById('profileTags');
     const tags=(m.category||'').split(',').map(t=>t.trim()).filter(Boolean);
-    const rows=filterByMonth(allRows,lbDate);
     const mPts=allRows.filter(r=>r['Member Name']===name).reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0);
     const tier=getTier(mPts);
     tagEl.innerHTML=`<span class="modal-tag gold">${tier.label}</span>`
@@ -3743,6 +3831,305 @@
   document.getElementById('profileModal').addEventListener('click',function(e){
     if(e.target===this) closeProfile();
   });
+
+  // ══════════════════════════════════════════════════════
+  //  DIGITAL VISITING CARD
+  // ══════════════════════════════════════════════════════
+  let vcardMemberName = '';
+
+  function openVCard(name){
+    vcardMemberName = name;
+    const m = MEMBERS.find(x=>x.name===name);
+    if(!m) return;
+    closeProfile();
+
+    // Avatar
+    const photo = getMemberPhoto(name);
+    const avEl = document.getElementById('vcardAv');
+    if(photo){
+      avEl.innerHTML=`<img src="${photo}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;" alt="${name}"/>`;
+      avEl.style.background='transparent';
+    } else {
+      avEl.textContent=getInitials(name);
+      avEl.style.background=getAvColor(name);
+    }
+
+    // Header info
+    document.getElementById('vcardName').textContent = name;
+    document.getElementById('vcardPosition').textContent = m.position || '';
+
+    // Company + logo
+    const logo = getMemberLogo(name);
+    const companyRow = document.getElementById('vcardCompanyRow');
+    if(m.company){
+      companyRow.innerHTML = (logo?`<img class="vcard-logo" src="${logo}" alt="logo"/>`:'')
+        + `<span class="vcard-company">${m.company}</span>`;
+    } else {
+      companyRow.innerHTML = '';
+    }
+
+    // Tier
+    const mPts = allRows.filter(r=>r['Member Name']===name).reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0);
+    const tier = getTier(mPts);
+    document.getElementById('vcardTier').textContent = tier.label + ' Member';
+
+    // Info rows
+    const infoDefs = [
+      m.phone && { icon:'📞', cls:'teal', label:'Phone', val:`<a href="tel:${m.phone}">${m.phone}</a>` },
+      m.email && { icon:'✉️', cls:'blue', label:'Email', val:`<a href="mailto:${m.email}">${m.email}</a>` },
+      m.company && { icon:'🏢', cls:'gold', label:'Organisation', val:m.company },
+    ].filter(Boolean);
+    document.getElementById('vcardInfoRows').innerHTML = infoDefs.map(d=>`
+      <div class="vcard-info-row">
+        <div class="vcard-info-icon ${d.cls}">${d.icon}</div>
+        <div><div class="vcard-info-label">${d.label}</div><div class="vcard-info-val">${d.val}</div></div>
+      </div>`).join('');
+
+    // Category tags
+    const tags = (m.category||'').split(',').map(t=>t.trim()).filter(Boolean);
+    document.getElementById('vcardTags').innerHTML = tags.length
+      ? tags.map(t=>`<span class="vcard-tag">${t}</span>`).join('')
+      : '';
+
+    // Stats strip
+    const memberRows = allRows.filter(r=>r['Member Name']===name);
+    const monthRows  = filterByMonth(memberRows, new Date());
+    const totalPts   = memberRows.reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0);
+    const monthPts   = monthRows.reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0);
+    const givenLeads = memberRows.filter(r=>r['QL - Passed To']).length;
+    document.getElementById('vcardStats').innerHTML = `
+      <div class="vcard-stat"><div class="vcard-stat-val">${totalPts}</div><div class="vcard-stat-lbl">Total Pts</div></div>
+      <div class="vcard-stat"><div class="vcard-stat-val">${monthPts}</div><div class="vcard-stat-lbl">This Month</div></div>
+      <div class="vcard-stat"><div class="vcard-stat-val">${memberRows.length}</div><div class="vcard-stat-lbl">Activities</div></div>
+      <div class="vcard-stat"><div class="vcard-stat-val">${givenLeads}</div><div class="vcard-stat-lbl">Leads Given</div></div>`;
+
+    document.getElementById('vcardOverlay').classList.add('open');
+  }
+
+  function closeVCard(){
+    document.getElementById('vcardOverlay').classList.remove('open');
+  }
+  document.getElementById('vcardOverlay').addEventListener('click',function(e){
+    if(e.target===this) closeVCard();
+  });
+
+  function buildVCardText(name){
+    const m = MEMBERS.find(x=>x.name===name);
+    if(!m) return '';
+    const mPts = allRows.filter(r=>r['Member Name']===name).reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0);
+    const tier = getTier(mPts);
+    return `👤 *${name}*\n${m.position?`💼 ${m.position}\n`:''}${m.company?`🏢 ${m.company}\n`:''}${m.phone?`📞 ${m.phone}\n`:''}${m.email?`✉️ ${m.email}\n`:''}${(m.category||'').trim()?`\n🏷 ${m.category}\n`:''}\n🏆 ${tier.label} — EKnot Aarohan Chapter\n\n_Shared via EKnot Aarohan Portal_`;
+  }
+
+  function shareVCardWA(){
+    const text = buildVCardText(vcardMemberName);
+    window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+  }
+
+  function copyVCardText(){
+    const text = buildVCardText(vcardMemberName);
+    navigator.clipboard.writeText(text).then(()=>showToast('✅ Contact info copied!')).catch(()=>{
+      // Fallback
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      showToast('✅ Contact info copied!');
+    });
+  }
+
+  function printVCard(){
+    const m = MEMBERS.find(x=>x.name===vcardMemberName);
+    if(!m) return;
+    const photo = getMemberPhoto(m.name);
+    const logo  = getMemberLogo(m.name);
+    const mPts  = allRows.filter(r=>r['Member Name']===m.name).reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0);
+    const tier  = getTier(mPts);
+    const memberRows = allRows.filter(r=>r['Member Name']===m.name);
+    const givenLeads = memberRows.filter(r=>r['QL - Passed To']).length;
+    const win = window.open('','_blank');
+    win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+    <title>${m.name} — EKnot Aarohan</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap');
+      * { box-sizing:border-box; margin:0; padding:0; }
+      body { font-family:'Inter',sans-serif; background:#f0f2f8; display:flex; align-items:center; justify-content:center; min-height:100vh; padding:20px; }
+      .card { width:380px; background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 8px 32px rgba(11,20,38,0.18); }
+      .header { background:linear-gradient(135deg,#0b1426,#1c2e52); padding:28px 22px 22px; text-align:center; position:relative; }
+      .header::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#c9a227,#f5d66a,#d4862a); }
+      .av { width:72px; height:72px; border-radius:50%; margin:0 auto 10px; border:3px solid rgba(201,162,39,0.5); overflow:hidden; background:${getAvColor(m.name)}; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700; color:#0b1426; }
+      .av img { width:100%; height:100%; object-fit:cover; }
+      .name { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; color:#fff; margin-bottom:3px; }
+      .pos  { font-size:12px; color:rgba(255,255,255,0.55); margin-bottom:4px; }
+      .co-row { display:flex; align-items:center; justify-content:center; gap:6px; }
+      .co-logo { width:18px; height:18px; border-radius:4px; object-fit:contain; }
+      .co  { font-size:11px; color:rgba(255,255,255,0.4); }
+      .tier { display:inline-block; background:rgba(201,162,39,0.15); border:1px solid rgba(201,162,39,0.3); border-radius:100px; padding:2px 10px; font-family:'Space Grotesk',sans-serif; font-size:9px; font-weight:700; color:#c9a227; margin-top:8px; }
+      .body { padding:16px 20px; }
+      .row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #f0f2f8; }
+      .row:last-child { border-bottom:none; }
+      .ico { width:28px; height:28px; border-radius:7px; background:#f0f2f8; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+      .lbl { font-family:'Space Grotesk',sans-serif; font-size:9px; font-weight:600; color:#8e99b5; text-transform:uppercase; letter-spacing:.06em; }
+      .val { font-size:12px; color:#0b1426; font-weight:500; }
+      .tags { display:flex; flex-wrap:wrap; gap:4px; padding:10px 0 4px; }
+      .tag { padding:2px 8px; background:#f0f2f8; border-radius:4px; font-size:10px; color:#5a6480; font-family:'Space Grotesk',sans-serif; }
+      .stats { display:flex; background:#f8f9fc; border-top:1px solid #e8eaf0; }
+      .stat { flex:1; padding:10px 6px; text-align:center; border-right:1px solid #e8eaf0; }
+      .stat:last-child { border-right:none; }
+      .sv { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; color:#0b1426; }
+      .sl { font-size:8px; color:#8e99b5; text-transform:uppercase; letter-spacing:.06em; font-family:'Space Grotesk',sans-serif; margin-top:2px; }
+      .footer { padding:10px 20px; text-align:center; font-size:10px; color:#8e99b5; font-family:'Space Grotesk',sans-serif; }
+    </style></head><body>
+    <div class="card">
+      <div class="header">
+        <div class="av">${photo?`<img src="${photo}" alt="${m.name}"/>`:`${getInitials(m.name)}`}</div>
+        <div class="name">${m.name}</div>
+        ${m.position?`<div class="pos">${m.position}</div>`:''}
+        ${m.company?`<div class="co-row">${logo?`<img class="co-logo" src="${logo}" alt="logo"/>`:''}
+          <span class="co">${m.company}</span></div>`:''}
+        <div class="tier">${tier.label} Member</div>
+      </div>
+      <div class="body">
+        ${m.phone?`<div class="row"><div class="ico">📞</div><div><div class="lbl">Phone</div><div class="val">${m.phone}</div></div></div>`:''}
+        ${m.email?`<div class="row"><div class="ico">✉️</div><div><div class="lbl">Email</div><div class="val">${m.email}</div></div></div>`:''}
+        ${m.company?`<div class="row"><div class="ico">🏢</div><div><div class="lbl">Organisation</div><div class="val">${m.company}</div></div></div>`:''}
+        ${(m.category||'').trim()?`<div class="tags">${(m.category||'').split(',').map(t=>`<span class="tag">${t.trim()}</span>`).join('')}</div>`:''}
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="sv">${mPts}</div><div class="sl">Total Pts</div></div>
+        <div class="stat"><div class="sv">${memberRows.length}</div><div class="sl">Activities</div></div>
+        <div class="stat"><div class="sv">${givenLeads}</div><div class="sl">Leads Given</div></div>
+      </div>
+      <div class="footer">EKnot Aarohan Chapter · Hyderabad</div>
+    </div>
+    <script>window.onload=()=>{window.print();}<\/script></body></html>`);
+    win.document.close();
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  ATTENDANCE PDF EXPORT
+  // ══════════════════════════════════════════════════════
+  function exportAttendancePDF(){
+    const allAtt = loadAttendance();
+    const yr = attMonthDate.getFullYear(), mo = attMonthDate.getMonth()+1;
+    const monthWeeks = Object.keys(allAtt)
+      .filter(k=>{ const d=new Date(k); return d.getFullYear()===yr && d.getMonth()+1===mo; })
+      .sort();
+    const month = getMonthLabel(attMonthDate);
+
+    if(!monthWeeks.length){ showToast('No attendance recorded for this month.',true); return; }
+
+    // Build data
+    const memberData = MEMBERS.map(m=>{
+      let p=0,s=0,a=0;
+      monthWeeks.forEach(k=>{
+        const st=(allAtt[k]||{})[m.name]||'none';
+        if(st==='present') p++;
+        else if(st==='substitute') s++;
+        else if(st==='absent') a++;
+      });
+      const total = monthWeeks.length;
+      const pct = Math.round(((p+s)/total)*100);
+      return {...m, p, s, a, total, pct};
+    });
+
+    const win = window.open('','_blank');
+    win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+    <title>Attendance — ${month}</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap');
+      * { box-sizing:border-box; margin:0; padding:0; }
+      body { font-family:'Inter',sans-serif; padding:32px; color:#0b1426; }
+      .header { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; padding-bottom:14px; border-bottom:2px solid #0b1426; }
+      .header-left h1 { font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700; color:#0b1426; }
+      .header-left p  { font-size:12px; color:#6b7280; margin-top:3px; }
+      .header-right { text-align:right; font-size:11px; color:#6b7280; }
+      .header-right strong { font-family:'Space Grotesk',sans-serif; font-size:16px; color:#c9a227; display:block; }
+      .summary { display:flex; gap:16px; margin:16px 0; }
+      .sum-box { background:#f8f9fc; border:1px solid #e0e4ee; border-radius:8px; padding:10px 16px; flex:1; text-align:center; }
+      .sum-val { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; color:#0b1426; }
+      .sum-lbl { font-size:10px; color:#8e99b5; text-transform:uppercase; letter-spacing:.06em; font-family:'Space Grotesk',sans-serif; }
+      table { width:100%; border-collapse:collapse; font-size:12px; }
+      thead tr { background:#0b1426; color:#fff; }
+      th { padding:9px 12px; text-align:left; font-family:'Space Grotesk',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:#c9a227; white-space:nowrap; }
+      td { padding:8px 12px; border-bottom:1px solid #f0f2f8; vertical-align:middle; }
+      tr:nth-child(even) td { background:#fafbfd; }
+      .av { width:26px; height:26px; border-radius:6px; display:inline-flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:9px; font-weight:700; color:#0b1426; margin-right:8px; vertical-align:middle; }
+      .name { font-weight:600; color:#0b1426; }
+      .p  { color:#1a8a78; font-weight:700; }
+      .s  { color:#1e4fa3; font-weight:700; }
+      .a  { color:#c0415a; font-weight:700; }
+      .pct-bar { display:inline-block; height:6px; background:#e0e4ee; border-radius:3px; width:60px; vertical-align:middle; margin-right:6px; }
+      .pct-fill { height:100%; border-radius:3px; display:inline-block; }
+      .pct-txt { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; vertical-align:middle; }
+      .week-dot { display:inline-block; width:14px; height:14px; border-radius:3px; margin:1px; }
+      .footer { margin-top:20px; font-size:10px; color:#9ca3af; text-align:center; border-top:1px solid #e0e4ee; padding-top:12px; }
+      @media print { body { padding:16px; } }
+    </style></head><body>
+    <div class="header">
+      <div class="header-left">
+        <h1>📅 Attendance Report</h1>
+        <p>EKnot Aarohan Chapter · Generated ${new Date().toLocaleDateString('en-IN')}</p>
+      </div>
+      <div class="header-right">
+        <strong>${month}</strong>
+        ${monthWeeks.length} meeting${monthWeeks.length!==1?'s':''} · ${MEMBERS.length} members
+      </div>
+    </div>
+
+    <div class="summary">
+      <div class="sum-box"><div class="sum-val">${monthWeeks.length}</div><div class="sum-lbl">Meetings</div></div>
+      <div class="sum-box"><div class="sum-val" style="color:#1a8a78">${memberData.filter(m=>m.pct===100).length}</div><div class="sum-lbl">100% Attendance</div></div>
+      <div class="sum-box"><div class="sum-val" style="color:#c0415a">${memberData.filter(m=>m.a===m.total).length}</div><div class="sum-lbl">All Absent</div></div>
+      <div class="sum-box"><div class="sum-val" style="color:#c9a227">${Math.round(memberData.reduce((s,m)=>s+m.pct,0)/MEMBERS.length)}%</div><div class="sum-lbl">Avg Attendance</div></div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Member</th>
+          ${monthWeeks.map(k=>`<th>${new Date(k).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</th>`).join('')}
+          <th>✅ P</th>
+          <th>🔄 S</th>
+          <th>❌ A</th>
+          <th>Attendance %</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${memberData.map((m,i)=>{
+          const color = getAvColor(m.name);
+          const weekCols = monthWeeks.map(k=>{
+            const st=(allAtt[k]||{})[m.name]||'none';
+            const symbol = st==='present'?'✅':st==='substitute'?'🔄':st==='absent'?'❌':'—';
+            return `<td style="text-align:center;font-size:13px">${symbol}</td>`;
+          }).join('');
+          const pctColor = m.pct>=80?'#1a8a78':m.pct>=50?'#c9a227':'#c0415a';
+          return `<tr>
+            <td style="color:#9ca3af;font-size:11px">${i+1}</td>
+            <td><span class="av" style="background:${color}">${getInitials(m.name)}</span><span class="name">${m.name}</span></td>
+            ${weekCols}
+            <td class="p">${m.p}</td>
+            <td class="s">${m.s}</td>
+            <td class="a">${m.a}</td>
+            <td>
+              <div class="pct-bar"><div class="pct-fill" style="width:${m.pct}%;background:${pctColor}"></div></div>
+              <span class="pct-txt" style="color:${pctColor}">${m.pct}%</span>
+            </td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+
+    <div class="footer">
+      ✅ Present &nbsp;|&nbsp; 🔄 Substitute &nbsp;|&nbsp; ❌ Absent &nbsp;|&nbsp; — Not recorded
+      <br/>EKnot Aarohan Chapter · Hyderabad · ${month}
+    </div>
+    <script>window.onload=()=>{window.print();}<\/script>
+    </body></html>`);
+    win.document.close();
+  }
+
+
 
   // ══════════════════════════════════════════════════════
   //  FINANCES
