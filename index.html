@@ -372,6 +372,66 @@
     .td-pts { font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--blue); }
     .hide-mobile { } /* shown by default */
     @media(max-width:640px){ .hide-mobile { display:none; } }
+    /* MEMBER OF THE MONTH */
+    .motm-card { background:linear-gradient(135deg,var(--navy),var(--navy-light)); border:1px solid rgba(201,162,39,0.3); border-radius:var(--radius); padding:20px 22px; margin-bottom:20px; position:relative; overflow:hidden; box-shadow:0 4px 20px rgba(11,20,38,0.15); }
+    .motm-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--orange)); }
+    .motm-glow { position:absolute; width:200px; height:200px; background:radial-gradient(circle,rgba(201,162,39,0.12),transparent 70%); top:-40px; right:-40px; pointer-events:none; }
+    .motm-badge-row { display:flex; align-items:center; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+    .motm-badge-pill { background:rgba(201,162,39,0.15); border:1px solid rgba(201,162,39,0.3); border-radius:100px; padding:3px 12px; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--gold); letter-spacing:0.08em; text-transform:uppercase; }
+    .motm-month { font-size:11px; color:rgba(255,255,255,0.3); font-family:'Space Grotesk',sans-serif; }
+    .motm-main { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .motm-av-wrap { position:relative; flex-shrink:0; }
+    .motm-av { width:60px; height:60px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700; color:var(--navy); border:2px solid rgba(201,162,39,0.4); overflow:hidden; }
+    .motm-crown { position:absolute; top:-10px; left:50%; transform:translateX(-50%); font-size:18px; }
+    .motm-info { flex:1; min-width:0; }
+    .motm-name { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; color:#fff; letter-spacing:-0.01em; margin-bottom:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .motm-detail { font-size:12px; color:rgba(255,255,255,0.45); }
+    .motm-pts-block { text-align:right; flex-shrink:0; }
+    .motm-pts-val { font-family:'Space Grotesk',sans-serif; font-size:32px; font-weight:700; color:var(--gold); line-height:1; }
+    .motm-pts-lbl { font-size:10px; color:rgba(255,255,255,0.3); margin-top:2px; font-family:'Space Grotesk',sans-serif; }
+    .motm-criteria { display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+    .motm-crit { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:5px 10px; font-size:11px; color:rgba(255,255,255,0.5); font-family:'Space Grotesk',sans-serif; display:flex; align-items:center; gap:5px; }
+    .motm-crit-val { color:var(--gold); font-weight:700; }
+    .motm-share-btn { display:inline-flex; align-items:center; gap:6px; background:#25d366; color:#fff; border:none; border-radius:6px; padding:7px 14px; font-size:11px; font-family:'Space Grotesk',sans-serif; font-weight:700; cursor:pointer; margin-top:12px; }
+    .motm-empty { text-align:center; padding:20px; color:rgba(255,255,255,0.3); font-size:13px; font-style:italic; }
+    /* CHAPTER GOALS */
+    .goals-section { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; box-shadow:var(--shadow); margin-bottom:16px; }
+    .goals-sec-title { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--ink); margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+    .goals-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px; margin-bottom:14px; }
+    .goal-card { background:#f8f9fc; border:1.5px solid var(--border); border-radius:10px; padding:14px 16px; transition:border-color 0.2s; }
+    .goal-card.achieved { background:rgba(26,138,120,0.06); border-color:rgba(26,138,120,0.3); }
+    .goal-card.near { border-color:rgba(201,162,39,0.4); background:rgba(201,162,39,0.03); }
+    .goal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .goal-label { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:6px; }
+    .goal-count { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--ink); }
+    .goal-track { height:8px; background:#e0e4ee; border-radius:100px; overflow:hidden; margin-bottom:6px; }
+    .goal-fill { height:100%; border-radius:100px; background:var(--blue); transition:width 0.8s cubic-bezier(.4,0,.2,1); }
+    .goal-card.achieved .goal-fill { background:var(--teal); }
+    .goal-card.near .goal-fill { background:var(--gold); }
+    .goal-meta { display:flex; justify-content:space-between; font-size:11px; color:var(--text-soft); font-family:'Space Grotesk',sans-serif; }
+    .goal-pct { font-weight:700; }
+    .goals-admin-panel { background:#f0f2f8; border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+    .goals-admin-title { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px; }
+    .goals-input-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:8px; margin-bottom:10px; }
+    .goal-input-row { display:flex; flex-direction:column; gap:4px; }
+    .goal-input-lbl { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.06em; }
+    .goal-input { padding:7px 10px; background:#fff; border:1.5px solid var(--border); border-radius:7px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; color:var(--ink); outline:none; width:100%; }
+    .goal-input:focus { border-color:var(--blue); }
+    .goals-save-btn { padding:8px 18px; background:var(--navy); color:var(--gold); font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; border:1px solid rgba(201,162,39,0.25); border-radius:6px; cursor:pointer; }
+    .goals-save-btn:hover { background:var(--navy-light); }
+    /* WA TEMPLATES */
+    .wa-templates-grid { display:flex; flex-direction:column; gap:10px; }
+    .wa-tpl { background:#f8f9fc; border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+    .wa-tpl-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; gap:10px; flex-wrap:wrap; }
+    .wa-tpl-title { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:6px; }
+    .wa-tpl-send { display:inline-flex; align-items:center; gap:6px; background:#25d366; color:#fff; border:none; border-radius:6px; padding:6px 14px; font-size:11px; font-family:'Space Grotesk',sans-serif; font-weight:700; cursor:pointer; white-space:nowrap; }
+    .wa-tpl-send:hover { background:#20b858; }
+    .wa-tpl-preview { font-size:11px; color:var(--text-muted); line-height:1.6; max-height:90px; overflow:hidden; font-family:'Inter',sans-serif; background:#fff; border:1px solid var(--border); border-radius:6px; padding:8px 10px; white-space:pre-wrap; }
+    .wa-config-row { display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+    .wa-config-input { padding:7px 12px; background:#fff; border:1.5px solid var(--border); border-radius:7px; font-family:'Inter',sans-serif; font-size:13px; color:var(--ink); outline:none; flex:1; min-width:120px; }
+    .wa-config-input:focus { border-color:var(--gold); }
+    @media(max-width:640px){ .goals-grid { grid-template-columns:1fr; } .goals-input-grid { grid-template-columns:1fr 1fr; } }
+
 
     /* Toasts */
     .toast { position:fixed; bottom:24px; right:24px; background:var(--navy); color:var(--white); border:1px solid rgba(201,162,39,0.25); border-radius:8px; padding:11px 18px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; z-index:9999; transform:translateY(80px); opacity:0; transition:all 0.3s; box-shadow:var(--shadow); }
@@ -1489,6 +1549,16 @@
           <button class="ref-btn" onclick="loadAllData()">↻ Refresh</button>
         </div>
       </div>
+
+      <!-- Member of the Month -->
+      <div class="motm-card" id="motmCard">
+        <div class="motm-glow"></div>
+        <div class="motm-badge-row">
+          <span class="motm-badge-pill">⭐ Member of the Month</span>
+          <span class="motm-month" id="motmMonth"></span>
+        </div>
+        <div id="motmContent"><div class="motm-empty">Loading…</div></div>
+      </div>
       <div class="stats-grid">
         <div class="stat-card sc1"><div class="stat-lbl">Submissions</div><div class="stat-val sv-yellow" id="lbStatSub">—</div></div>
         <div class="stat-card sc2"><div class="stat-lbl">Total Points</div><div class="stat-val sv-teal" id="lbStatPts">—</div></div>
@@ -1981,8 +2051,102 @@
 <div class="comms-page">
   <div class="comms-inner">
     <div class="page-title">📣 <span>Communications</span></div>
-    <div class="comms-grid">
 
+    <!-- Chapter Goals -->
+    <div class="goals-section">
+      <div class="goals-sec-title">
+        <span>🎯 Chapter Monthly Goals</span>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <div class="month-sel">
+            <button class="m-btn" onclick="goalsChangeMonth(-1)">‹</button>
+            <div class="m-label" id="goalsMonthLabel">—</div>
+            <button class="m-btn" onclick="goalsChangeMonth(1)">›</button>
+          </div>
+        </div>
+      </div>
+      <div class="goals-grid" id="goalsGrid">
+        <div style="font-size:13px;color:var(--text-soft);font-style:italic">Loading…</div>
+      </div>
+      <!-- Admin: set targets -->
+      <div class="goals-admin-panel" id="goalsAdminPanel" style="display:none">
+        <div class="goals-admin-title">🔐 Set Monthly Target (Admin)</div>
+        <div class="goals-input-grid" style="grid-template-columns:1fr 1fr;max-width:400px">
+          <div class="goal-input-row">
+            <label class="goal-input-lbl">📊 Total Points Target</label>
+            <input class="goal-input" type="number" id="goalPts" placeholder="e.g. 300" min="0"/>
+          </div>
+          <div class="goal-input-row" style="justify-content:flex-end;padding-top:18px">
+            <button class="goals-save-btn" onclick="saveGoals()">💾 Save Target</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WA Notification Templates -->
+    <div class="goals-section" id="waTemplatesSection" style="display:none">
+      <div class="goals-sec-title">💬 WhatsApp Notification Templates</div>
+
+      <!-- Meeting config -->
+      <div class="wa-config-row">
+        <input class="wa-config-input" id="waMeetingDate" type="date" placeholder="Meeting date"/>
+        <input class="wa-config-input" id="waMeetingTime" placeholder="Meeting time (e.g. 7:30 AM)"/>
+        <input class="wa-config-input" id="waMeetingVenue" placeholder="Venue / Zoom link"/>
+      </div>
+
+      <div class="wa-templates-grid">
+
+        <!-- Meeting Reminder -->
+        <div class="wa-tpl">
+          <div class="wa-tpl-header">
+            <div class="wa-tpl-title">📅 Meeting Reminder</div>
+            <button class="wa-tpl-send" onclick="sendWATpl('meeting')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Send
+            </button>
+          </div>
+          <div class="wa-tpl-preview" id="waTplMeeting">Fill in the meeting details above to preview…</div>
+        </div>
+
+        <!-- Activity Reminder -->
+        <div class="wa-tpl">
+          <div class="wa-tpl-header">
+            <div class="wa-tpl-title">📝 Activity Log Reminder</div>
+            <button class="wa-tpl-send" onclick="sendWATpl('activity')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Send
+            </button>
+          </div>
+          <div class="wa-tpl-preview" id="waTplActivity"></div>
+        </div>
+
+        <!-- Member of Month Announcement -->
+        <div class="wa-tpl">
+          <div class="wa-tpl-header">
+            <div class="wa-tpl-title">⭐ Member of the Month</div>
+            <button class="wa-tpl-send" onclick="sendWATpl('motm')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Send
+            </button>
+          </div>
+          <div class="wa-tpl-preview" id="waTplMotm"></div>
+        </div>
+
+        <!-- Goals Progress -->
+        <div class="wa-tpl">
+          <div class="wa-tpl-header">
+            <div class="wa-tpl-title">🎯 Goals Progress Update</div>
+            <button class="wa-tpl-send" onclick="sendWATpl('goals')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Send
+            </button>
+          </div>
+          <div class="wa-tpl-preview" id="waTplGoals"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="comms-grid">
       <!-- Announcements -->
       <div class="comms-card full">
         <div class="comms-card-title">
@@ -1998,7 +2162,6 @@
           </div>
         </div>
       </div>
-
       <!-- WhatsApp Share (admin only) -->
       <div class="comms-card" id="waShareCard" style="display:none">
         <div class="comms-card-title">💬 Share Leaderboard on WhatsApp</div>
@@ -2008,14 +2171,12 @@
           Share on WhatsApp
         </a>
       </div>
-
       <!-- Birthdays -->
       <div class="comms-card">
         <div class="comms-card-title">🎂 Birthdays & Reminders</div>
         <div class="bday-list" id="bdayList"></div>
         <div style="margin-top:12px;font-size:11px;color:var(--text-soft)">Set birthdays via Admin → Member profiles (dob field)</div>
       </div>
-
     </div>
   </div>
 </div>
@@ -2657,6 +2818,7 @@
 
   function renderLeaderboard(){
     document.getElementById('lbMonthLabel').textContent=getMonthLabel(lbDate);
+    renderMOTM();
     const rows=filterByMonth(allRows,lbDate);
     // Stats
     const totalPts=rows.reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0);
@@ -3503,6 +3665,16 @@
     renderNotesList();
     renderWAShare();
     renderBirthdays();
+    renderGoals();
+    buildWATemplates();
+    // Show WA templates section for admin
+    const waTplSection = document.getElementById('waTemplatesSection');
+    if(waTplSection) waTplSection.style.display = isAdmin ? 'block' : 'none';
+    // Live-update templates when config inputs change
+    ['waMeetingDate','waMeetingTime','waMeetingVenue'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.oninput = buildWATemplates;
+    });
   }
 
   // ══════════════════════════════════════════════════════
@@ -4097,6 +4269,251 @@
       const bts=document.getElementById('eplBonusTeam');
       if(bts){ bts.options[0].text=epl.teamA; bts.options[1].text=epl.teamB; }
     }
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  MEMBER OF THE MONTH
+  // ══════════════════════════════════════════════════════
+  function calcMOTM(monthDate){
+    const rows = filterByMonth(allRows, monthDate);
+    const attData = loadAttendance();
+    const yr = monthDate.getFullYear();
+    const mo = String(monthDate.getMonth()+1).padStart(2,'0');
+
+    // Accumulate per member
+    const pts={}, att={};
+    getMemberNames().forEach(n=>{ pts[n]=0; att[n]=0; });
+    rows.forEach(r=>{
+      const n=r['Member Name']; if(!n||pts[n]===undefined) return;
+      pts[n]+=(parseInt(r['Points Earned'])||0);
+    });
+    // Count attendance (present + substitute) for this month's weeks
+    Object.keys(attData)
+      .filter(k=>{ const d=new Date(k); return d.getFullYear()===yr && d.getMonth()+1===parseInt(mo); })
+      .forEach(wk=>{
+        Object.entries(attData[wk]||{}).forEach(([name,status])=>{
+          if(att[name]!==undefined && (status==='present'||status==='substitute')) att[name]++;
+        });
+      });
+
+    // MOTM criteria: Most points this month (tiebreaker: best attendance)
+    const sorted = getMemberNames()
+      .map(n=>({ name:n, pts:pts[n], att:att[n] }))
+      .filter(m => m.pts > 0 || m.att > 0)
+      .sort((a,b)=> b.pts!==a.pts ? b.pts-a.pts : b.att-a.att);
+
+    return sorted.length ? sorted[0] : null;
+  }
+
+  function renderMOTM(){
+    document.getElementById('motmMonth').textContent = getMonthLabel(lbDate);
+    const winner = calcMOTM(lbDate);
+    const el = document.getElementById('motmContent');
+    if(!winner){
+      el.innerHTML='<div class="motm-empty">No activity logged yet this month.</div>';
+      return;
+    }
+    const photo = getMemberPhoto(winner.name);
+    const avHTML = photo
+      ? `<img src="${photo}" style="width:60px;height:60px;border-radius:14px;object-fit:cover;" alt="${winner.name}"/>`
+      : `<div class="motm-av" style="background:${getAvColor(winner.name)}">${getInitials(winner.name)}</div>`;
+    const member = MEMBERS.find(m=>m.name===winner.name)||{};
+    // Total meetings this month (for % calculation)
+    const attData = loadAttendance();
+    const yr=lbDate.getFullYear(), mo=lbDate.getMonth()+1;
+    const totalMeetings = Object.keys(attData).filter(k=>{ const d=new Date(k); return d.getFullYear()===yr && d.getMonth()+1===mo; }).length || 1;
+    const attPct = Math.round((winner.att/totalMeetings)*100);
+
+    el.innerHTML=`
+      <div class="motm-main">
+        <div class="motm-av-wrap">
+          ${avHTML}
+          <div class="motm-crown">👑</div>
+        </div>
+        <div class="motm-info">
+          <div class="motm-name">${winner.name}</div>
+          <div class="motm-detail">${[member.position,member.company].filter(Boolean).join(' · ')||'Aarohan Member'}</div>
+          <div class="motm-criteria">
+            <div class="motm-crit">🏆 <span class="motm-crit-val">${winner.pts}</span> Points this month</div>
+            <div class="motm-crit">📅 <span class="motm-crit-val">${winner.att}/${totalMeetings}</span> Meetings (${attPct}%)</div>
+          </div>
+        </div>
+        <div class="motm-pts-block">
+          <div class="motm-pts-val">${winner.pts}</div>
+          <div class="motm-pts-lbl">points</div>
+        </div>
+      </div>
+      <button class="motm-share-btn" onclick="shareMotmWA()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Share on WhatsApp
+      </button>`;
+  }
+
+  function shareMotmWA(){
+    const winner = calcMOTM(lbDate);
+    if(!winner){ showToast('No winner yet this month.',true); return; }
+    const month = getMonthLabel(lbDate);
+    const attData = loadAttendance();
+    const yr=lbDate.getFullYear(), mo=lbDate.getMonth()+1;
+    const totalMeetings = Object.keys(attData).filter(k=>{ const d=new Date(k); return d.getFullYear()===yr && d.getMonth()+1===mo; }).length || 1;
+    const text = `🏆 *EKnot Aarohan Chapter*\n⭐ *Member of the Month — ${month}*\n\n👑 *${winner.name}*\n\n📊 Winning Stats:\n🔢 Total Points: *${winner.pts}*\n📅 Attendance: *${winner.att}/${totalMeetings}* meetings\n\nSelected based on most points this month with best attendance as tiebreaker.\n\nCongratulations ${winner.name.split(' ')[0]}! Keep inspiring the chapter! 🎉🎊\n\n_EKnot Aarohan Chapter_ 🎓`;
+    window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  CHAPTER GOALS & TARGETS
+  // ══════════════════════════════════════════════════════
+  const GOALS_KEY = 'aarohan_goals';
+  let goalsDate = new Date();
+
+  function goalsMonthKey(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
+
+  function getGoals(mk){
+    try{ const d=JSON.parse(localStorage.getItem(GOALS_KEY)||'{}'); return d[mk]||{}; }catch(e){return {};}
+  }
+  function setGoals(mk, goals){
+    try{ const d=JSON.parse(localStorage.getItem(GOALS_KEY)||'{}'); d[mk]=goals; localStorage.setItem(GOALS_KEY,JSON.stringify(d));
+      const params=new URLSearchParams();
+      params.append('payload',JSON.stringify({action:'saveGoals',monthKey:mk,goals}));
+      fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:params}).catch(e=>console.warn(e));
+    }catch(e){}
+  }
+
+  function goalsChangeMonth(dir){
+    goalsDate.setMonth(goalsDate.getMonth()+dir);
+    renderGoals();
+  }
+
+  function saveGoals(){
+    const mk = goalsMonthKey(goalsDate);
+    const goals = {
+      pts: parseInt(document.getElementById('goalPts').value)||0,
+    };
+    setGoals(mk, goals);
+    renderGoals();
+    showToast('✅ Target saved!');
+  }
+
+  function calcGoalActuals(monthDate){
+    const rows = filterByMonth(allRows, monthDate);
+    const pts = rows.reduce((s,r)=>s+(parseInt(r['Points Earned'])||0), 0);
+    return { pts };
+  }
+
+  function renderGoals(){
+    const mk = goalsMonthKey(goalsDate);
+    document.getElementById('goalsMonthLabel').textContent = getMonthLabel(goalsDate);
+    const goals = getGoals(mk);
+    const actual = calcGoalActuals(goalsDate);
+
+    const adminPanel = document.getElementById('goalsAdminPanel');
+    if(adminPanel) adminPanel.style.display = isAdmin ? 'block' : 'none';
+    if(isAdmin){
+      const ptsFld = document.getElementById('goalPts');
+      if(ptsFld) ptsFld.value = goals.pts || '';
+    }
+
+    const grid = document.getElementById('goalsGrid');
+    if(!goals.pts){
+      grid.innerHTML=`<div style="font-size:13px;color:var(--text-soft);font-style:italic;grid-column:1/-1">${isAdmin?'Set a monthly points target above.':'No target set for this month yet.'}</div>`;
+      buildWATemplates();
+      return;
+    }
+
+    const pct = Math.min(100, Math.round((actual.pts/goals.pts)*100));
+    const cls = pct>=100?'achieved':pct>=75?'near':'';
+    const remaining = Math.max(0, goals.pts - actual.pts);
+    // Count active members with at least 1 submission this month
+    const activeRows = filterByMonth(allRows, goalsDate);
+    const activeCount = new Set(activeRows.map(r=>r['Member Name']).filter(Boolean)).size;
+
+    grid.innerHTML = `
+      <div class="goal-card ${cls}" style="grid-column:1/-1">
+        <div class="goal-header">
+          <div class="goal-label">📊 Chapter Monthly Points Target ${pct>=100?'✅':''}</div>
+          <div class="goal-count">${actual.pts} / ${goals.pts} pts</div>
+        </div>
+        <div class="goal-track"><div class="goal-fill" style="width:${pct}%"></div></div>
+        <div class="goal-meta">
+          <span>${pct>=100?'🎉 Target achieved! Great work team!':remaining+' pts to go — keep pushing!'}</span>
+          <span class="goal-pct">${pct}%</span>
+        </div>
+      </div>
+      <div class="goal-card">
+        <div class="goal-header"><div class="goal-label">👥 Active Members</div><div class="goal-count">${activeCount} / ${MEMBERS.length}</div></div>
+        <div class="goal-track"><div class="goal-fill" style="width:${Math.round(activeCount/MEMBERS.length*100)}%;background:var(--blue)"></div></div>
+        <div class="goal-meta"><span>Members who logged this month</span><span class="goal-pct">${Math.round(activeCount/MEMBERS.length*100)}%</span></div>
+      </div>
+      <div class="goal-card">
+        <div class="goal-header"><div class="goal-label">📈 Avg Points/Member</div><div class="goal-count">${activeCount?Math.round(actual.pts/activeCount):0} pts</div></div>
+        <div class="goal-track"><div class="goal-fill" style="width:${Math.min(100,activeCount?Math.round((actual.pts/activeCount)/(goals.pts/MEMBERS.length)*100):0)}%;background:var(--purple)"></div></div>
+        <div class="goal-meta"><span>Target avg: ${Math.round(goals.pts/MEMBERS.length)} pts/member</span><span class="goal-pct"></span></div>
+      </div>`;
+
+    buildWATemplates();
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  WHATSAPP NOTIFICATION TEMPLATES
+  // ══════════════════════════════════════════════════════
+  function buildWATemplates(){
+    const month = getMonthLabel(new Date());
+    const dateVal = document.getElementById('waMeetingDate')?.value || '';
+    const time    = document.getElementById('waMeetingTime')?.value || '—';
+    const venue   = document.getElementById('waMeetingVenue')?.value || '—';
+
+    // Auto-fill next Friday if no date entered
+    function getNextFriday(){
+      const d = new Date();
+      const day = d.getDay(); // 0=Sun,5=Fri
+      const daysUntilFri = (5 - day + 7) % 7 || 7;
+      d.setDate(d.getDate() + daysUntilFri);
+      return d;
+    }
+    const meetingDate = dateVal ? new Date(dateVal) : getNextFriday();
+    const dateStr = meetingDate.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+    // 1. Meeting Reminder (every Friday)
+    const meetingTpl = `📅 *EKnot Aarohan Chapter*\n🔔 *Weekly Meeting Reminder*\n\nDear Members,\n\nThis is a reminder for our *Friday Chapter Meeting*:\n\n📆 *Date:* ${dateStr}\n⏰ *Time:* ${time}\n📍 *Venue:* ${venue}\n\nPlease come prepared with:\n✅ Your weekly activity updates\n✅ Any quality leads or referrals\n✅ Guest invites if any\n\n📱 Don't forget to log your activities on the Aarohan portal!\n\n_EKnot Aarohan Chapter_ 🎓`;
+
+    // 2. Activity Log Reminder — show who hasn't logged yet
+    const rows = filterByMonth(allRows, new Date());
+    const logged = new Set(rows.map(r=>r['Member Name']).filter(Boolean));
+    const notLogged = getMemberNames().filter(n=>!logged.has(n));
+    const totalPts = rows.reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0);
+    const activityTpl = `📝 *EKnot Aarohan Chapter*\n⚡ *Activity Log Reminder — ${month}*\n\nHi team! 👋\n\nPlease log your weekly activities on the portal.\n\n📊 *Month Status:*\n✅ ${logged.size}/${MEMBERS.length} members logged\n🏆 ${totalPts} total points earned\n${notLogged.length>0?`\n⏳ *Yet to log this month:*\n${notLogged.map(n=>`• ${n.split(' ')[0]}`).join('\n')}\n`:'\n🎉 All members have logged!\n'}\nEvery activity earns points for the leaderboard! 🏆\n\n_EKnot Aarohan Chapter_ 🎓`;
+
+    // 3. MOTM
+    const winner = calcMOTM(lbDate);
+    const attData = loadAttendance();
+    const yr=lbDate.getFullYear(), mo=lbDate.getMonth()+1;
+    const totalMeetings = Object.keys(attData).filter(k=>{ const d=new Date(k); return d.getFullYear()===yr && d.getMonth()+1===mo; }).length||1;
+    const motmTpl = winner
+      ? `🏆 *EKnot Aarohan Chapter*\n⭐ *Member of the Month — ${getMonthLabel(lbDate)}*\n\n👑 Congratulations to *${winner.name}*!\n\n📊 Winning Performance:\n🔢 Total Points: *${winner.pts}*\n📅 Attendance: *${winner.att}/${totalMeetings}* Friday meetings\n\nSelected based on most points earned with best attendance!\n\nKeep inspiring the chapter! 🎉🎊\n\n_EKnot Aarohan Chapter_ 🎓`
+      : 'No winner yet — data will appear once members log activities.';
+
+    // 4. Goals — Total Points only
+    const mk = goalsMonthKey(new Date());
+    const goals = getGoals(mk);
+    const actual = calcGoalActuals(new Date());
+    const pct = goals.pts ? Math.min(100,Math.round((actual.pts/goals.pts)*100)) : 0;
+    const goalsTpl = goals.pts
+      ? `🎯 *EKnot Aarohan Chapter*\n📊 *Monthly Points Progress — ${month}*\n\n🏆 Target: *${goals.pts} points*\n✅ Achieved: *${actual.pts} points* (${pct}%)\n📈 Remaining: *${Math.max(0,goals.pts-actual.pts)} points*\n\n${pct>=100?'🎉 TARGET ACHIEVED! Amazing work team!':pct>=75?'💪 Almost there! Strong push needed!':'🚀 Let\'s step it up! Every activity counts!'}\n\nLog your activities every week to hit our target! 💯\n\n_EKnot Aarohan Chapter_ 🎓`
+      : `🎯 *EKnot Aarohan Chapter*\n📊 *Monthly Points Update — ${month}*\n\n✅ Total Points so far: *${actual.pts}*\n👥 Active Members: ${new Set(filterByMonth(allRows,new Date()).map(r=>r['Member Name']).filter(Boolean)).size}/${MEMBERS.length}\n\nKeep logging your activities! 💪\n\n_EKnot Aarohan Chapter_ 🎓`;
+
+    const tpls = { Meeting:meetingTpl, Activity:activityTpl, Motm:motmTpl, Goals:goalsTpl };
+    Object.entries(tpls).forEach(([k,v])=>{
+      const el=document.getElementById('waTpl'+k);
+      if(el) el.textContent=v;
+    });
+  }
+
+  function sendWATpl(type){
+    const elMap = { meeting:'waTplMeeting', activity:'waTplActivity', motm:'waTplMotm', goals:'waTplGoals' };
+    const el = document.getElementById(elMap[type]);
+    if(!el){ showToast('Template not found.',true); return; }
+    const text = el.textContent;
+    window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
   }
 
   function exportPDF(){
