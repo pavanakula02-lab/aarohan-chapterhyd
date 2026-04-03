@@ -3331,24 +3331,36 @@
   const NOTES_KEY='aarohan_notes';
   let attDate=new Date();
 
+  // Meetings are on Fridays — anchor the week key to the Friday date itself
   function getWeekStart(d){
-    const day=new Date(d);
-    const diff=day.getDay()===0?-6:1-day.getDay();
-    day.setDate(day.getDate()+diff);
+    const day = new Date(d);
     day.setHours(0,0,0,0);
+    const dow = day.getDay(); // 0=Sun, 5=Fri
+    // Find the nearest Friday (the meeting day)
+    // If today is Friday → use today
+    // If after Friday (Sat/Sun) → go back to last Friday
+    // If before Friday (Mon-Thu) → go forward to next Friday
+    let diff = 5 - dow; // days to next/current Friday
+    if(dow === 6) diff = -1;  // Saturday → go back 1 to Friday
+    if(dow === 0) diff = -2;  // Sunday   → go back 2 to Friday
+    // For Mon-Thu (diff is positive 1-4): go to upcoming Friday
+    // For Fri (diff=0): stay on today
+    day.setDate(day.getDate() + diff);
     return day;
   }
 
   function getWeekKey(d){
-    const ws=getWeekStart(d);
-    return ws.toISOString().split('T')[0];
+    const ws = getWeekStart(d);
+    // Use local date string to avoid timezone shifting to previous day
+    const yr  = ws.getFullYear();
+    const mo  = String(ws.getMonth()+1).padStart(2,'0');
+    const dt  = String(ws.getDate()).padStart(2,'0');
+    return `${yr}-${mo}-${dt}`;
   }
 
   function getWeekLabel(d){
-    const ws=getWeekStart(d);
-    const we=new Date(ws); we.setDate(we.getDate()+6);
-    const fmt=dt=>dt.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
-    return fmt(ws)+' – '+fmt(we);
+    const ws = getWeekStart(d);
+    return ws.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
   }
 
   // Sheet-backed attendance (localStorage as cache, sheet as source of truth)
