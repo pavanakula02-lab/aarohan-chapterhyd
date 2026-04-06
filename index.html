@@ -1842,6 +1842,10 @@
           <div class="epl-season-label">Days Left</div>
           <div class="epl-season-val" id="eplDaysLeft">—</div>
         </div>
+        <div style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+          <button id="eplRefreshBtn" onclick="refreshEPLFromSheet()" style="display:inline-flex;align-items:center;gap:6px;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid rgba(201,162,39,0.3);border-radius:6px;padding:6px 12px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='rgba(201,162,39,0.25)'" onmouseout="this.style.background='rgba(201,162,39,0.15)'">🔄 Sync</button>
+          <div id="eplSyncLabel" style="font-size:9px;color:rgba(255,255,255,0.25);font-family:'Space Grotesk',sans-serif;letter-spacing:0.05em;white-space:nowrap;">Tap to load latest</div>
+        </div>
       </div>
 
       <!-- Head-to-head -->
@@ -3303,7 +3307,6 @@
   const ATTENDANCE_CSV   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0t6K6i7gIrRcSClFD0CitHurwWaljgUG3nir3lNAmNKZHJLGm61j4gi8XADu-I-XuHVdOmoIra_Bc/pub?gid=158143059&single=true&output=csv";
   const NOTES_CSV        = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0t6K6i7gIrRcSClFD0CitHurwWaljgUG3nir3lNAmNKZHJLGm61j4gi8XADu-I-XuHVdOmoIra_Bc/pub?gid=324489959&single=true&output=csv";
   const ANNOUNCEMENTS_CSV= "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0t6K6i7gIrRcSClFD0CitHurwWaljgUG3nir3lNAmNKZHJLGm61j4gi8XADu-I-XuHVdOmoIra_Bc/pub?gid=116196960&single=true&output=csv";
-  const EPL_CSV          = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0t6K6i7gIrRcSClFD0CitHurwWaljgUG3nir3lNAmNKZHJLGm61j4gi8XADu-I-XuHVdOmoIra_Bc/pub?gid=EPL_GID&single=true&output=csv";
 
   function parseCSV(text){
     const lines = text.trim().split('\n');
@@ -4840,47 +4843,58 @@
   // ══════════════════════════════════════════════════════
   //  EPL — EDUCATION PREMIUM LEAGUE
   // ══════════════════════════════════════════════════════
-  const EPL_KEY = 'aarohan_epl'; // local cache key
+  const EPL_KEY       = 'aarohan_epl';       // local cache key
+  const EPL_CACHE_TS  = 'aarohan_epl_ts';    // timestamp of last successful fetch
 
   function eplGet(){ try{ return JSON.parse(localStorage.getItem(EPL_KEY)||'{}'); }catch(e){ return {}; } }
 
-  // Save to localStorage AND sync to Google Sheet
+  // Save to localStorage AND push to Google Sheet via Apps Script
   function eplSet(d){
     localStorage.setItem(EPL_KEY, JSON.stringify(d));
+    localStorage.setItem(EPL_CACHE_TS, Date.now().toString());
     syncEplToSheet(d);
   }
 
-  // Push full EPL object to Apps Script as a single JSON blob
+  // Push full EPL JSON blob to Apps Script (action: saveEpl)
   function syncEplToSheet(d){
     try{
+      const payload = Object.assign({}, d, { _savedAt: Date.now() });
       const params = new URLSearchParams();
-      params.append('payload', JSON.stringify({ action:'saveEpl', data: d }));
+      params.append('payload', JSON.stringify({ action:'saveEpl', data: payload }));
       fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body: params })
         .catch(e => console.warn('EPL sync error:', e));
     } catch(e){ console.warn('EPL sync error:', e); }
   }
 
-  // Load EPL data from Google Sheet CSV on startup
+  // Load EPL data from Apps Script via GET ?action=getEpl
+  // Falls back to localStorage cache if the fetch fails
   async function loadEplFromSheet(){
-    // EPL_CSV not yet set — skip until admin shares the GID
-    if(EPL_CSV.includes('EPL_GID')) return;
     try{
-      const res = await fetch(EPL_CSV + '&t=' + Date.now());
-      if(!res.ok) return;
+      const url = SCRIPT_URL + '?action=getEpl&t=' + Date.now();
+      const res  = await fetch(url);
+      if(!res.ok) throw new Error('HTTP ' + res.status);
       const text = await res.text();
       if(!text || !text.trim()) return;
-      const rows = parseCSV(text);
-      if(!rows.length) return;
-      // Sheet stores one row per key: key | value (JSON)
-      const merged = eplGet(); // start from local cache
-      rows.forEach(r => {
-        const key = (r.key || r.Key || '').trim();
-        const val = (r.value || r.Value || r.val || '').trim();
-        if(!key || !val) return;
-        try{ merged[key] = JSON.parse(val); } catch(e){ merged[key] = val; }
-      });
-      localStorage.setItem(EPL_KEY, JSON.stringify(merged));
-    } catch(e){ console.warn('loadEplFromSheet error:', e); }
+
+      // Apps Script returns JSON: { status:'ok', data: { ...eplObject } }
+      let parsed;
+      try{ parsed = JSON.parse(text); } catch(e){ return; }
+
+      if(parsed && parsed.data && typeof parsed.data === 'object'){
+        // Merge sheet data over local cache so locally-unsaved edits aren't lost
+        const local  = eplGet();
+        const sheetTs  = parsed.data._savedAt || 0;
+        const localTs  = parseInt(localStorage.getItem(EPL_CACHE_TS)||'0');
+
+        // Sheet wins if it was saved more recently than our local copy
+        const merged = (sheetTs >= localTs) ? Object.assign({}, local, parsed.data) : Object.assign({}, parsed.data, local);
+        delete merged._savedAt;
+        localStorage.setItem(EPL_KEY, JSON.stringify(merged));
+        localStorage.setItem(EPL_CACHE_TS, String(sheetTs || Date.now()));
+      }
+    } catch(e){
+      console.warn('loadEplFromSheet error (will use local cache):', e);
+    }
   }
 
   function eplGetData(){
@@ -4938,6 +4952,22 @@
     eplSet(d); renderEPL(); showToast('✅ Team assignments saved!');
   }
 
+  // Manual refresh — pull latest EPL data from sheet across all devices
+  async function refreshEPLFromSheet(){
+    const btn = document.getElementById('eplRefreshBtn');
+    const lbl = document.getElementById('eplSyncLabel');
+    if(btn){ btn.disabled=true; btn.textContent='⏳ Syncing…'; }
+    if(lbl) lbl.textContent = 'Syncing…';
+    // Force timestamp to 0 so sheet data always wins on manual refresh
+    localStorage.setItem(EPL_CACHE_TS, '0');
+    await loadEplFromSheet();
+    renderEPL();
+    if(btn){ btn.disabled=false; btn.textContent='🔄 Sync'; }
+    const now = new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+    if(lbl) lbl.textContent = 'Synced at ' + now;
+    showToast('✅ EPL synced from server!');
+  }
+
   function addEplBonus(){
     const team = document.getElementById('eplBonusTeam').value;
     const desc = document.getElementById('eplBonusDesc').value.trim();
@@ -4961,6 +4991,15 @@
   }
 
   function renderEPL(){
+    // Update sync label with cache timestamp
+    const _eplTs = parseInt(localStorage.getItem(EPL_CACHE_TS)||'0');
+    if(_eplTs){
+      const _lbl = document.getElementById('eplSyncLabel');
+      if(_lbl){
+        const _d = new Date(_eplTs);
+        _lbl.textContent = 'Last synced ' + _d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+      }
+    }
     const epl = eplGetData();
     const att = loadAttendance();
 
