@@ -432,6 +432,59 @@
     .wa-config-input:focus { border-color:var(--gold); }
     @media(max-width:640px){ .goals-grid { grid-template-columns:1fr; } .goals-input-grid { grid-template-columns:1fr 1fr; } }
 
+    /* ══════════════════════════════════════
+       GUEST REGISTRATION PAGE
+    ══════════════════════════════════════ */
+    .guest-page { background:var(--bg); min-height:100vh; padding:32px 20px 80px; display:flex; flex-direction:column; align-items:center;
+      background-image:radial-gradient(circle at 10% 15%,rgba(201,162,39,0.07) 0%,transparent 45%),
+        radial-gradient(circle at 90% 80%,rgba(26,138,120,0.06) 0%,transparent 45%); }
+    .guest-wrap { width:100%; max-width:680px; }
+
+    .guest-hero { background:var(--navy); border:1px solid rgba(201,162,39,0.2); border-radius:var(--radius); padding:28px 30px; margin-bottom:16px; position:relative; overflow:hidden; }
+    .guest-hero::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--orange),var(--gold)); }
+    .guest-hero-orb { position:absolute; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle,rgba(201,162,39,0.08),transparent 70%); top:-60px; right:-60px; pointer-events:none; }
+    .guest-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(201,162,39,0.12); color:var(--gold); font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; padding:4px 12px; border-radius:4px; border:1px solid rgba(201,162,39,0.25); margin-bottom:12px; }
+    .guest-hero-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(20px,4vw,26px); font-weight:700; color:#fff; line-height:1.2; margin-bottom:8px; letter-spacing:-0.02em; }
+    .guest-hero-title span { color:var(--gold); }
+    .guest-hero-sub { font-size:13px; color:rgba(255,255,255,0.45); line-height:1.7; max-width:480px; }
+    .guest-hero-note { margin-top:12px; font-size:11px; color:rgba(255,255,255,0.2); }
+    .guest-hero-note em { color:var(--gold); font-style:normal; }
+
+    .guest-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); margin-bottom:12px; overflow:hidden; }
+    .guest-card-header { padding:14px 22px 12px; background:#fafbfd; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+    .guest-card-num { width:22px; height:22px; background:var(--navy); color:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; flex-shrink:0; }
+    .guest-card-title { font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; color:var(--ink); }
+    .guest-card-body { padding:18px 22px 22px; }
+
+    .gf { margin-bottom:16px; }
+    .gf:last-child { margin-bottom:0; }
+    .gl { display:block; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--ink); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em; }
+    .gl .req { color:var(--orange); margin-left:2px; }
+    .gl .hint { font-family:'Inter',sans-serif; font-size:11px; font-weight:400; color:var(--text-soft); text-transform:none; letter-spacing:0; display:block; margin-top:2px; }
+
+    .g2col { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    @media(max-width:520px){ .g2col { grid-template-columns:1fr; } }
+
+    .guest-radio-group { display:flex; gap:10px; flex-wrap:wrap; }
+    .guest-radio { display:flex; align-items:center; gap:8px; padding:9px 16px; border:1.5px solid var(--border); border-radius:8px; cursor:pointer; font-size:14px; background:#fafbfc; transition:all 0.15s; user-select:none; }
+    .guest-radio input { display:none; }
+    .guest-radio:hover { border-color:var(--teal); background:#f0faf8; }
+    .guest-radio.selected { background:var(--navy); border-color:var(--gold); color:#fff; font-weight:600; }
+    .guest-radio.selected-yes { background:rgba(26,138,120,0.08); border-color:var(--teal); color:var(--teal); font-weight:600; }
+    .guest-radio.selected-no  { background:rgba(192,65,90,0.07); border-color:var(--pink); color:var(--pink); font-weight:600; }
+
+    .guest-submit-btn { width:100%; padding:14px; background:var(--navy); color:var(--gold); font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; border:1px solid rgba(201,162,39,0.3); border-radius:10px; cursor:pointer; transition:all 0.2s; letter-spacing:0.02em; box-shadow:0 4px 14px rgba(11,20,38,0.2); display:flex; align-items:center; justify-content:center; gap:10px; }
+    .guest-submit-btn:hover { background:var(--navy-light); transform:translateY(-1px); box-shadow:0 6px 20px rgba(11,20,38,0.25); }
+    .guest-submit-btn:disabled { background:#9aa0b0; cursor:not-allowed; transform:none; border-color:transparent; box-shadow:none; }
+
+    .guest-ty { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:48px 28px; text-align:center; display:none; box-shadow:var(--shadow); }
+    .guest-ty.show { display:block; animation:slideIn 0.4s ease; }
+    .guest-ty-icon { width:72px; height:72px; background:linear-gradient(135deg,var(--navy),var(--navy-light)); border:2px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 18px; animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
+    .guest-ty-title { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--ink); margin-bottom:8px; }
+    .guest-ty-sub { font-size:14px; color:var(--text-muted); line-height:1.6; max-width:360px; margin:0 auto 24px; }
+    .guest-ty-again { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--navy); font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; padding:10px 22px; border:none; border-radius:6px; cursor:pointer; }
+    .guest-ty-again:hover { opacity:0.9; }
+
 
     /* Toasts */
     .toast { position:fixed; bottom:24px; right:24px; background:var(--navy); color:var(--white); border:1px solid rgba(201,162,39,0.25); border-radius:8px; padding:11px 18px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; z-index:9999; transform:translateY(80px); opacity:0; transition:all 0.3s; box-shadow:var(--shadow); }
@@ -842,6 +895,51 @@
       .lp-right::before { display:none; }
     }
 
+    /* ── Login screen tab switcher ── */
+    .lp-tabs { display:flex; gap:0; margin-bottom:28px; background:#eef0f5; border-radius:10px; padding:4px; }
+    .lp-tab-btn { flex:1; padding:10px 8px; background:none; border:none; border-radius:7px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; color:var(--text-muted); cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+    .lp-tab-btn.active { background:#fff; color:var(--ink); box-shadow:0 1px 6px rgba(11,20,38,0.1); }
+    .lp-panel { display:none; }
+    .lp-panel.active { display:block; }
+
+    /* ── Guest form embedded in login screen ── */
+    .lp-guest-wrap { width:100%; }
+    .lp-guest-header { text-align:center; margin-bottom:24px; }
+    .lp-guest-title { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; color:var(--ink); letter-spacing:-0.02em; margin-bottom:4px; }
+    .lp-guest-sub { font-size:12px; color:var(--text-muted); line-height:1.5; }
+    .lp-guest-sub span { color:var(--gold); font-weight:600; }
+    .lp-gf { margin-bottom:14px; }
+    .lp-gl { display:block; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px; }
+    .lp-gl .req { color:var(--orange); }
+    .lp-gl .hint { font-family:'Inter',sans-serif; font-size:10px; font-weight:400; color:var(--text-soft); display:block; margin-top:1px; text-transform:none; letter-spacing:0; }
+    .lp-ginput { width:100%; padding:11px 14px; font-family:'Inter',sans-serif; font-size:13px; color:var(--ink); background:#fff; border:1.5px solid var(--border); border-radius:9px; outline:none; transition:all 0.2s; box-shadow:0 1px 4px rgba(11,20,38,0.05); -webkit-appearance:none; appearance:none; }
+    .lp-ginput:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,162,39,0.12); }
+    .lp-ginput::placeholder { color:#bcc4d4; }
+    .lp-ginput.lp-gselect { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230b1426' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; cursor:pointer; }
+    .lp-g2col { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    @media(max-width:480px){ .lp-g2col { grid-template-columns:1fr; } }
+    .lp-gerr { display:none; font-size:11px; color:var(--pink); font-weight:500; margin-top:4px; }
+    .lp-gerr.show { display:block; }
+    .lp-ginput.error { border-color:var(--pink)!important; }
+    .lp-grad-group { display:flex; gap:8px; flex-wrap:wrap; margin-top:2px; }
+    .lp-grad { display:flex; align-items:center; gap:7px; padding:8px 14px; border:1.5px solid var(--border); border-radius:7px; cursor:pointer; font-size:13px; background:#fafbfc; transition:all 0.15s; }
+    .lp-grad input { display:none; }
+    .lp-grad.sel { background:var(--navy); border-color:var(--gold); color:#fff; font-weight:600; }
+    .lp-gtextarea { width:100%; min-height:80px; resize:vertical; padding:10px 14px; font-family:'Inter',sans-serif; font-size:13px; color:var(--ink); background:#fff; border:1.5px solid var(--border); border-radius:9px; outline:none; transition:all 0.2s; }
+    .lp-gtextarea:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,162,39,0.12); }
+    .lp-gtextarea::placeholder { color:#bcc4d4; }
+    .lp-guest-submit { width:100%; padding:13px; background:var(--navy); color:var(--gold); font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; border:1px solid rgba(201,162,39,0.3); border-radius:10px; cursor:pointer; transition:all 0.2s; margin-top:4px; box-shadow:0 4px 14px rgba(11,20,38,0.2); letter-spacing:0.02em; }
+    .lp-guest-submit:hover { background:var(--navy-light); transform:translateY(-1px); }
+    .lp-guest-submit:disabled { background:#9aa0b0; cursor:not-allowed; transform:none; border-color:transparent; }
+    .lp-guest-ty { text-align:center; padding:28px 10px; display:none; }
+    .lp-guest-ty.show { display:block; }
+    .lp-guest-ty-icon { font-size:40px; margin-bottom:12px; }
+    .lp-guest-ty-title { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; color:var(--ink); margin-bottom:6px; }
+    .lp-guest-ty-sub { font-size:12px; color:var(--text-muted); line-height:1.6; margin-bottom:18px; }
+    .lp-guest-ty-again { background:none; border:1.5px solid var(--border); border-radius:8px; padding:9px 18px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--text-muted); cursor:pointer; transition:all 0.15s; }
+    .lp-guest-ty-again:hover { border-color:var(--navy); color:var(--ink); }
+    .lp-guest-section-label { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.1em; margin:18px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--border); }
+
     .ml-user-badge { display:flex; align-items:center; gap:8px; background:rgba(201,162,39,0.1); border:1px solid rgba(201,162,39,0.2); border-radius:100px; padding:5px 14px 5px 5px; }
     .ml-user-av { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--navy); flex-shrink:0; }
     .ml-user-name { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--gold); }
@@ -1227,52 +1325,141 @@
     </div>
   </div>
 
-  <!-- RIGHT: Login Form -->
+  <!-- RIGHT: Tabbed panel — Guest Registration | Member Login -->
   <div class="lp-right">
     <div class="lp-form-wrap">
 
-      <!-- Form header -->
-      <div style="text-align:center;margin-bottom:32px">
-        <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--navy),var(--navy-light));border:2px solid rgba(201,162,39,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 16px;box-shadow:0 4px 16px rgba(11,20,38,0.15)">🎓</div>
-        <div class="lp-welcome">Welcome back</div>
-        <div class="lp-welcome-sub">Sign in to your <span>Aarohan</span> portal</div>
+      <!-- Tab switcher -->
+      <div class="lp-tabs">
+        <button class="lp-tab-btn active" id="lpTabGuest" onclick="switchLpTab('guest')">&#127903; Guest Registration</button>
+        <button class="lp-tab-btn" id="lpTabMember" onclick="switchLpTab('member')">&#128274; Member Login</button>
       </div>
 
-      <!-- Name select -->
-      <label class="ml-label">👤 &nbsp;Your Name</label>
-      <div class="ml-field-wrap">
-        <select class="ml-select" id="mlName">
-          <option value="">— Select your name —</option>
-        </select>
+      <!-- PANEL: Guest Registration -->
+      <div class="lp-panel active" id="lpPanelGuest">
+        <div class="lp-guest-wrap">
+          <div class="lp-guest-ty" id="lpGuestTy">
+            <div class="lp-guest-ty-icon">&#127881;</div>
+            <div class="lp-guest-ty-title">Thank You for Registering!</div>
+            <div class="lp-guest-ty-sub">Your details have been submitted. The Aarohan team will get in touch shortly. We hope you enjoyed the meeting!</div>
+            <button class="lp-guest-ty-again" onclick="resetLpGuestForm()">&#8592; Submit Another Response</button>
+          </div>
+          <div id="lpGuestFormBody">
+            <div class="lp-guest-header">
+              <div class="lp-guest-title">Welcome to Aarohan! &#128075;</div>
+              <div class="lp-guest-sub">Attended our meeting as a guest? Fill in your details so we can stay in touch.<br/><span>* Required fields</span></div>
+            </div>
+            <div class="lp-guest-section-label">Personal &amp; Business Details</div>
+            <div class="lp-gf">
+              <label class="lp-gl">Today's Date <span class="req">*</span></label>
+              <input type="date" id="lpgDate" class="lp-ginput"/>
+              <p class="lp-gerr" id="lpgDateErr">Please select the date.</p>
+            </div>
+            <div class="lp-g2col">
+              <div class="lp-gf">
+                <label class="lp-gl">Your Full Name <span class="req">*</span></label>
+                <input type="text" id="lpgName" class="lp-ginput" placeholder="Full name"/>
+                <p class="lp-gerr" id="lpgNameErr">Please enter your name.</p>
+              </div>
+              <div class="lp-gf">
+                <label class="lp-gl">Business Phone <span class="req">*</span></label>
+                <input type="tel" id="lpgPhone" class="lp-ginput" placeholder="+91 XXXXX XXXXX"/>
+                <p class="lp-gerr" id="lpgPhoneErr">Please enter your phone.</p>
+              </div>
+            </div>
+            <div class="lp-g2col">
+              <div class="lp-gf">
+                <label class="lp-gl">Email ID <span class="req">*</span></label>
+                <input type="email" id="lpgEmail" class="lp-ginput" placeholder="you@example.com"/>
+                <p class="lp-gerr" id="lpgEmailErr">Please enter a valid email.</p>
+              </div>
+              <div class="lp-gf">
+                <label class="lp-gl">Website <span class="req">*</span><span class="hint">School / company website</span></label>
+                <input type="text" id="lpgWebsite" class="lp-ginput" placeholder="www.yourwebsite.com"/>
+                <p class="lp-gerr" id="lpgWebsiteErr">Please enter your website.</p>
+              </div>
+            </div>
+            <div class="lp-gf">
+              <label class="lp-gl">Business Category <span class="req">*</span><span class="hint">e.g. School, College, Coaching, EdTech...</span></label>
+              <input type="text" id="lpgCategory" class="lp-ginput" placeholder="Enter your business category"/>
+              <p class="lp-gerr" id="lpgCategoryErr">Please enter your business category.</p>
+            </div>
+            <div class="lp-gf">
+              <label class="lp-gl">Referred By <span class="req">*</span><span class="hint">Which member invited you today?</span></label>
+              <select id="lpgReferredBy" class="lp-ginput lp-gselect">
+                <option value="">&#8212; Select member who invited you &#8212;</option>
+              </select>
+              <p class="lp-gerr" id="lpgReferredByErr">Please select who referred you.</p>
+            </div>
+            <div class="lp-guest-section-label">About the Community</div>
+            <div class="lp-gf">
+              <label class="lp-gl">Have you understood the process and criteria for membership? <span class="req">*</span></label>
+              <div class="lp-grad-group" id="lpgrUnderstood">
+                <label class="lp-grad" onclick="selectLpGuestRadio(this,'lpgrUnderstood','Yes')"><input type="radio" name="lpgrUnderstood" value="Yes"/>&#9989; Yes</label>
+                <label class="lp-grad" onclick="selectLpGuestRadio(this,'lpgrUnderstood','No')"><input type="radio" name="lpgrUnderstood" value="No"/>&#10060; No</label>
+              </div>
+              <p class="lp-gerr" id="lpgrUnderstoodErr">Please select an option.</p>
+            </div>
+            <div class="lp-gf">
+              <label class="lp-gl">Do you see value in being part of this community? <span class="req">*</span></label>
+              <div class="lp-grad-group" id="lpgrValue">
+                <label class="lp-grad" onclick="selectLpGuestRadio(this,'lpgrValue','Yes')"><input type="radio" name="lpgrValue" value="Yes"/>&#9989; Yes</label>
+                <label class="lp-grad" onclick="selectLpGuestRadio(this,'lpgrValue','No')"><input type="radio" name="lpgrValue" value="No"/>&#10060; No</label>
+              </div>
+              <p class="lp-gerr" id="lpgrValueErr">Please select an option.</p>
+            </div>
+            <div class="lp-gf">
+              <label class="lp-gl">Would you like to join the community? <span class="req">*</span></label>
+              <div class="lp-grad-group" id="lpgrJoin">
+                <label class="lp-grad" onclick="selectLpGuestRadio(this,'lpgrJoin','Yes')"><input type="radio" name="lpgrJoin" value="Yes"/>&#9989; Yes, I'd love to!</label>
+                <label class="lp-grad" onclick="selectLpGuestRadio(this,'lpgrJoin','No')"><input type="radio" name="lpgrJoin" value="No"/>&#10060; Not right now</label>
+              </div>
+              <p class="lp-gerr" id="lpgrJoinErr">Please select an option.</p>
+            </div>
+            <div class="lp-gf">
+              <label class="lp-gl">Your Feedback <span class="req">*</span><span class="hint">Thoughts about today's meeting and our community</span></label>
+              <textarea id="lpgFeedback" class="lp-gtextarea" placeholder="Tell us what you thought about today's session..."></textarea>
+              <p class="lp-gerr" id="lpgFeedbackErr">Please share your feedback.</p>
+            </div>
+            <button class="lp-guest-submit" id="lpgSubmitBtn" onclick="submitLpGuestForm()">Submit Registration &#8594;</button>
+            <p style="text-align:center;font-size:11px;color:var(--text-soft);margin-top:8px">&#128274; Your info is securely stored and only used by the Aarohan team.</p>
+          </div>
+        </div>
       </div>
 
-      <!-- Password -->
-      <label class="ml-label">🔑 &nbsp;Password</label>
-      <div class="ml-field-wrap">
-        <input class="ml-input" type="password" id="mlPassword" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doMemberLogin()"/>
-      </div>
-
-      <!-- Error -->
-      <div class="ml-err" id="mlErr">Incorrect password. Please try again.</div>
-
-      <!-- Submit -->
-      <button class="ml-btn" onclick="doMemberLogin()">Sign In to Portal →</button>
-
-      <div class="ml-footer">
-        🔒 Your data is secure and only visible to chapter members.<br/>
-        Contact your chapter admin if you need help logging in.
-      </div>
-
-      <!-- Trust strip -->
-      <div class="lp-trust">
-        <div class="lp-trust-title">What's inside</div>
-        <div class="lp-trust-chips">
-          <span class="lp-trust-chip">📝 Activity Log</span>
-          <span class="lp-trust-chip">🏆 Leaderboard</span>
-          <span class="lp-trust-chip">📅 Attendance</span>
-          <span class="lp-trust-chip">💰 Finances</span>
-          <span class="lp-trust-chip">⚽ EPL</span>
-          <span class="lp-trust-chip">📣 Comms</span>
+      <!-- PANEL: Member Login -->
+      <div class="lp-panel" id="lpPanelMember">
+        <div style="text-align:center;margin-bottom:28px">
+          <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--navy),var(--navy-light));border:2px solid rgba(201,162,39,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 16px;box-shadow:0 4px 16px rgba(11,20,38,0.15)">&#127891;</div>
+          <div class="lp-welcome">Welcome back</div>
+          <div class="lp-welcome-sub">Sign in to your <span>Aarohan</span> portal</div>
+        </div>
+        <label class="ml-label">&#128100; &nbsp;Your Name</label>
+        <div class="ml-field-wrap">
+          <select class="ml-select" id="mlName">
+            <option value="">&#8212; Select your name &#8212;</option>
+          </select>
+        </div>
+        <label class="ml-label">&#128273; &nbsp;Password</label>
+        <div class="ml-field-wrap">
+          <input class="ml-input" type="password" id="mlPassword" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doMemberLogin()"/>
+        </div>
+        <div class="ml-err" id="mlErr">Incorrect password. Please try again.</div>
+        <button class="ml-btn" onclick="doMemberLogin()">Sign In to Portal &#8594;</button>
+        <div class="ml-footer">
+          &#128274; Your data is secure and only visible to chapter members.<br/>
+          Contact your chapter admin if you need help logging in.
+        </div>
+        <div class="lp-trust">
+          <div class="lp-trust-title">What's inside</div>
+          <div class="lp-trust-chips">
+            <span class="lp-trust-chip">&#128221; Activity Log</span>
+            <span class="lp-trust-chip">&#127942; Leaderboard</span>
+            <span class="lp-trust-chip">&#128197; Attendance</span>
+            <span class="lp-trust-chip">&#128176; Finances</span>
+            <span class="lp-trust-chip">&#9917; EPL</span>
+            <span class="lp-trust-chip">&#128227; Comms</span>
+          </div>
         </div>
       </div>
 
@@ -1292,6 +1479,7 @@
       <button class="nav-tab" onclick="showPage('comms')">📣 Comms</button>
       <button class="nav-tab" onclick="showPage('members')">👥 Members</button>
       <button class="nav-tab" onclick="showPage('finances')">💰 Finances</button>
+      <button class="nav-tab" onclick="showPage('guest')">🎟 Guest Register</button>
       <button class="nav-tab admin-tab" onclick="showPage('admin')">🔐 Admin</button>
     </div>
     <div class="nav-right">
@@ -1340,6 +1528,9 @@
       </button>
       <button class="nav-drawer-item" id="ditem-finances" onclick="drawerNav('finances')">
         <span class="ditem-icon">💰</span><span class="ditem-label">Finances</span>
+      </button>
+      <button class="nav-drawer-item" id="ditem-guest" onclick="drawerNav('guest')">
+        <span class="ditem-icon">🎟</span><span class="ditem-label">Guest Registration</span>
       </button>
       <div class="nav-drawer-divider"></div>
       <button class="nav-drawer-item" id="ditem-admin" onclick="drawerNav('admin')">
@@ -2033,6 +2224,148 @@
   </div>
 </div>
 
+<!-- ══════════════ PAGE: GUEST REGISTRATION ══════════════ -->
+<div class="page" id="page-guest">
+<div class="guest-page">
+  <div class="guest-wrap">
+
+    <!-- Hero -->
+    <div class="guest-hero">
+      <div class="guest-hero-orb"></div>
+      <div class="guest-badge">◆ Guest Registration</div>
+      <div class="guest-hero-title">Welcome to<br/><span>EducationKnot</span> Aarohan</div>
+      <div class="guest-hero-sub">Thank you for attending our chapter meeting as a guest. Please fill in this form so we can keep in touch and help you learn more about our community.</div>
+      <div class="guest-hero-note"><em>*</em> Indicates required field</div>
+    </div>
+
+    <!-- Thank You screen (hidden until submit) -->
+    <div class="guest-ty" id="guestTy">
+      <div class="guest-ty-icon">🎉</div>
+      <div class="guest-ty-title">Thank You for Registering!</div>
+      <div class="guest-ty-sub">Your details have been submitted successfully. The Aarohan team will get in touch with you shortly. We hope you enjoyed the meeting!</div>
+      <button class="guest-ty-again" onclick="resetGuestForm()">← Submit Another Response</button>
+    </div>
+
+    <!-- Form cards (hidden after submit) -->
+    <div id="guestFormBody">
+
+      <!-- Section 1: Personal Details -->
+      <div class="guest-card">
+        <div class="guest-card-header">
+          <div class="guest-card-num">1</div>
+          <div class="guest-card-title">Personal & Business Details</div>
+        </div>
+        <div class="guest-card-body">
+          <div class="gf">
+            <label class="gl">Today's Date <span class="req">*</span></label>
+            <input type="date" id="gDate" class=""/>
+            <p class="err" id="gDateErr">Please select the date.</p>
+          </div>
+          <div class="g2col">
+            <div class="gf">
+              <label class="gl">Applicant's Name <span class="req">*</span></label>
+              <input type="text" id="gName" placeholder="Your full name"/>
+              <p class="err" id="gNameErr">Please enter your name.</p>
+            </div>
+            <div class="gf">
+              <label class="gl">Business Phone <span class="req">*</span></label>
+              <input type="tel" id="gPhone" placeholder="+91 XXXXX XXXXX"/>
+              <p class="err" id="gPhoneErr">Please enter your phone number.</p>
+            </div>
+          </div>
+          <div class="g2col">
+            <div class="gf">
+              <label class="gl">Email ID <span class="req">*</span></label>
+              <input type="email" id="gEmail" placeholder="you@example.com"/>
+              <p class="err" id="gEmailErr">Please enter a valid email.</p>
+            </div>
+            <div class="gf">
+              <label class="gl">Website <span class="req">*</span>
+                <span class="hint">Enter your school / company website</span>
+              </label>
+              <input type="text" id="gWebsite" placeholder="www.yourwebsite.com"/>
+              <p class="err" id="gWebsiteErr">Please enter your website.</p>
+            </div>
+          </div>
+          <div class="gf">
+            <label class="gl">Business Category <span class="req">*</span>
+              <span class="hint">e.g. School, College, Coaching, EdTech, Training…</span>
+            </label>
+            <input type="text" id="gCategory" placeholder="Enter your business category"/>
+            <p class="err" id="gCategoryErr">Please enter your business category.</p>
+          </div>
+          <div class="gf">
+            <label class="gl">Referred By <span class="req">*</span>
+              <span class="hint">Which member invited you to today's meeting?</span>
+            </label>
+            <select id="gReferredBy">
+              <option value="">— Select member who invited you —</option>
+            </select>
+            <p class="err" id="gReferredByErr">Please select who referred you.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Community Questions -->
+      <div class="guest-card">
+        <div class="guest-card-header">
+          <div class="guest-card-num">2</div>
+          <div class="guest-card-title">About the Community</div>
+        </div>
+        <div class="guest-card-body">
+
+          <div class="gf">
+            <label class="gl">Have you understood the process and criteria for being a member of the community? <span class="req">*</span></label>
+            <div class="guest-radio-group" id="grUnderstood">
+              <label class="guest-radio" onclick="selectGuestRadio(this,'grUnderstood','Yes')"><input type="radio" name="grUnderstood" value="Yes"/>✅ Yes</label>
+              <label class="guest-radio" onclick="selectGuestRadio(this,'grUnderstood','No')"><input type="radio" name="grUnderstood" value="No"/>❌ No</label>
+            </div>
+            <p class="err" id="grUnderstoodErr">Please select an option.</p>
+          </div>
+
+          <div class="gf">
+            <label class="gl">Do you see value in being part of this community? <span class="req">*</span></label>
+            <div class="guest-radio-group" id="grValue">
+              <label class="guest-radio" onclick="selectGuestRadio(this,'grValue','Yes')"><input type="radio" name="grValue" value="Yes"/>✅ Yes</label>
+              <label class="guest-radio" onclick="selectGuestRadio(this,'grValue','No')"><input type="radio" name="grValue" value="No"/>❌ No</label>
+            </div>
+            <p class="err" id="grValueErr">Please select an option.</p>
+          </div>
+
+          <div class="gf">
+            <label class="gl">Would you like to be part of this community? <span class="req">*</span></label>
+            <div class="guest-radio-group" id="grJoin">
+              <label class="guest-radio" onclick="selectGuestRadio(this,'grJoin','Yes')"><input type="radio" name="grJoin" value="Yes"/>✅ Yes, I'd love to join!</label>
+              <label class="guest-radio" onclick="selectGuestRadio(this,'grJoin','No')"><input type="radio" name="grJoin" value="No"/>❌ Not right now</label>
+            </div>
+            <p class="err" id="grJoinErr">Please select an option.</p>
+          </div>
+
+          <div class="gf">
+            <label class="gl">Your Feedback <span class="req">*</span>
+              <span class="hint">Share your thoughts about today's meeting and the community</span>
+            </label>
+            <textarea id="gFeedback" placeholder="Tell us what you thought about today's session, what impressed you, or any suggestions…" style="min-height:100px"></textarea>
+            <p class="err" id="gFeedbackErr">Please share your feedback.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div style="margin-top:4px">
+        <button class="guest-submit-btn" id="gSubmitBtn" onclick="submitGuestForm()">
+          <span id="gSubmitLabel">Submit Registration →</span>
+        </button>
+        <p style="text-align:center;font-size:11px;color:var(--text-soft);margin-top:10px">🔒 Your information is securely stored and will only be used by the Aarohan chapter team.</p>
+      </div>
+
+    </div><!-- end guestFormBody -->
+
+  </div>
+</div>
+</div>
+
 <!-- ══════════════ PAGE: ANALYTICS ══════════════ -->
 <div class="page" id="page-analytics">
 <div class="analytics-page">
@@ -2269,7 +2602,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZRt6EqHgCpYCPaHCpW31MGP9p2-ZmE1-3PLdNglcqXPrjp01n3bs9Gmy15M7DAvvX/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwXqpHD6FPjg-cZpj96GDpJMoUx2t05-gV_psKf49Y976Jv_nE5AXGNoKG29vL9OBlm/exec";
   const ADMIN_PWD_KEY  = "aarohan_admin_pwd";
   const MEMBERS_KEY    = "aarohan_members";
   const DEFAULT_PWD    = "Aarohan@2025";
@@ -2396,6 +2729,113 @@
   let isAdmin   = false;
   let fCurSec   = 1;
   let loggedInMember = null; // currently logged-in member object
+
+
+  // ══════════════════════════════════════════════════════
+  //  LANDING PAGE TAB SWITCH
+  // ══════════════════════════════════════════════════════
+  function switchLpTab(tab){
+    document.getElementById('lpTabGuest').classList.toggle('active', tab==='guest');
+    document.getElementById('lpTabMember').classList.toggle('active', tab==='member');
+    document.getElementById('lpPanelGuest').classList.toggle('active', tab==='guest');
+    document.getElementById('lpPanelMember').classList.toggle('active', tab==='member');
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  LANDING PAGE GUEST FORM
+  // ══════════════════════════════════════════════════════
+  function populateLpGuestReferredBy(){
+    const sel = document.getElementById('lpgReferredBy');
+    if(!sel) return;
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">— Select member who invited you —</option>'
+      + MEMBERS.map(m => '<option value="'+m.name+'"'+(m.name===cur?' selected':'')+'>'+m.name+'</option>').join('');
+  }
+
+  function selectLpGuestRadio(el, groupId, val){
+    document.querySelectorAll('#'+groupId+' .lp-grad').forEach(l => l.classList.remove('sel'));
+    el.classList.add('sel');
+    el.querySelector('input').checked = true;
+  }
+
+  function getLpGuestRadio(groupId){
+    const checked = document.querySelector('#'+groupId+' input[type=radio]:checked');
+    return checked ? checked.value : '';
+  }
+
+  function resetLpGuestForm(){
+    document.getElementById('lpGuestTy').style.display = 'none';
+    document.getElementById('lpGuestFormBody').style.display = 'block';
+    ['lpgDate','lpgName','lpgPhone','lpgEmail','lpgWebsite','lpgCategory','lpgFeedback'].forEach(function(id){
+      var el = document.getElementById(id); if(el) el.value = '';
+    });
+    document.getElementById('lpgReferredBy').value = '';
+    ['lpgrUnderstood','lpgrValue','lpgrJoin'].forEach(function(gid){
+      document.querySelectorAll('#'+gid+' .lp-grad').forEach(function(l){ l.classList.remove('sel'); });
+      document.querySelectorAll('#'+gid+' input').forEach(function(i){ i.checked = false; });
+    });
+    document.querySelectorAll('.lp-gerr.show').forEach(function(e){ e.classList.remove('show'); });
+    document.querySelectorAll('.lp-ginput.error').forEach(function(e){ e.classList.remove('error'); });
+    var btn = document.getElementById('lpgSubmitBtn');
+    if(btn){ btn.disabled=false; btn.textContent='Submit Registration'; }
+    var d = document.getElementById('lpgDate');
+    if(d) d.value = new Date().toISOString().split('T')[0];
+  }
+
+  async function submitLpGuestForm(){
+    var valid = true;
+    function lpgErr(fieldId, errId, check){
+      var f=document.getElementById(fieldId), e=document.getElementById(errId);
+      if(!check){ if(f) f.classList.add('error'); if(e) e.classList.add('show'); valid=false; }
+      else { if(f) f.classList.remove('error'); if(e) e.classList.remove('show'); }
+    }
+    var date    = (document.getElementById('lpgDate')||{}).value||'';
+    var name    = ((document.getElementById('lpgName')||{}).value||'').trim();
+    var phone   = ((document.getElementById('lpgPhone')||{}).value||'').trim();
+    var email   = ((document.getElementById('lpgEmail')||{}).value||'').trim();
+    var website = ((document.getElementById('lpgWebsite')||{}).value||'').trim();
+    var cat     = ((document.getElementById('lpgCategory')||{}).value||'').trim();
+    var refBy   = (document.getElementById('lpgReferredBy')||{}).value||'';
+    var feedback= ((document.getElementById('lpgFeedback')||{}).value||'').trim();
+    var understood = getLpGuestRadio('lpgrUnderstood');
+    var value_q    = getLpGuestRadio('lpgrValue');
+    var join       = getLpGuestRadio('lpgrJoin');
+
+    lpgErr('lpgDate','lpgDateErr',!!date);
+    lpgErr('lpgName','lpgNameErr',name.length>0);
+    lpgErr('lpgPhone','lpgPhoneErr',phone.length>=7);
+    lpgErr('lpgEmail','lpgEmailErr',/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+    lpgErr('lpgWebsite','lpgWebsiteErr',website.length>0);
+    lpgErr('lpgCategory','lpgCategoryErr',cat.length>0);
+    lpgErr('lpgReferredBy','lpgReferredByErr',!!refBy);
+    lpgErr('lpgFeedback','lpgFeedbackErr',feedback.length>0);
+
+    var ue=document.getElementById('lpgrUnderstoodErr');
+    if(!understood){ if(ue) ue.classList.add('show'); valid=false; } else { if(ue) ue.classList.remove('show'); }
+    var ve=document.getElementById('lpgrValueErr');
+    if(!value_q){ if(ve) ve.classList.add('show'); valid=false; } else { if(ve) ve.classList.remove('show'); }
+    var je=document.getElementById('lpgrJoinErr');
+    if(!join){ if(je) je.classList.add('show'); valid=false; } else { if(je) je.classList.remove('show'); }
+
+    if(!valid) return;
+
+    var btn=document.getElementById('lpgSubmitBtn');
+    btn.disabled=true; btn.textContent='Submitting...';
+
+    var payload={action:'submit',type:'guest',date:date,name:name,phone:phone,email:email,
+      website:website,category:cat,referredBy:refBy,understood:understood,
+      valueInCommunity:value_q,wantToJoin:join,feedback:feedback,
+      timestamp:new Date().toISOString()};
+    try{
+      var params=new URLSearchParams();
+      params.append('payload',JSON.stringify(payload));
+      await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:params});
+    }catch(e){console.warn('Guest submit error',e);}
+
+    document.getElementById('lpGuestFormBody').style.display='none';
+    document.getElementById('lpGuestTy').style.display='block';
+    btn.disabled=false; btn.textContent='Submit Registration';
+  }
 
   const MEMBER_SESSION_KEY = 'aarohan_member_session';
 
@@ -2528,7 +2968,7 @@
     document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
     document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
     document.getElementById('page-'+p).classList.add('active');
-    const pageOrder=['form','leaderboard','analytics','attendance','comms','members','finances','admin'];
+    const pageOrder=['form','leaderboard','analytics','attendance','comms','members','finances','guest','admin'];
     const idx=pageOrder.indexOf(p);
     const tabs=document.querySelectorAll('.nav-tab');
     if(tabs[idx]) tabs[idx].classList.add('active');
@@ -2542,6 +2982,7 @@
     if(p==='attendance'){ renderAttendancePage(); }
     if(p==='comms'){ renderCommsPage(); }
     if(p==='finances'){ renderFinancesPage(); }
+    if(p==='guest'){ renderGuestPage(); }
     if(p==='admin' && isAdmin) renderAdminDash();
   }
 
@@ -2619,6 +3060,8 @@
       sel.innerHTML='<option value="">— Select '+(id==='fMember'?'your name':'member')+'—</option>'
         +list.map(m=>`<option${cur===m?' selected':''}>${m}</option>`).join('');
     });
+    // LP Guest referred-by dropdown
+    populateLpGuestReferredBy();
     // JM checkboxes
     const jmList=document.getElementById('jmAttList');
     if(jmList){
@@ -2821,6 +3264,8 @@
     btn.classList.remove('submitting'); btn.disabled=false;
     document.getElementById('fNavWrap').style.display='';
     document.getElementById('fDate').value=new Date().toISOString().split('T')[0];
+  // Pre-fill today's date on landing guest form
+  (function(){ var d=document.getElementById('lpgDate'); if(d) d.value=new Date().toISOString().split('T')[0]; })();
     // Re-apply logged-in member — lock name & prefill email
     if(loggedInMember){
       const sel = document.getElementById('fMember');
@@ -4913,6 +5358,125 @@
     if(!el){ showToast('Template not found.',true); return; }
     const text = el.textContent;
     window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  GUEST REGISTRATION
+  // ══════════════════════════════════════════════════════
+  const GUEST_SHEET = 'GuestRegistrations';
+
+  function renderGuestPage(){
+    // Set today's date
+    const dateEl = document.getElementById('gDate');
+    if(dateEl && !dateEl.value) dateEl.value = new Date().toISOString().split('T')[0];
+    // Populate referred-by dropdown with member names
+    const sel = document.getElementById('gReferredBy');
+    if(sel){
+      const cur = sel.value;
+      sel.innerHTML = '<option value="">— Select member who invited you —</option>'
+        + MEMBERS.map(m=>`<option value="${m.name}"${cur===m.name?' selected':''}>${m.name}</option>`).join('');
+    }
+  }
+
+  function selectGuestRadio(el, groupId, value){
+    // Clear all in group
+    document.querySelectorAll(`#${groupId} .guest-radio`).forEach(r=>{
+      r.classList.remove('selected','selected-yes','selected-no');
+    });
+    // Mark selected
+    el.classList.add('selected', value==='Yes'?'selected-yes':'selected-no');
+    el.querySelector('input').checked = true;
+    // Hide error
+    const errEl = document.getElementById(groupId+'Err');
+    if(errEl) errEl.classList.remove('show');
+  }
+
+  function guestVal(id, errId, checkFn){
+    const el = document.getElementById(id);
+    const err = document.getElementById(errId);
+    const val = el ? el.value.trim() : '';
+    const ok = checkFn ? checkFn(val) : val.length > 0;
+    if(el) el.classList.toggle('error', !ok);
+    if(err) err.classList.toggle('show', !ok);
+    return ok;
+  }
+
+  function guestRadioVal(name, errId){
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    const err = document.getElementById(errId);
+    const ok = !!checked;
+    if(err) err.classList.toggle('show', !ok);
+    return ok;
+  }
+
+  function validateGuestForm(){
+    let ok = true;
+    if(!guestVal('gDate','gDateErr')) ok=false;
+    if(!guestVal('gName','gNameErr')) ok=false;
+    if(!guestVal('gPhone','gPhoneErr')) ok=false;
+    if(!guestVal('gEmail','gEmailErr', v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))) ok=false;
+    if(!guestVal('gWebsite','gWebsiteErr')) ok=false;
+    if(!guestVal('gCategory','gCategoryErr')) ok=false;
+    if(!guestVal('gReferredBy','gReferredByErr')) ok=false;
+    if(!guestRadioVal('grUnderstood','grUnderstoodErr')) ok=false;
+    if(!guestRadioVal('grValue','grValueErr')) ok=false;
+    if(!guestRadioVal('grJoin','grJoinErr')) ok=false;
+    if(!guestVal('gFeedback','gFeedbackErr')) ok=false;
+    return ok;
+  }
+
+  async function submitGuestForm(){
+    if(!validateGuestForm()) return;
+    const btn = document.getElementById('gSubmitBtn');
+    const lbl = document.getElementById('gSubmitLabel');
+    btn.disabled = true;
+    lbl.textContent = '⏳ Submitting…';
+
+    const data = {
+      action: 'saveGuestRegistration',
+      'Timestamp':    new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
+      'Date':         document.getElementById('gDate').value,
+      'Chapter Name': 'Aarohan',
+      'Name':         document.getElementById('gName').value.trim(),
+      'Phone':        document.getElementById('gPhone').value.trim(),
+      'Email':        document.getElementById('gEmail').value.trim(),
+      'Website':      document.getElementById('gWebsite').value.trim(),
+      'Business Category': document.getElementById('gCategory').value.trim(),
+      'Referred By':  document.getElementById('gReferredBy').value,
+      'Understood Process': document.querySelector('input[name="grUnderstood"]:checked')?.value||'',
+      'Sees Value':   document.querySelector('input[name="grValue"]:checked')?.value||'',
+      'Wants to Join':document.querySelector('input[name="grJoin"]:checked')?.value||'',
+      'Feedback':     document.getElementById('gFeedback').value.trim(),
+    };
+
+    try{
+      const params = new URLSearchParams();
+      params.append('payload', JSON.stringify(data));
+      await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:params });
+    } catch(e){ console.warn('Guest submit error:', e); }
+
+    // Show thank you
+    document.getElementById('guestFormBody').style.display = 'none';
+    document.getElementById('guestTy').classList.add('show');
+    window.scrollTo({top:0, behavior:'smooth'});
+    btn.disabled = false;
+    lbl.textContent = 'Submit Registration →';
+  }
+
+  function resetGuestForm(){
+    // Reset all fields
+    ['gDate','gName','gPhone','gEmail','gWebsite','gCategory','gFeedback'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.value='';
+    });
+    document.getElementById('gReferredBy').value='';
+    document.querySelectorAll('.guest-radio').forEach(r=>r.classList.remove('selected','selected-yes','selected-no'));
+    document.querySelectorAll('.guest-radio input').forEach(r=>r.checked=false);
+    document.querySelectorAll('.err').forEach(e=>e.classList.remove('show'));
+    document.querySelectorAll('.error').forEach(e=>e.classList.remove('error'));
+    document.getElementById('guestTy').classList.remove('show');
+    document.getElementById('guestFormBody').style.display='';
+    renderGuestPage();
+    window.scrollTo({top:0, behavior:'smooth'});
   }
 
   function exportPDF(){
