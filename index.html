@@ -842,13 +842,13 @@
 
     /* Right panel — login form */
     .lp-right {
-      width:420px; flex-shrink:0; background:#f2f4f8;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      padding:48px 40px; position:relative; overflow-y:auto;
+      width:460px; flex-shrink:0; background:#f2f4f8;
+      display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+      padding:36px 36px 48px; position:relative; overflow-y:auto;
     }
-    .lp-right::before { content:''; position:absolute; top:0; left:0; bottom:0; width:1px; background:linear-gradient(180deg,transparent,rgba(201,162,39,0.3),transparent); }
+    .lp-right::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--orange),var(--gold)); }
 
-    .lp-form-wrap { width:100%; max-width:340px; }
+    .lp-form-wrap { width:100%; max-width:400px; }
     .lp-welcome { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--ink); letter-spacing:-0.02em; margin-bottom:4px; }
     .lp-welcome-sub { font-size:13px; color:var(--text-muted); margin-bottom:32px; line-height:1.5; }
     .lp-welcome-sub span { color:var(--gold); font-weight:600; }
@@ -889,14 +889,15 @@
     @media(max-width:768px){
       .member-login-screen { flex-direction:column; overflow-y:auto; }
       .lp-left { padding:32px 24px; min-height:auto; flex:none; }
-      .lp-right { width:100%; padding:32px 24px; }
+      .lp-form-wrap { max-width:100%; }
+      .lp-right { width:100%; padding:24px 20px 48px; }
       .lp-hero-title { font-size:26px; }
       .lp-stats { gap:16px; }
       .lp-right::before { display:none; }
     }
 
     /* ── Login screen tab switcher ── */
-    .lp-tabs { display:flex; gap:0; margin-bottom:28px; background:#eef0f5; border-radius:10px; padding:4px; }
+    .lp-tabs { display:flex; gap:0; margin-bottom:24px; background:#eef0f5; border-radius:10px; padding:4px; position:sticky; top:-36px; z-index:10; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
     .lp-tab-btn { flex:1; padding:10px 8px; background:none; border:none; border-radius:7px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; color:var(--text-muted); cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .lp-tab-btn.active { background:#fff; color:var(--ink); box-shadow:0 1px 6px rgba(11,20,38,0.1); }
     .lp-panel { display:none; }
@@ -917,7 +918,7 @@
     .lp-ginput::placeholder { color:#bcc4d4; }
     .lp-ginput.lp-gselect { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230b1426' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; cursor:pointer; }
     .lp-g2col { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    @media(max-width:480px){ .lp-g2col { grid-template-columns:1fr; } }
+    @media(max-width:480px){ .lp-g2col { grid-template-columns:1fr; gap:0; } }
     .lp-gerr { display:none; font-size:11px; color:var(--pink); font-weight:500; margin-top:4px; }
     .lp-gerr.show { display:block; }
     .lp-ginput.error { border-color:var(--pink)!important; }
@@ -938,7 +939,8 @@
     .lp-guest-ty-sub { font-size:12px; color:var(--text-muted); line-height:1.6; margin-bottom:18px; }
     .lp-guest-ty-again { background:none; border:1.5px solid var(--border); border-radius:8px; padding:9px 18px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--text-muted); cursor:pointer; transition:all 0.15s; }
     .lp-guest-ty-again:hover { border-color:var(--navy); color:var(--ink); }
-    .lp-guest-section-label { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.1em; margin:18px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--border); }
+    .lp-guest-section-label { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.1em; margin:14px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--border); }
+    .lp-guest-section-label:first-of-type { margin-top:4px; }
 
     .ml-user-badge { display:flex; align-items:center; gap:8px; background:rgba(201,162,39,0.1); border:1px solid rgba(201,162,39,0.2); border-radius:100px; padding:5px 14px 5px 5px; }
     .ml-user-av { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; color:var(--navy); flex-shrink:0; }
@@ -1423,6 +1425,7 @@
             </div>
             <button class="lp-guest-submit" id="lpgSubmitBtn" onclick="submitLpGuestForm()">Submit Registration &#8594;</button>
             <p style="text-align:center;font-size:11px;color:var(--text-soft);margin-top:8px">&#128274; Your info is securely stored and only used by the Aarohan team.</p>
+            <p style="text-align:center;font-size:12px;margin-top:16px;color:var(--text-muted)">Chapter member? <button onclick="switchLpTab('member')" style="background:none;border:none;color:var(--blue);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0;">Sign in here &#8594;</button></p>
           </div>
         </div>
       </div>
@@ -1461,6 +1464,7 @@
             <span class="lp-trust-chip">&#128227; Comms</span>
           </div>
         </div>
+        <p style="text-align:center;font-size:12px;margin-top:20px;color:var(--text-muted)">Attending as a guest? <button onclick="switchLpTab('guest')" style="background:none;border:none;color:var(--blue);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0;">Register here &larr;</button></p>
       </div>
 
     </div>
