@@ -2984,7 +2984,7 @@
     document.querySelectorAll('.nav-drawer-item').forEach(el=>el.classList.remove('active'));
     const ditem=document.getElementById('ditem-'+p);
     if(ditem) ditem.classList.add('active');
-    if(p==='leaderboard'){ loadAllData(); renderLeaderboard(); }
+    if(p==='leaderboard'){ loadAllData().then(()=>{ renderLeaderboard(); if(document.getElementById('lbSectionEPL').classList.contains('active')) renderEPL(); }); }
     if(p==='members'){ loadAllData(); renderMembersPage(); }
     if(p==='analytics'){ loadAllData().then(()=>renderAnalytics()); }
     if(p==='attendance'){ renderAttendancePage(); }
@@ -3695,7 +3695,13 @@
     await loadEplFromSheet();
     renderAttendancePage();
     renderCommsPage();
-    loadAllData();
+    // Load submissions first so EPL activity points are correct
+    await loadAllData();
+    // Now render EPL with full data — if user is already on EPL tab, refresh it
+    if(document.getElementById('lbSectionEPL') &&
+       document.getElementById('lbSectionEPL').classList.contains('active')){
+      renderEPL();
+    }
   })();
 
   // ══════════════════════════════════════════════════════
@@ -4858,42 +4864,56 @@
   // Push full EPL JSON blob to Apps Script (action: saveEpl)
   function syncEplToSheet(d){
     try{
-      const payload = Object.assign({}, d, { _savedAt: Date.now() });
+      const now = Date.now();
+      const payload = Object.assign({}, d, { _savedAt: now });
       const params = new URLSearchParams();
       params.append('payload', JSON.stringify({ action:'saveEpl', data: payload }));
       fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body: params })
+        .then(()=>{
+          // Update sync label so admin sees data was pushed
+          const lbl = document.getElementById('eplSyncLabel');
+          if(lbl){
+            const t = new Date(now).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+            lbl.textContent = 'Saved to sheet at ' + t;
+          }
+        })
         .catch(e => console.warn('EPL sync error:', e));
     } catch(e){ console.warn('EPL sync error:', e); }
   }
 
   // Load EPL data from Apps Script via GET ?action=getEpl
-  // Falls back to localStorage cache if the fetch fails
+  // Google Apps Script redirects GET requests — we must follow redirects
+  // Falls back to localStorage cache silently if fetch fails
   async function loadEplFromSheet(){
     try{
       const url = SCRIPT_URL + '?action=getEpl&t=' + Date.now();
-      const res  = await fetch(url);
-      if(!res.ok) throw new Error('HTTP ' + res.status);
+      // 'follow' handles the Apps Script 302 redirect automatically
+      const res = await fetch(url, { redirect: 'follow' });
       const text = await res.text();
       if(!text || !text.trim()) return;
 
-      // Apps Script returns JSON: { status:'ok', data: { ...eplObject } }
       let parsed;
-      try{ parsed = JSON.parse(text); } catch(e){ return; }
-
-      if(parsed && parsed.data && typeof parsed.data === 'object'){
-        // Merge sheet data over local cache so locally-unsaved edits aren't lost
-        const local  = eplGet();
-        const sheetTs  = parsed.data._savedAt || 0;
-        const localTs  = parseInt(localStorage.getItem(EPL_CACHE_TS)||'0');
-
-        // Sheet wins if it was saved more recently than our local copy
-        const merged = (sheetTs >= localTs) ? Object.assign({}, local, parsed.data) : Object.assign({}, parsed.data, local);
-        delete merged._savedAt;
-        localStorage.setItem(EPL_KEY, JSON.stringify(merged));
-        localStorage.setItem(EPL_CACHE_TS, String(sheetTs || Date.now()));
+      try{ parsed = JSON.parse(text); } catch(e){
+        console.warn('EPL parse error:', e, text.slice(0,200));
+        return;
       }
+
+      // Must have valid data object with at least one meaningful key
+      if(!parsed || !parsed.data || typeof parsed.data !== 'object') return;
+      const d = parsed.data;
+      if(!Object.keys(d).length) return;
+
+      // Sheet data ALWAYS wins during a load — that is the source of truth
+      // Only keep _savedAt for timestamp tracking, don't store it in EPL data
+      const sheetTs = d._savedAt || Date.now();
+      const clean = Object.assign({}, d);
+      delete clean._savedAt;
+
+      localStorage.setItem(EPL_KEY, JSON.stringify(clean));
+      localStorage.setItem(EPL_CACHE_TS, String(sheetTs));
+      console.log('EPL loaded from sheet:', Object.keys(clean));
     } catch(e){
-      console.warn('loadEplFromSheet error (will use local cache):', e);
+      console.warn('loadEplFromSheet error (using local cache):', e.message || e);
     }
   }
 
@@ -4917,7 +4937,11 @@
     document.getElementById('lbSectionEPL').classList.toggle('active', view==='epl');
     document.getElementById('lbToggleLeaderboard').classList.toggle('active', view==='leaderboard');
     document.getElementById('lbToggleEPL').classList.toggle('active', view==='epl');
-    if(view==='epl') renderEPL();
+    if(view==='epl'){
+      renderEPL(); // render immediately with cached data
+      // Then fetch fresh data from sheet and re-render
+      loadEplFromSheet().then(()=>{ renderEPL(); });
+    }
   }
 
   function saveEplSeason(){
@@ -4952,20 +4976,27 @@
     eplSet(d); renderEPL(); showToast('✅ Team assignments saved!');
   }
 
-  // Manual refresh — pull latest EPL data from sheet across all devices
+  // Manual refresh — pull latest EPL + submissions from server, then re-render
   async function refreshEPLFromSheet(){
     const btn = document.getElementById('eplRefreshBtn');
     const lbl = document.getElementById('eplSyncLabel');
     if(btn){ btn.disabled=true; btn.textContent='⏳ Syncing…'; }
     if(lbl) lbl.textContent = 'Syncing…';
-    // Force timestamp to 0 so sheet data always wins on manual refresh
-    localStorage.setItem(EPL_CACHE_TS, '0');
-    await loadEplFromSheet();
-    renderEPL();
+    try{
+      // Fetch both EPL config and latest submissions in parallel
+      await Promise.all([
+        loadEplFromSheet(),
+        loadAllData()
+      ]);
+      renderEPL();
+      const now = new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+      if(lbl) lbl.textContent = 'Synced at ' + now;
+      showToast('✅ EPL synced from server!');
+    } catch(e){
+      if(lbl) lbl.textContent = 'Sync failed — try again';
+      showToast('⚠️ Sync failed. Check connection.', true);
+    }
     if(btn){ btn.disabled=false; btn.textContent='🔄 Sync'; }
-    const now = new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-    if(lbl) lbl.textContent = 'Synced at ' + now;
-    showToast('✅ EPL synced from server!');
   }
 
   function addEplBonus(){
