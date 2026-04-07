@@ -2644,16 +2644,45 @@
   function getMemberNames() { return MEMBERS.map(m => m.name); }
 
   // Save members to Google Sheet + local cache
+  // Photos/logos are stripped from the main payload (too large for one POST)
+  // and sent separately via saveMemberPhotos()
   async function saveMembers() {
-    saveMembersCache(); // instant local update
+    saveMembersCache(); // instant local update (includes photos in localStorage)
     try {
+      // Strip base64 photos before sending — sheet stores them in a separate call
+      const membersNoPhotos = MEMBERS.map(m => {
+        const copy = Object.assign({}, m);
+        if(copy.photo && copy.photo.startsWith('data:')) delete copy.photo;
+        if(copy.logo  && copy.logo.startsWith('data:'))  delete copy.logo;
+        return copy;
+      });
       const params = new URLSearchParams();
-      params.append('payload', JSON.stringify({action:'saveMembers', members:MEMBERS}));
+      params.append('payload', JSON.stringify({action:'saveMembers', members:membersNoPhotos}));
       await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', body:params});
-      showToast('✅ Members saved!');
     } catch(e){
       console.warn('saveMembers error:', e);
-      showToast('⚠️ Saved locally — sheet sync may have failed.', true);
+    }
+  }
+
+  // Save a single member's photo and/or logo separately
+  // Called after profile edit — sends only the changed member's images
+  async function saveMemberPhotos(memberName) {
+    const m = MEMBERS.find(x => x.name === memberName);
+    if(!m) return;
+    const hasPhoto = m.photo && m.photo.startsWith('data:');
+    const hasLogo  = m.logo  && m.logo.startsWith('data:');
+    if(!hasPhoto && !hasLogo) return; // nothing to save
+    try {
+      const params = new URLSearchParams();
+      params.append('payload', JSON.stringify({
+        action: 'saveMemberPhotos',
+        name:   memberName,
+        photo:  hasPhoto ? m.photo : '',
+        logo:   hasLogo  ? m.logo  : '',
+      }));
+      await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', body:params});
+    } catch(e){
+      console.warn('saveMemberPhotos error:', e);
     }
   }
 
@@ -3679,7 +3708,15 @@
     if(sheetMembers && sheetMembers.length) {
       const cacheAge = Date.now() - parseInt(localStorage.getItem(MEMBERS_CACHE_TS)||'0');
       if(cacheAge > 10 * 60 * 1000 || !cached) {
-        MEMBERS = sheetMembers;
+        // Restore photos/logos from local cache — CSV cannot store base64 images
+        const localCache = loadMembersCache() || [];
+        MEMBERS = sheetMembers.map(sm => {
+          const local = localCache.find(lm => lm.name === sm.name);
+          return Object.assign({}, sm, {
+            photo: (local && local.photo) ? local.photo : (sm.photo || ''),
+            logo:  (local && local.logo)  ? local.logo  : (sm.logo  || ''),
+          });
+        });
         populateDropdowns();
         populateMemberLoginSelect();
         renderMembersPage();
@@ -5901,7 +5938,10 @@
     const btn = document.querySelector('.medit-save-btn');
     btn.textContent = '⏳ Saving…'; btn.disabled = true;
     try {
+      // Save member data (without photos — they go separately)
       await saveMembers();
+      // Save photos in a separate request so they don't exceed payload limit
+      await saveMemberPhotos(MEMBERS[idx].name);
       populateDropdowns();
       populateMemberLoginSelect();
       renderMembersPage();
@@ -5909,9 +5949,10 @@
       if(emailFld && MEMBERS[idx].email) emailFld.value = MEMBERS[idx].email;
       msg.textContent = '✅ Profile updated successfully!';
       msg.className = 'medit-msg ok';
-      showToast('✅ Profile saved!');
+      showToast('✅ Profile & photo saved!');
       setTimeout(() => closeMemberProfileEdit(), 1800);
     } catch(e){
+      console.warn('saveMemberProfileEdit error:', e);
       msg.textContent = '⚠️ Saved locally. Sheet sync may have failed.';
       msg.className = 'medit-msg fail';
     }
