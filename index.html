@@ -33,6 +33,8 @@
     .navbar::before { content:''; display:block; height:3px; background:linear-gradient(90deg,var(--gold),var(--orange),var(--gold-light),var(--gold)); }
     .nav-inner { max-width:1100px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
     .nav-brand { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; color:var(--white); letter-spacing:-0.02em; white-space:nowrap; }
+    .offline-pill { display:none; background:var(--pink); color:#fff; font-size:9px; font-family:'Space Grotesk',sans-serif; font-weight:700; padding:2px 7px; border-radius:4px; letter-spacing:0.06em; text-transform:uppercase; margin-left:6px; vertical-align:middle; }
+    body.is-offline .offline-pill { display:inline; }
     .nav-brand span { color:var(--gold); }
 
     /* Desktop tabs */
@@ -118,7 +120,8 @@
        PAGES
     ══════════════════════════════════════ */
     .page { display:none; }
-    .page.active { display:block; }
+    .page.active { display:block; animation:pageIn 0.2s ease; }
+    @keyframes pageIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
     /* ══════════════════════════════════════
        PAGE 1 — FORM
@@ -298,6 +301,18 @@
     .empty-lb .et { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; color:var(--ink); margin-bottom:6px; }
     .empty-lb .es { font-size:13px; color:var(--text-soft); }
     .spinner { display:inline-block; width:18px; height:18px; border:2px solid #dce1ec; border-top-color:var(--blue); border-radius:50%; animation:spin 0.8s linear infinite; }
+    /* Skeleton loader */
+    @keyframes shimmer { 0%{opacity:1} 50%{opacity:.5} 100%{opacity:1} }
+    .sk-row { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px; margin-bottom:8px; animation:shimmer 1.4s ease-in-out infinite; }
+    .sk-rank { width:32px; height:32px; border-radius:7px; background:#f0f2f8; flex-shrink:0; }
+    .sk-av { width:38px; height:38px; border-radius:9px; background:#f0f2f8; flex-shrink:0; }
+    .sk-info { flex:1; }
+    .sk-line { height:11px; background:#f0f2f8; border-radius:4px; margin-bottom:6px; }
+    .sk-line:last-child { margin-bottom:0; }
+    .sk-line.w30 { width:30%; } .sk-line.w35 { width:35%; } .sk-line.w40 { width:40%; }
+    .sk-line.w45 { width:45%; } .sk-line.w50 { width:50%; } .sk-line.w55 { width:55%; }
+    .sk-line.w60 { width:60%; } .sk-line.w65 { width:65%; } .sk-line.w70 { width:70%; }
+    .sk-pts { width:44px; height:28px; background:#f0f2f8; border-radius:6px; flex-shrink:0; }
     @keyframes spin { to{transform:rotate(360deg)} }
 
     /* ══════════════════════════════════════
@@ -1351,6 +1366,12 @@
               <div class="lp-guest-title">Welcome to Aarohan! &#128075;</div>
               <div class="lp-guest-sub">Attended our meeting as a guest? Fill in your details so we can stay in touch.<br/><span>* Required fields</span></div>
             </div>
+            <!-- Guest form progress -->
+            <div style="display:flex;gap:6px;margin-bottom:16px;align-items:center">
+              <div style="flex:1;height:4px;border-radius:100px;background:var(--gold);"></div>
+              <div style="flex:1;height:4px;border-radius:100px;background:#dce1ec;" id="lpgStep2Bar"></div>
+              <span style="font-size:10px;color:var(--text-soft);font-family:'Space Grotesk',sans-serif;font-weight:600;white-space:nowrap;">Step 1 of 2</span>
+            </div>
             <div class="lp-guest-section-label">Personal &amp; Business Details</div>
             <div class="lp-gf">
               <label class="lp-gl">Today's Date <span class="req">*</span></label>
@@ -1393,7 +1414,7 @@
               </select>
               <p class="lp-gerr" id="lpgReferredByErr">Please select who referred you.</p>
             </div>
-            <div class="lp-guest-section-label">About the Community</div>
+            <div class="lp-guest-section-label" id="lpgSection2Label" onclick="document.getElementById('lpgStep2Bar').style.background='var(--gold)';document.querySelector('[style*=\"Step 1\"]').textContent='Step 2 of 2'">About the Community</div>
             <div class="lp-gf">
               <label class="lp-gl">Have you understood the process and criteria for membership? <span class="req">*</span></label>
               <div class="lp-grad-group" id="lpgrUnderstood">
@@ -1419,8 +1440,8 @@
               <p class="lp-gerr" id="lpgrJoinErr">Please select an option.</p>
             </div>
             <div class="lp-gf">
-              <label class="lp-gl">Your Feedback <span class="req">*</span><span class="hint">Thoughts about today's meeting and our community</span></label>
-              <textarea id="lpgFeedback" class="lp-gtextarea" placeholder="Tell us what you thought about today's session..."></textarea>
+              <label class="lp-gl" style="display:flex;justify-content:space-between;align-items:center"><span>Your Feedback <span class="req">*</span><span class="hint">Thoughts about today's meeting and our community</span></span><span id="lpgFeedbackCount" style="font-size:10px;color:var(--text-soft);font-weight:400;letter-spacing:0;text-transform:none;">0 / 300</span></label>
+              <textarea id="lpgFeedback" class="lp-gtextarea" placeholder="Tell us what you thought about today's session..." maxlength="300" oninput="document.getElementById('lpgFeedbackCount').textContent=this.value.length+' / 300'" onfocus="document.getElementById('lpgStep2Bar').style.background='var(--gold)'"></textarea>
               <p class="lp-gerr" id="lpgFeedbackErr">Please share your feedback.</p>
             </div>
             <button class="lp-guest-submit" id="lpgSubmitBtn" onclick="submitLpGuestForm()">Submit Registration &#8594;</button>
@@ -1474,7 +1495,7 @@
 
 <nav class="navbar">
   <div class="nav-inner">
-    <div class="nav-brand">EKnot <span>Aarohan</span></div>
+    <div class="nav-brand">EKnot <span>Aarohan</span><span class="offline-pill">Offline</span></div>
     <div class="nav-tabs">
       <button class="nav-tab active" onclick="showPage('form')">📝 Log Activity</button>
       <button class="nav-tab" onclick="showPage('leaderboard')">🏆 Leaderboard</button>
@@ -1561,6 +1582,7 @@
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
+<button id="backToTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" style="position:fixed;bottom:80px;right:24px;width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--gold);border:1px solid rgba(201,162,39,0.3);font-size:18px;cursor:pointer;z-index:990;display:none;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(11,20,38,0.25);transition:all 0.2s;">↑</button>
 
 <!-- ══════════════ PAGE: FORM ══════════════ -->
 <div class="page active" id="page-form">
@@ -1791,12 +1813,13 @@
       <div class="lb-top">
         <div class="lb-title">🏆 <span>Aarohan</span> Leaderboard</div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <input id="lbSearch" placeholder="🔍 Search member…" oninput="renderLeaderboard()" style="padding:7px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;outline:none;background:var(--card-bg);color:var(--ink);width:160px;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
           <div class="month-sel">
             <button class="m-btn" onclick="lbChangeMonth(-1)">‹</button>
             <div class="m-label" id="lbMonthLabel">—</div>
             <button class="m-btn" onclick="lbChangeMonth(1)">›</button>
           </div>
-          <button class="ref-btn" onclick="loadAllData()">↻ Refresh</button>
+          <button class="ref-btn" onclick="loadAllData().then(renderLeaderboard)">↻ Refresh</button>
         </div>
       </div>
 
@@ -1817,7 +1840,13 @@
         <div class="stat-card sc5"><div class="stat-lbl">Top Activity</div><div class="stat-val" id="lbStatAct" style="font-size:13px">—</div></div>
       </div>
       <div class="lb-list" id="lbList">
-        <div class="empty-lb"><div class="spinner"></div><div class="et" style="margin-top:14px">Loading…</div></div>
+        <div id="lbSkeleton">
+          <div class="sk-row"><div class="sk-rank"></div><div class="sk-av"></div><div class="sk-info"><div class="sk-line w60"></div><div class="sk-line w40"></div></div><div class="sk-pts"></div></div>
+          <div class="sk-row"><div class="sk-rank"></div><div class="sk-av"></div><div class="sk-info"><div class="sk-line w55"></div><div class="sk-line w35"></div></div><div class="sk-pts"></div></div>
+          <div class="sk-row"><div class="sk-rank"></div><div class="sk-av"></div><div class="sk-info"><div class="sk-line w65"></div><div class="sk-line w45"></div></div><div class="sk-pts"></div></div>
+          <div class="sk-row"><div class="sk-rank"></div><div class="sk-av"></div><div class="sk-info"><div class="sk-line w50"></div><div class="sk-line w30"></div></div><div class="sk-pts"></div></div>
+          <div class="sk-row"><div class="sk-rank"></div><div class="sk-av"></div><div class="sk-info"><div class="sk-line w70"></div><div class="sk-line w40"></div></div><div class="sk-pts"></div></div>
+        </div>
       </div>
     </div>
 
@@ -1981,7 +2010,14 @@
   <div class="members-inner">
     <div class="members-header">
       <div class="members-title">👥 <span>Chapter</span> Members</div>
-      <input class="members-search" id="membersSearch" placeholder="🔍 Search by name, company…" oninput="renderMembersPage()"/>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <input class="members-search" id="membersSearch" placeholder="🔍 Search by name, company…" oninput="renderMembersPage()"/>
+        <select id="membersSort" onchange="renderMembersPage()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--ink);background:var(--card-bg);outline:none;cursor:pointer;">
+          <option value="name">A–Z Name</option>
+          <option value="pts">Top Points</option>
+          <option value="company">Company</option>
+        </select>
+      </div>
     </div>
     <div class="members-grid" id="membersGrid"></div>
   </div>
@@ -2124,6 +2160,8 @@
       <div class="fin-sec-title">
         <span>👥 Member Fee Status</span>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button onclick="bulkMarkFees('paid')" style="display:inline-flex;align-items:center;gap:5px;background:rgba(26,138,120,0.1);color:var(--teal);border:1px solid rgba(26,138,120,0.3);border-radius:6px;padding:6px 12px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;cursor:pointer;" id="finMarkAllPaidBtn">✅ Mark All Paid</button>
+          <button onclick="bulkMarkFees('unpaid')" style="display:inline-flex;align-items:center;gap:5px;background:rgba(192,65,90,0.08);color:var(--pink);border:1px solid rgba(192,65,90,0.25);border-radius:6px;padding:6px 12px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;cursor:pointer;" id="finMarkAllUnpaidBtn">❌ Mark All Unpaid</button>
           <button class="fin-wa-all-btn" id="finWaAllBtn" onclick="sendFeeReminderAll()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Remind All Unpaid
@@ -2445,10 +2483,13 @@
     <div class="att-section" id="attAdminSection" style="display:none">
       <div class="att-sec-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
         <span>🔐 Mark Attendance <span style="font-size:11px;color:var(--gold);font-weight:400">(Admin Only)</span></span>
-        <div class="att-controls" style="margin:0">
-          <button class="m-btn" onclick="attChangeWeek(-1)">‹</button>
-          <div class="att-date-label" id="attWeekLabel">—</div>
-          <button class="m-btn" onclick="attChangeWeek(1)">›</button>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <input id="attSearch" placeholder="🔍 Filter…" oninput="renderAdminAttGrid()" style="padding:6px 11px;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:12px;outline:none;width:130px;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
+          <div class="att-controls" style="margin:0">
+            <button class="m-btn" onclick="attChangeWeek(-1)">‹</button>
+            <div class="att-date-label" id="attWeekLabel">—</div>
+            <button class="m-btn" onclick="attChangeWeek(1)">›</button>
+          </div>
         </div>
       </div>
       <div style="margin-bottom:12px;font-size:12px;color:var(--text-soft)">Click each member to cycle: ⬜ Not set → ✅ Present → 🔄 Substitute → ❌ Absent</div>
@@ -2948,13 +2989,14 @@
         badgeAv.style.background = getAvColor(member.name);
         badgeAv.textContent = getInitials(member.name);
       }
-      badgeName.textContent = member.name.split(' ')[0];
+      badgeName.textContent = member.name.split(' ').slice(0,2).join(' ');
     }
     document.getElementById('memberLogoutBtn').style.display='inline-block';
     // Show edit profile button
     const editBtn = document.getElementById('memberEditProfileBtn');
     if(editBtn) editBtn.style.display='inline-block';
     // Auto-select name in form and lock it
+    setTimeout(restoreDraft, 500); // restore any saved draft
     const sel = document.getElementById('fMember');
     if(sel){ sel.value = member.name; sel.disabled = true; }
     // Auto-fill email if available
@@ -3009,11 +3051,17 @@
     return          {label:'🔴 RED',     cls:'tt-red',  fcls:'tp-red'};
   }
 
+  let _toastTimer=null;
   function showToast(msg, isErr=false){
     const t=document.getElementById('toast');
     t.textContent=msg; t.className='toast'+(isErr?' error':'');
+    t.style.cursor='pointer';
+    t.onclick=()=>t.classList.remove('show');
+    if(_toastTimer) clearTimeout(_toastTimer);
     setTimeout(()=>t.classList.add('show'),10);
-    setTimeout(()=>t.classList.remove('show'),3000);
+    // Longer duration for longer messages or errors
+    const dur = isErr ? 5000 : Math.max(3000, msg.length * 60);
+    _toastTimer=setTimeout(()=>t.classList.remove('show'), dur);
   }
 
   function filterByMonth(rows, d){
@@ -3293,17 +3341,124 @@
     };
   }
 
+  // ── Form draft: auto-save form fields every 30s ──
+  const FORM_DRAFT_KEY = 'aarohan_form_draft';
+  function saveDraft(){
+    if(!loggedInMember) return; // only save if logged in
+    const draft={
+      actType: (document.querySelector('input[name="actType"]:checked')||{}).value||'',
+      fDate: document.getElementById('fDate')?.value||'',
+      fEmail: document.getElementById('fEmail')?.value||'',
+      qlInst: document.getElementById('qlInst')?.value||'',
+      qlTo: document.getElementById('qlTo')?.value||'',
+      kymWith: document.getElementById('kymWith')?.value||'',
+      kymTopics: document.getElementById('kymTopics')?.value||'',
+      jmInst: document.getElementById('jmInst')?.value||'',
+      bizAmt: document.getElementById('bizAmt')?.value||'',
+      bizInst: document.getElementById('bizInst')?.value||'',
+      clubDets: document.getElementById('clubDets')?.value||'',
+      gName: document.getElementById('gName')?.value||'',
+      gPhone: document.getElementById('gPhone')?.value||'',
+      savedAt: Date.now(),
+    };
+    if(draft.actType || draft.qlInst || draft.kymTopics || draft.bizAmt){
+      localStorage.setItem(FORM_DRAFT_KEY, JSON.stringify(draft));
+    }
+  }
+  function clearDraft(){ localStorage.removeItem(FORM_DRAFT_KEY); }
+  function restoreDraft(){
+    try{
+      const d=JSON.parse(localStorage.getItem(FORM_DRAFT_KEY)||'null');
+      if(!d || !d.savedAt) return;
+      const age=Date.now()-d.savedAt;
+      if(age > 24*60*60*1000){ clearDraft(); return; } // expire after 24h
+      // Restore fields
+      if(d.fDate) document.getElementById('fDate').value=d.fDate;
+      if(d.qlInst) document.getElementById('qlInst').value=d.qlInst;
+      if(d.kymTopics) document.getElementById('kymTopics').value=d.kymTopics;
+      if(d.bizAmt) document.getElementById('bizAmt').value=d.bizAmt;
+      if(d.bizInst) document.getElementById('bizInst').value=d.bizInst;
+      if(d.clubDets) document.getElementById('clubDets').value=d.clubDets;
+      if(d.jmInst) document.getElementById('jmInst').value=d.jmInst;
+      if(d.gName) document.getElementById('gName').value=d.gName;
+      if(d.gPhone) document.getElementById('gPhone').value=d.gPhone;
+      if(d.actType){
+        const radio=document.querySelector(`input[name="actType"][value="${d.actType}"]`);
+        if(radio){ radio.checked=true; onActChange(); }
+      }
+      showToast('📝 Draft restored from your last session');
+    } catch(e){ clearDraft(); }
+  }
+  // Auto-save draft every 30 seconds
+  setInterval(saveDraft, 30000);
+
+  // ── Offline queue: store failed submissions and retry on reconnect ──
+  const SUBMIT_QUEUE_KEY = 'aarohan_submit_queue';
+  function queueGet(){ try{ return JSON.parse(localStorage.getItem(SUBMIT_QUEUE_KEY)||'[]'); }catch(e){ return []; } }
+  function queueAdd(data){ const q=queueGet(); q.push({data, ts:Date.now()}); localStorage.setItem(SUBMIT_QUEUE_KEY,JSON.stringify(q)); }
+  async function queueFlush(){
+    const q=queueGet(); if(!q.length) return;
+    const remaining=[];
+    for(const item of q){
+      try{
+        const p=new URLSearchParams(); p.append('payload',JSON.stringify(item.data));
+        await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:p});
+      } catch(e){ remaining.push(item); }
+    }
+    localStorage.setItem(SUBMIT_QUEUE_KEY, JSON.stringify(remaining));
+    if(remaining.length < q.length) showToast(`✅ ${q.length-remaining.length} queued submission${q.length-remaining.length>1?'s':''} synced!`);
+  }
+  window.addEventListener('online', ()=>{
+    document.body.classList.remove('is-offline');
+    showToast('🟢 Back online — syncing…');
+    queueFlush();
+  });
+  window.addEventListener('offline', ()=>{
+    document.body.classList.add('is-offline');
+    showToast('📴 You are offline — submissions will be saved locally', true);
+  });
+  if(!navigator.onLine) document.body.classList.add('is-offline');
+  window.addEventListener('scroll', function(){
+    const btn=document.getElementById('backToTopBtn');
+    if(btn) btn.style.display = window.scrollY>300 ? 'flex' : 'none';
+  }, {passive:true});
+  // Show pending badge on navbar if queue has items
+  function updateQueueBadge(){
+    const q=queueGet();
+    let badge=document.getElementById('queueBadge');
+    if(!badge){
+      badge=document.createElement('span');
+      badge.id='queueBadge';
+      badge.style.cssText='position:absolute;top:-4px;right:-4px;background:var(--pink);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;font-family:"Space Grotesk",sans-serif;font-weight:700;';
+      const navBrand=document.querySelector('.nav-brand');
+      if(navBrand){ navBrand.style.position='relative'; navBrand.appendChild(badge); }
+    }
+    badge.textContent=q.length;
+    badge.style.display=q.length?'flex':'none';
+  }
+
   async function fSubmit(){
     const btn=document.getElementById('fNextBtn');
     btn.classList.add('submitting'); btn.textContent='⏳ Saving…'; btn.disabled=true;
     const data=fCollect();
     const pts=parseInt(data['Points Earned'])||0;
     try {
-      // Use form-encoded body — works reliably with Apps Script no-cors
       const params=new URLSearchParams();
       params.append('payload', JSON.stringify(data));
-      await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', body: params});
-    } catch(e){ console.warn('Submit error:', e); }
+      if(navigator.onLine){
+        await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', body: params});
+        // Also flush any queued items
+        queueFlush();
+      } else {
+        queueAdd(data);
+        showToast('📴 Offline — saved locally, will sync when back online', true);
+      }
+    } catch(e){
+      queueAdd(data);
+      showToast('⚠️ Network error — saved locally, will retry', true);
+      console.warn('Submit error:', e);
+    }
+    updateQueueBadge();
     document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active'));
     document.getElementById('tyCard').classList.add('show');
     document.getElementById('fNavWrap').style.display='none';
@@ -3311,7 +3466,8 @@
     document.getElementById('tyPts').textContent=pts;
     document.getElementById('tyTierLbl').textContent=getTier(pts).label;
     updateFProgress(11);
-    showToast('✅ Activity logged successfully!');
+    clearDraft();
+    if(navigator.onLine) showToast('✅ Activity logged successfully!');
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
@@ -3328,8 +3484,6 @@
     btn.classList.remove('submitting'); btn.disabled=false;
     document.getElementById('fNavWrap').style.display='';
     document.getElementById('fDate').value=new Date().toISOString().split('T')[0];
-  // Pre-fill today's date on landing guest form
-  (function(){ var d=document.getElementById('lpgDate'); if(d) d.value=new Date().toISOString().split('T')[0]; })();
     // Re-apply logged-in member — lock name & prefill email
     if(loggedInMember){
       const sel = document.getElementById('fMember');
@@ -3412,6 +3566,7 @@
   function renderLeaderboard(){
     document.getElementById('lbMonthLabel').textContent=getMonthLabel(lbDate);
     renderMOTM();
+    const lbQ=(document.getElementById('lbSearch')?.value||'').toLowerCase().trim();
     const rows=filterByMonth(allRows,lbDate);
     // Stats
     const totalPts=rows.reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0);
@@ -3436,7 +3591,7 @@
       const a=r['Activity Type']||'Other';
       memberData[n].acts[a]=(memberData[n].acts[a]||0)+1;
     });
-    const sorted=Object.entries(memberData).sort((a,b)=>b[1].pts-a[1].pts);
+    const sorted=Object.entries(memberData).filter(([n])=>!lbQ||n.toLowerCase().includes(lbQ)).sort((a,b)=>b[1].pts-a[1].pts);
     const maxPts=sorted[0]?.[1]?.pts||1;
     const lb=document.getElementById('lbList');
 
@@ -3445,6 +3600,7 @@
       return;
     }
 
+    const sk=document.getElementById('lbSkeleton'); if(sk) sk.style.display='none';
     lb.innerHTML=sorted.map(([name,d],i)=>{
       const rank=i+1, tier=getTier(d.pts);
       const color=getAvColor(name);
@@ -3657,14 +3813,19 @@
   // ══════════════════════════════════════════════════════
   function renderMembersPage(){
     const query=(document.getElementById('membersSearch')?.value||'').toLowerCase();
+    const sortBy=(document.getElementById('membersSort')?.value||'name');
+    const rows=filterByMonth(allRows,lbDate);
+    const mPts={};
+    rows.forEach(r=>{ if(r['Member Name']) mPts[r['Member Name']]=(mPts[r['Member Name']]||0)+(parseInt(r['Points Earned'])||0); });
     const filtered=MEMBERS.filter(m=>
       m.name.toLowerCase().includes(query)||
       (m.company||'').toLowerCase().includes(query)||
       (m.position||'').toLowerCase().includes(query)
-    );
-    const rows=filterByMonth(allRows,lbDate);
-    const mPts={};
-    rows.forEach(r=>{ if(r['Member Name']) mPts[r['Member Name']]=(mPts[r['Member Name']]||0)+(parseInt(r['Points Earned'])||0); });
+    ).sort((a,b)=>{
+      if(sortBy==='pts') return (mPts[b.name]||0)-(mPts[a.name]||0);
+      if(sortBy==='company') return (a.company||'zzz').localeCompare(b.company||'zzz');
+      return a.name.localeCompare(b.name);
+    });
 
     const grid=document.getElementById('membersGrid');
     if(!filtered.length){
@@ -3696,7 +3857,7 @@
           <div class="mpc-body">
             <div class="mpc-row"><span class="mpc-ico">🏢</span><span class="mpc-txt ${m.company?'':'mpc-na'}">${m.company||'Company not set'}</span></div>
             <div class="mpc-row"><span class="mpc-ico">📧</span><span class="mpc-txt ${m.email?'':'mpc-na'}">${m.email?'<a href="mailto:'+m.email+'" onclick="event.stopPropagation()">'+m.email+'</a>':'Email not set'}</span></div>
-            <div class="mpc-row"><span class="mpc-ico">📞</span><span class="mpc-txt ${m.phone?'':'mpc-na'}">${m.phone?'<a href="tel:'+m.phone+'" onclick="event.stopPropagation()">'+m.phone+'</a>':'Phone not set'}</span></div>
+            <div class="mpc-row"><span class="mpc-ico">📞</span><span class="mpc-txt ${m.phone?'':'mpc-na'}">${m.phone?'<a href="tel:'+m.phone+'" onclick="event.stopPropagation()">'+m.phone+'</a> <button onclick="event.stopPropagation();navigator.clipboard&&navigator.clipboard.writeText(\'' + m.phone + '\').then(()=>showToast(\'📋 Phone copied!\'))" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-soft);padding:0 3px;" title="Copy">📋</button>':'Phone not set'}</span></div>
           </div>
           <div class="mpc-foot">
             <span class="mpc-ft-lbl">This Month</span>
@@ -3767,6 +3928,9 @@
        document.getElementById('lbSectionEPL').classList.contains('active')){
       renderEPL();
     }
+    // Flush any queued offline submissions and show pending badge
+    updateQueueBadge();
+    if(navigator.onLine) queueFlush();
   })();
 
   // ══════════════════════════════════════════════════════
@@ -3794,6 +3958,22 @@
   }
 
   function renderAnalytics(){
+    if(!allRows.length){
+      const grid=document.querySelector('.analytics-inner');
+      if(grid){
+        const existing=document.getElementById('analyticsEmpty');
+        if(!existing){
+          const empty=document.createElement('div');
+          empty.id='analyticsEmpty';
+          empty.style.cssText='text-align:center;padding:60px 20px;color:var(--text-soft);';
+          empty.innerHTML='<div style="font-size:40px;margin-bottom:12px">📊</div><div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px">No data yet</div><div style="font-size:13px">Analytics will appear once members start logging activities.</div>';
+          grid.prepend(empty);
+        }
+      }
+      return;
+    }
+    const emptyEl=document.getElementById('analyticsEmpty');
+    if(emptyEl) emptyEl.remove();
     populateAnalyticsSelects();
     renderTrendChart();
     renderBreakdownChart();
@@ -3992,8 +4172,10 @@
     const key=getWeekKey(attDate);
     const allAtt=loadAttendance();
     attState=allAtt[key]||{};
+    const attQ=(document.getElementById('attSearch')?.value||'').toLowerCase();
     const grid=document.getElementById('attMemberGrid');
-    grid.innerHTML=MEMBERS.map(m=>{
+    const filteredMembers=MEMBERS.filter(m=>!attQ||m.name.toLowerCase().includes(attQ));
+    grid.innerHTML=filteredMembers.map(m=>{
       const st=attState[m.name]||'none';
       const safeId='attm-'+attSafeId(m.name);
       const safeName=m.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
@@ -4758,6 +4940,18 @@
     fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:params}).catch(e=>console.warn(e));
   }
 
+  function bulkMarkFees(newStatus){
+    if(!isAdmin){ showToast('Only admin can update fee status.',true); return; }
+    const word = newStatus==='paid' ? 'ALL PAID' : 'ALL UNPAID';
+    if(!confirm('Mark ' + word + ' for ' + getMonthLabel(finDate) + '? This will overwrite all individual statuses.')) return;
+    const mk = finMonthKey(finDate);
+    const st = finGetStatus(mk);
+    MEMBERS.forEach(function(m){ st[m.name] = newStatus; });
+    finSetStatus(mk, st);
+    renderFinancesPage();
+    showToast(newStatus==='paid' ? '✅ All members marked as Paid!' : '❌ All members marked as Unpaid!');
+  }
+
   function toggleFeeStatus(memberName){
     if(!isAdmin){ showToast('Only admin can update fee status.',true); return; }
     const mk=finMonthKey(finDate);
@@ -4833,6 +5027,10 @@
     const txnForm=document.getElementById('finTxnForm');
     if(adminSettings) adminSettings.style.display=isAdmin?'block':'none';
     if(txnForm) txnForm.style.display=isAdmin?'block':'none';
+    const allPaidBtn=document.getElementById('finMarkAllPaidBtn');
+    const allUnpaidBtn=document.getElementById('finMarkAllUnpaidBtn');
+    if(allPaidBtn) allPaidBtn.style.display=isAdmin?'inline-flex':'none';
+    if(allUnpaidBtn) allUnpaidBtn.style.display=isAdmin?'inline-flex':'none';
 
     // Fee input prefill
     if(isAdmin){
@@ -4997,15 +5195,24 @@
     };
   }
 
+  let _eplAutoRefresh=null;
   function switchLbView(view){
     document.getElementById('lbSectionLeaderboard').classList.toggle('active', view==='leaderboard');
     document.getElementById('lbSectionEPL').classList.toggle('active', view==='epl');
     document.getElementById('lbToggleLeaderboard').classList.toggle('active', view==='leaderboard');
     document.getElementById('lbToggleEPL').classList.toggle('active', view==='epl');
     if(view==='epl'){
-      renderEPL(); // render immediately with cached data
-      // Then fetch fresh data from sheet and re-render
+      renderEPL();
       loadEplFromSheet().then(()=>{ renderEPL(); });
+      // Auto-refresh EPL every 2 minutes while tab is open
+      if(_eplAutoRefresh) clearInterval(_eplAutoRefresh);
+      _eplAutoRefresh = setInterval(()=>{
+        if(document.getElementById('lbSectionEPL').classList.contains('active')){
+          loadEplFromSheet().then(()=>renderEPL());
+        }
+      }, 2 * 60 * 1000);
+    } else {
+      if(_eplAutoRefresh){ clearInterval(_eplAutoRefresh); _eplAutoRefresh=null; }
     }
   }
 
