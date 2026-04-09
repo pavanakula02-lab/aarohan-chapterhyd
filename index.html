@@ -2610,7 +2610,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwXqpHD6FPjg-cZpj96GDpJMoUx2t05-gV_psKf49Y976Jv_nE5AXGNoKG29vL9OBlm/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFoCEJjJ__kqnnC4x5ZYZ-_6lSCY8zb5l6C5SR8r26OFz5A9SMXX9g89QnDWcrOg/exec";
   const ADMIN_PWD_KEY  = "aarohan_admin_pwd";
   const MEMBERS_KEY    = "aarohan_members";
   const DEFAULT_PWD    = "Aarohan@2025";
@@ -2872,6 +2872,33 @@
     document.getElementById('lpGuestFormBody').style.display='none';
     document.getElementById('lpGuestTy').style.display='block';
     btn.disabled=false; btn.textContent='Submit Registration';
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  LOAD MEMBER PHOTOS FROM SHEET
+  //  Called at startup so every device sees up-to-date avatars
+  // ══════════════════════════════════════════════════════
+  async function loadMemberPhotosFromSheet(){
+    try{
+      const url = SCRIPT_URL + '?action=getMemberPhotos&t=' + Date.now();
+      const res = await fetch(url, { redirect: 'follow' });
+      const text = await res.text();
+      if(!text || !text.trim()) return;
+      let parsed;
+      try{ parsed = JSON.parse(text); } catch(e){ return; }
+      if(!parsed || !parsed.photos || typeof parsed.photos !== 'object') return;
+      // Merge photos into MEMBERS array and local cache
+      MEMBERS.forEach(function(m){
+        const p = parsed.photos[m.name];
+        if(p){
+          if(p.photo) m.photo = p.photo;
+          if(p.logo)  m.logo  = p.logo;
+        }
+      });
+      saveMembersCache(); // persist merged photos to localStorage
+    } catch(e){
+      console.warn('loadMemberPhotosFromSheet error:', e.message || e);
+    }
   }
 
   const MEMBER_SESSION_KEY = 'aarohan_member_session';
@@ -3730,6 +3757,7 @@
     await loadAttendanceFromSheet();
     await loadFinancesFromSheet();
     await loadEplFromSheet();
+    await loadMemberPhotosFromSheet(); // FIX: load photos so all devices see avatars
     renderAttendancePage();
     renderCommsPage();
     // Load submissions first so EPL activity points are correct
@@ -5837,18 +5865,35 @@
     document.getElementById('memberEditModal').classList.remove('open');
   }
 
+  // Compress image to max 200x200px JPEG at 0.7 quality before storing.
+  // This keeps base64 output under ~30KB — well within Apps Script limits.
+  function compressImage(file, maxPx, quality, callback){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const img = new Image();
+      img.onload = function(){
+        const canvas = document.createElement('canvas');
+        const scale  = Math.min(1, maxPx / Math.max(img.width, img.height));
+        canvas.width  = Math.round(img.width  * scale);
+        canvas.height = Math.round(img.height * scale);
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        callback(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
   function handlePhotoUpload(type, input){
     const file = input.files[0];
     if(!file) return;
-    if(file.size > 500 * 1024){
-      showToast('⚠️ Image too large. Max 500KB.', true);
-      input.value = '';
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = function(e){
-      const dataUrl = e.target.result;
-      if(type === 'profile'){
+    // Accept any size — canvas will compress it down
+    const isProfile = (type === 'profile');
+    const maxPx     = isProfile ? 200 : 300; // profile 200px, logo 300px
+    const quality   = 0.75;
+    compressImage(file, maxPx, quality, function(dataUrl){
+      if(isProfile){
         const preview  = document.getElementById('meditPhotoPreview');
         const initials = document.getElementById('meditPhotoInitials');
         const clear    = document.getElementById('meditPhotoClear');
@@ -5865,8 +5910,7 @@
         initials.style.display = 'none';
         clear.style.display = 'inline';
       }
-    };
-    reader.readAsDataURL(file);
+    });
   }
 
   function clearPhoto(type){
