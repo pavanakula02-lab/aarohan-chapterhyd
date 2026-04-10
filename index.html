@@ -33,8 +33,6 @@
     .navbar::before { content:''; display:block; height:3px; background:linear-gradient(90deg,var(--gold),var(--orange),var(--gold-light),var(--gold)); }
     .nav-inner { max-width:1100px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
     .nav-brand { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; color:var(--white); letter-spacing:-0.02em; white-space:nowrap; }
-    .offline-pill { display:none; background:var(--pink); color:#fff; font-size:9px; font-family:'Space Grotesk',sans-serif; font-weight:700; padding:2px 7px; border-radius:4px; letter-spacing:0.06em; text-transform:uppercase; margin-left:6px; vertical-align:middle; }
-    body.is-offline .offline-pill { display:inline; }
     .nav-brand span { color:var(--gold); }
 
     /* Desktop tabs */
@@ -120,8 +118,7 @@
        PAGES
     ══════════════════════════════════════ */
     .page { display:none; }
-    .page.active { display:block; animation:pageIn 0.2s ease; }
-    @keyframes pageIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .page.active { display:block; }
 
     /* ══════════════════════════════════════
        PAGE 1 — FORM
@@ -301,18 +298,6 @@
     .empty-lb .et { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; color:var(--ink); margin-bottom:6px; }
     .empty-lb .es { font-size:13px; color:var(--text-soft); }
     .spinner { display:inline-block; width:18px; height:18px; border:2px solid #dce1ec; border-top-color:var(--blue); border-radius:50%; animation:spin 0.8s linear infinite; }
-    /* Skeleton loader */
-    @keyframes shimmer { 0%{opacity:1} 50%{opacity:.5} 100%{opacity:1} }
-    .sk-row { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px; margin-bottom:8px; animation:shimmer 1.4s ease-in-out infinite; }
-    .sk-rank { width:32px; height:32px; border-radius:7px; background:#f0f2f8; flex-shrink:0; }
-    .sk-av { width:38px; height:38px; border-radius:9px; background:#f0f2f8; flex-shrink:0; }
-    .sk-info { flex:1; }
-    .sk-line { height:11px; background:#f0f2f8; border-radius:4px; margin-bottom:6px; }
-    .sk-line:last-child { margin-bottom:0; }
-    .sk-line.w30 { width:30%; } .sk-line.w35 { width:35%; } .sk-line.w40 { width:40%; }
-    .sk-line.w45 { width:45%; } .sk-line.w50 { width:50%; } .sk-line.w55 { width:55%; }
-    .sk-line.w60 { width:60%; } .sk-line.w65 { width:65%; } .sk-line.w70 { width:70%; }
-    .sk-pts { width:44px; height:28px; background:#f0f2f8; border-radius:6px; flex-shrink:0; }
     @keyframes spin { to{transform:rotate(360deg)} }
 
     /* ══════════════════════════════════════
@@ -1366,12 +1351,6 @@
               <div class="lp-guest-title">Welcome to Aarohan! &#128075;</div>
               <div class="lp-guest-sub">Attended our meeting as a guest? Fill in your details so we can stay in touch.<br/><span>* Required fields</span></div>
             </div>
-            <!-- Guest form progress -->
-            <div style="display:flex;gap:6px;margin-bottom:16px;align-items:center">
-              <div style="flex:1;height:4px;border-radius:100px;background:var(--gold);"></div>
-              <div style="flex:1;height:4px;border-radius:100px;background:#dce1ec;" id="lpgStep2Bar"></div>
-              <span style="font-size:10px;color:var(--text-soft);font-family:'Space Grotesk',sans-serif;font-weight:600;white-space:nowrap;">Step 1 of 2</span>
-            </div>
             <div class="lp-guest-section-label">Personal &amp; Business Details</div>
             <div class="lp-gf">
               <label class="lp-gl">Today's Date <span class="req">*</span></label>
@@ -1414,7 +1393,7 @@
               </select>
               <p class="lp-gerr" id="lpgReferredByErr">Please select who referred you.</p>
             </div>
-            <div class="lp-guest-section-label" id="lpgSection2Label" onclick="document.getElementById('lpgStep2Bar').style.background='var(--gold)';document.querySelector('[style*=\"Step 1\"]').textContent='Step 2 of 2'">About the Community</div>
+            <div class="lp-guest-section-label">About the Community</div>
             <div class="lp-gf">
               <label class="lp-gl">Have you understood the process and criteria for membership? <span class="req">*</span></label>
               <div class="lp-grad-group" id="lpgrUnderstood">
@@ -1440,8 +1419,8 @@
               <p class="lp-gerr" id="lpgrJoinErr">Please select an option.</p>
             </div>
             <div class="lp-gf">
-              <label class="lp-gl" style="display:flex;justify-content:space-between;align-items:center"><span>Your Feedback <span class="req">*</span><span class="hint">Thoughts about today's meeting and our community</span></span><span id="lpgFeedbackCount" style="font-size:10px;color:var(--text-soft);font-weight:400;letter-spacing:0;text-transform:none;">0 / 300</span></label>
-              <textarea id="lpgFeedback" class="lp-gtextarea" placeholder="Tell us what you thought about today's session..." maxlength="300" oninput="document.getElementById('lpgFeedbackCount').textContent=this.value.length+' / 300'" onfocus="document.getElementById('lpgStep2Bar').style.background='var(--gold)'"></textarea>
+              <label class="lp-gl">Your Feedback <span class="req">*</span><span class="hint">Thoughts about today's meeting and our community</span></label>
+              <textarea id="lpgFeedback" class="lp-gtextarea" placeholder="Tell us what you thought about today's session..."></textarea>
               <p class="lp-gerr" id="lpgFeedbackErr">Please share your feedback.</p>
             </div>
             <button class="lp-guest-submit" id="lpgSubmitBtn" onclick="submitLpGuestForm()">Submit Registration &#8594;</button>
@@ -1495,7 +1474,7 @@
 
 <nav class="navbar">
   <div class="nav-inner">
-    <div class="nav-brand">EKnot <span>Aarohan</span><span class="offline-pill">Offline</span></div>
+    <div class="nav-brand">EKnot <span>Aarohan</span></div>
     <div class="nav-tabs">
       <button class="nav-tab active" onclick="showPage('form')">📝 Log Activity</button>
       <button class="nav-tab" onclick="showPage('leaderboard')">🏆 Leaderboard</button>
@@ -1582,7 +1561,6 @@
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
-<button id="backToTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" style="position:fixed;bottom:80px;right:24px;width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--gold);border:1px solid rgba(201,162,39,0.3);font-size:18px;cursor:pointer;z-index:990;display:none;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(11,20,38,0.25);transition:all 0.2s;">↑</button>
 
 <!-- ══════════════ PAGE: FORM ══════════════ -->
 <div class="page active" id="page-form">
@@ -1813,13 +1791,12 @@
       <div class="lb-top">
         <div class="lb-title">🏆 <span>Aarohan</span> Leaderboard</div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <input id="lbSearch" placeholder="🔍 Search member…" oninput="renderLeaderboard()" style="padding:7px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;outline:none;background:var(--card-bg);color:var(--ink);width:160px;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
           <div class="month-sel">
             <button class="m-btn" onclick="lbChangeMonth(-1)">‹</button>
             <div class="m-label" id="lbMonthLabel">—</div>
             <button class="m-btn" onclick="lbChangeMonth(1)">›</button>
           </div>
-          <button class="ref-btn" onclick="loadAllData().then(renderLeaderboard)">↻ Refresh</button>
+          <button class="ref-btn" onclick="loadAllData()">↻ Refresh</button>
         </div>
       </div>
 
@@ -1840,13 +1817,7 @@
         <div class="stat-card sc5"><div class="stat-lbl">Top Activity</div><div class="stat-val" id="lbStatAct" style="font-size:13px">—</div></div>
       </div>
       <div class="lb-list" id="lbList">
-        <div id="lbSkeleton">
-          <div class="sk-row"><div class="sk-rank"></div><div class="sk-av"></div><div class="sk-info"><div class="sk-line w60"></div><div class="sk-line w40"></div></div><div class="sk-pts"></div></div>
-          <div class="sk-row"><div class="sk-rank"></div><div class="sk-av"></div><div class="sk-info"><div class="sk-line w55"></div><div class="sk-line w35"></div></div><div class="sk-pts"></div></div>
-          <div class="sk-row"><div class="sk-rank"></div><div class="sk-av"></div><div class="sk-info"><div class="sk-line w65"></div><div class="sk-line w45"></div></div><div class="sk-pts"></div></div>
-          <div class="sk-row"><div class="sk-rank"></div><div class="sk-av"></div><div class="sk-info"><div class="sk-line w50"></div><div class="sk-line w30"></div></div><div class="sk-pts"></div></div>
-          <div class="sk-row"><div class="sk-rank"></div><div class="sk-av"></div><div class="sk-info"><div class="sk-line w70"></div><div class="sk-line w40"></div></div><div class="sk-pts"></div></div>
-        </div>
+        <div class="empty-lb"><div class="spinner"></div><div class="et" style="margin-top:14px">Loading…</div></div>
       </div>
     </div>
 
@@ -2010,14 +1981,7 @@
   <div class="members-inner">
     <div class="members-header">
       <div class="members-title">👥 <span>Chapter</span> Members</div>
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <input class="members-search" id="membersSearch" placeholder="🔍 Search by name, company…" oninput="renderMembersPage()"/>
-        <select id="membersSort" onchange="renderMembersPage()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--ink);background:var(--card-bg);outline:none;cursor:pointer;">
-          <option value="name">A–Z Name</option>
-          <option value="pts">Top Points</option>
-          <option value="company">Company</option>
-        </select>
-      </div>
+      <input class="members-search" id="membersSearch" placeholder="🔍 Search by name, company…" oninput="renderMembersPage()"/>
     </div>
     <div class="members-grid" id="membersGrid"></div>
   </div>
@@ -2160,8 +2124,6 @@
       <div class="fin-sec-title">
         <span>👥 Member Fee Status</span>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button onclick="bulkMarkFees('paid')" style="display:inline-flex;align-items:center;gap:5px;background:rgba(26,138,120,0.1);color:var(--teal);border:1px solid rgba(26,138,120,0.3);border-radius:6px;padding:6px 12px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;cursor:pointer;" id="finMarkAllPaidBtn">✅ Mark All Paid</button>
-          <button onclick="bulkMarkFees('unpaid')" style="display:inline-flex;align-items:center;gap:5px;background:rgba(192,65,90,0.08);color:var(--pink);border:1px solid rgba(192,65,90,0.25);border-radius:6px;padding:6px 12px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;cursor:pointer;" id="finMarkAllUnpaidBtn">❌ Mark All Unpaid</button>
           <button class="fin-wa-all-btn" id="finWaAllBtn" onclick="sendFeeReminderAll()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Remind All Unpaid
@@ -2483,13 +2445,10 @@
     <div class="att-section" id="attAdminSection" style="display:none">
       <div class="att-sec-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
         <span>🔐 Mark Attendance <span style="font-size:11px;color:var(--gold);font-weight:400">(Admin Only)</span></span>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <input id="attSearch" placeholder="🔍 Filter…" oninput="renderAdminAttGrid()" style="padding:6px 11px;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:12px;outline:none;width:130px;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
-          <div class="att-controls" style="margin:0">
-            <button class="m-btn" onclick="attChangeWeek(-1)">‹</button>
-            <div class="att-date-label" id="attWeekLabel">—</div>
-            <button class="m-btn" onclick="attChangeWeek(1)">›</button>
-          </div>
+        <div class="att-controls" style="margin:0">
+          <button class="m-btn" onclick="attChangeWeek(-1)">‹</button>
+          <div class="att-date-label" id="attWeekLabel">—</div>
+          <button class="m-btn" onclick="attChangeWeek(1)">›</button>
         </div>
       </div>
       <div style="margin-bottom:12px;font-size:12px;color:var(--text-soft)">Click each member to cycle: ⬜ Not set → ✅ Present → 🔄 Substitute → ❌ Absent</div>
@@ -2651,7 +2610,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFoCEJjJ__kqnnC4x5ZYZ-_6lSCY8zb5l6C5SR8r26OFz5A9SMXX9g89QnDWcrOg/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwXqpHD6FPjg-cZpj96GDpJMoUx2t05-gV_psKf49Y976Jv_nE5AXGNoKG29vL9OBlm/exec";
   const ADMIN_PWD_KEY  = "aarohan_admin_pwd";
   const MEMBERS_KEY    = "aarohan_members";
   const DEFAULT_PWD    = "Aarohan@2025";
@@ -2685,45 +2644,16 @@
   function getMemberNames() { return MEMBERS.map(m => m.name); }
 
   // Save members to Google Sheet + local cache
-  // Photos/logos are stripped from the main payload (too large for one POST)
-  // and sent separately via saveMemberPhotos()
   async function saveMembers() {
-    saveMembersCache(); // instant local update (includes photos in localStorage)
+    saveMembersCache(); // instant local update
     try {
-      // Strip base64 photos before sending — sheet stores them in a separate call
-      const membersNoPhotos = MEMBERS.map(m => {
-        const copy = Object.assign({}, m);
-        if(copy.photo && copy.photo.startsWith('data:')) delete copy.photo;
-        if(copy.logo  && copy.logo.startsWith('data:'))  delete copy.logo;
-        return copy;
-      });
       const params = new URLSearchParams();
-      params.append('payload', JSON.stringify({action:'saveMembers', members:membersNoPhotos}));
+      params.append('payload', JSON.stringify({action:'saveMembers', members:MEMBERS}));
       await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', body:params});
+      showToast('✅ Members saved!');
     } catch(e){
       console.warn('saveMembers error:', e);
-    }
-  }
-
-  // Save a single member's photo and/or logo separately
-  // Called after profile edit — sends only the changed member's images
-  async function saveMemberPhotos(memberName) {
-    const m = MEMBERS.find(x => x.name === memberName);
-    if(!m) return;
-    const hasPhoto = m.photo && m.photo.startsWith('data:');
-    const hasLogo  = m.logo  && m.logo.startsWith('data:');
-    if(!hasPhoto && !hasLogo) return; // nothing to save
-    try {
-      const params = new URLSearchParams();
-      params.append('payload', JSON.stringify({
-        action: 'saveMemberPhotos',
-        name:   memberName,
-        photo:  hasPhoto ? m.photo : '',
-        logo:   hasLogo  ? m.logo  : '',
-      }));
-      await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', body:params});
-    } catch(e){
-      console.warn('saveMemberPhotos error:', e);
+      showToast('⚠️ Saved locally — sheet sync may have failed.', true);
     }
   }
 
@@ -2915,33 +2845,6 @@
     btn.disabled=false; btn.textContent='Submit Registration';
   }
 
-  // ══════════════════════════════════════════════════════
-  //  LOAD MEMBER PHOTOS FROM SHEET
-  //  Called at startup so every device sees up-to-date avatars
-  // ══════════════════════════════════════════════════════
-  async function loadMemberPhotosFromSheet(){
-    try{
-      const url = SCRIPT_URL + '?action=getMemberPhotos&t=' + Date.now();
-      const res = await fetch(url, { redirect: 'follow' });
-      const text = await res.text();
-      if(!text || !text.trim()) return;
-      let parsed;
-      try{ parsed = JSON.parse(text); } catch(e){ return; }
-      if(!parsed || !parsed.photos || typeof parsed.photos !== 'object') return;
-      // Merge photos into MEMBERS array and local cache
-      MEMBERS.forEach(function(m){
-        const p = parsed.photos[m.name];
-        if(p){
-          if(p.photo) m.photo = p.photo;
-          if(p.logo)  m.logo  = p.logo;
-        }
-      });
-      saveMembersCache(); // persist merged photos to localStorage
-    } catch(e){
-      console.warn('loadMemberPhotosFromSheet error:', e.message || e);
-    }
-  }
-
   const MEMBER_SESSION_KEY = 'aarohan_member_session';
 
   // ══════════════════════════════════════════════════════
@@ -2989,14 +2892,13 @@
         badgeAv.style.background = getAvColor(member.name);
         badgeAv.textContent = getInitials(member.name);
       }
-      badgeName.textContent = member.name.split(' ').slice(0,2).join(' ');
+      badgeName.textContent = member.name.split(' ')[0];
     }
     document.getElementById('memberLogoutBtn').style.display='inline-block';
     // Show edit profile button
     const editBtn = document.getElementById('memberEditProfileBtn');
     if(editBtn) editBtn.style.display='inline-block';
     // Auto-select name in form and lock it
-    setTimeout(restoreDraft, 500); // restore any saved draft
     const sel = document.getElementById('fMember');
     if(sel){ sel.value = member.name; sel.disabled = true; }
     // Auto-fill email if available
@@ -3051,17 +2953,11 @@
     return          {label:'🔴 RED',     cls:'tt-red',  fcls:'tp-red'};
   }
 
-  let _toastTimer=null;
   function showToast(msg, isErr=false){
     const t=document.getElementById('toast');
     t.textContent=msg; t.className='toast'+(isErr?' error':'');
-    t.style.cursor='pointer';
-    t.onclick=()=>t.classList.remove('show');
-    if(_toastTimer) clearTimeout(_toastTimer);
     setTimeout(()=>t.classList.add('show'),10);
-    // Longer duration for longer messages or errors
-    const dur = isErr ? 5000 : Math.max(3000, msg.length * 60);
-    _toastTimer=setTimeout(()=>t.classList.remove('show'), dur);
+    setTimeout(()=>t.classList.remove('show'),3000);
   }
 
   function filterByMonth(rows, d){
@@ -3088,7 +2984,7 @@
     document.querySelectorAll('.nav-drawer-item').forEach(el=>el.classList.remove('active'));
     const ditem=document.getElementById('ditem-'+p);
     if(ditem) ditem.classList.add('active');
-    if(p==='leaderboard'){ loadAllData().then(()=>{ renderLeaderboard(); if(document.getElementById('lbSectionEPL').classList.contains('active')) renderEPL(); }); }
+    if(p==='leaderboard'){ loadAllData(); renderLeaderboard(); }
     if(p==='members'){ loadAllData(); renderMembersPage(); }
     if(p==='analytics'){ loadAllData().then(()=>renderAnalytics()); }
     if(p==='attendance'){ renderAttendancePage(); }
@@ -3341,124 +3237,17 @@
     };
   }
 
-  // ── Form draft: auto-save form fields every 30s ──
-  const FORM_DRAFT_KEY = 'aarohan_form_draft';
-  function saveDraft(){
-    if(!loggedInMember) return; // only save if logged in
-    const draft={
-      actType: (document.querySelector('input[name="actType"]:checked')||{}).value||'',
-      fDate: document.getElementById('fDate')?.value||'',
-      fEmail: document.getElementById('fEmail')?.value||'',
-      qlInst: document.getElementById('qlInst')?.value||'',
-      qlTo: document.getElementById('qlTo')?.value||'',
-      kymWith: document.getElementById('kymWith')?.value||'',
-      kymTopics: document.getElementById('kymTopics')?.value||'',
-      jmInst: document.getElementById('jmInst')?.value||'',
-      bizAmt: document.getElementById('bizAmt')?.value||'',
-      bizInst: document.getElementById('bizInst')?.value||'',
-      clubDets: document.getElementById('clubDets')?.value||'',
-      gName: document.getElementById('gName')?.value||'',
-      gPhone: document.getElementById('gPhone')?.value||'',
-      savedAt: Date.now(),
-    };
-    if(draft.actType || draft.qlInst || draft.kymTopics || draft.bizAmt){
-      localStorage.setItem(FORM_DRAFT_KEY, JSON.stringify(draft));
-    }
-  }
-  function clearDraft(){ localStorage.removeItem(FORM_DRAFT_KEY); }
-  function restoreDraft(){
-    try{
-      const d=JSON.parse(localStorage.getItem(FORM_DRAFT_KEY)||'null');
-      if(!d || !d.savedAt) return;
-      const age=Date.now()-d.savedAt;
-      if(age > 24*60*60*1000){ clearDraft(); return; } // expire after 24h
-      // Restore fields
-      if(d.fDate) document.getElementById('fDate').value=d.fDate;
-      if(d.qlInst) document.getElementById('qlInst').value=d.qlInst;
-      if(d.kymTopics) document.getElementById('kymTopics').value=d.kymTopics;
-      if(d.bizAmt) document.getElementById('bizAmt').value=d.bizAmt;
-      if(d.bizInst) document.getElementById('bizInst').value=d.bizInst;
-      if(d.clubDets) document.getElementById('clubDets').value=d.clubDets;
-      if(d.jmInst) document.getElementById('jmInst').value=d.jmInst;
-      if(d.gName) document.getElementById('gName').value=d.gName;
-      if(d.gPhone) document.getElementById('gPhone').value=d.gPhone;
-      if(d.actType){
-        const radio=document.querySelector(`input[name="actType"][value="${d.actType}"]`);
-        if(radio){ radio.checked=true; onActChange(); }
-      }
-      showToast('📝 Draft restored from your last session');
-    } catch(e){ clearDraft(); }
-  }
-  // Auto-save draft every 30 seconds
-  setInterval(saveDraft, 30000);
-
-  // ── Offline queue: store failed submissions and retry on reconnect ──
-  const SUBMIT_QUEUE_KEY = 'aarohan_submit_queue';
-  function queueGet(){ try{ return JSON.parse(localStorage.getItem(SUBMIT_QUEUE_KEY)||'[]'); }catch(e){ return []; } }
-  function queueAdd(data){ const q=queueGet(); q.push({data, ts:Date.now()}); localStorage.setItem(SUBMIT_QUEUE_KEY,JSON.stringify(q)); }
-  async function queueFlush(){
-    const q=queueGet(); if(!q.length) return;
-    const remaining=[];
-    for(const item of q){
-      try{
-        const p=new URLSearchParams(); p.append('payload',JSON.stringify(item.data));
-        await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:p});
-      } catch(e){ remaining.push(item); }
-    }
-    localStorage.setItem(SUBMIT_QUEUE_KEY, JSON.stringify(remaining));
-    if(remaining.length < q.length) showToast(`✅ ${q.length-remaining.length} queued submission${q.length-remaining.length>1?'s':''} synced!`);
-  }
-  window.addEventListener('online', ()=>{
-    document.body.classList.remove('is-offline');
-    showToast('🟢 Back online — syncing…');
-    queueFlush();
-  });
-  window.addEventListener('offline', ()=>{
-    document.body.classList.add('is-offline');
-    showToast('📴 You are offline — submissions will be saved locally', true);
-  });
-  if(!navigator.onLine) document.body.classList.add('is-offline');
-  window.addEventListener('scroll', function(){
-    const btn=document.getElementById('backToTopBtn');
-    if(btn) btn.style.display = window.scrollY>300 ? 'flex' : 'none';
-  }, {passive:true});
-  // Show pending badge on navbar if queue has items
-  function updateQueueBadge(){
-    const q=queueGet();
-    let badge=document.getElementById('queueBadge');
-    if(!badge){
-      badge=document.createElement('span');
-      badge.id='queueBadge';
-      badge.style.cssText='position:absolute;top:-4px;right:-4px;background:var(--pink);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;font-family:"Space Grotesk",sans-serif;font-weight:700;';
-      const navBrand=document.querySelector('.nav-brand');
-      if(navBrand){ navBrand.style.position='relative'; navBrand.appendChild(badge); }
-    }
-    badge.textContent=q.length;
-    badge.style.display=q.length?'flex':'none';
-  }
-
   async function fSubmit(){
     const btn=document.getElementById('fNextBtn');
     btn.classList.add('submitting'); btn.textContent='⏳ Saving…'; btn.disabled=true;
     const data=fCollect();
     const pts=parseInt(data['Points Earned'])||0;
     try {
+      // Use form-encoded body — works reliably with Apps Script no-cors
       const params=new URLSearchParams();
       params.append('payload', JSON.stringify(data));
-      if(navigator.onLine){
-        await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', body: params});
-        // Also flush any queued items
-        queueFlush();
-      } else {
-        queueAdd(data);
-        showToast('📴 Offline — saved locally, will sync when back online', true);
-      }
-    } catch(e){
-      queueAdd(data);
-      showToast('⚠️ Network error — saved locally, will retry', true);
-      console.warn('Submit error:', e);
-    }
-    updateQueueBadge();
+      await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', body: params});
+    } catch(e){ console.warn('Submit error:', e); }
     document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active'));
     document.getElementById('tyCard').classList.add('show');
     document.getElementById('fNavWrap').style.display='none';
@@ -3466,8 +3255,7 @@
     document.getElementById('tyPts').textContent=pts;
     document.getElementById('tyTierLbl').textContent=getTier(pts).label;
     updateFProgress(11);
-    clearDraft();
-    if(navigator.onLine) showToast('✅ Activity logged successfully!');
+    showToast('✅ Activity logged successfully!');
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
@@ -3484,6 +3272,8 @@
     btn.classList.remove('submitting'); btn.disabled=false;
     document.getElementById('fNavWrap').style.display='';
     document.getElementById('fDate').value=new Date().toISOString().split('T')[0];
+  // Pre-fill today's date on landing guest form
+  (function(){ var d=document.getElementById('lpgDate'); if(d) d.value=new Date().toISOString().split('T')[0]; })();
     // Re-apply logged-in member — lock name & prefill email
     if(loggedInMember){
       const sel = document.getElementById('fMember');
@@ -3566,7 +3356,6 @@
   function renderLeaderboard(){
     document.getElementById('lbMonthLabel').textContent=getMonthLabel(lbDate);
     renderMOTM();
-    const lbQ=(document.getElementById('lbSearch')?.value||'').toLowerCase().trim();
     const rows=filterByMonth(allRows,lbDate);
     // Stats
     const totalPts=rows.reduce((s,r)=>s+(parseInt(r['Points Earned'])||0),0);
@@ -3591,7 +3380,7 @@
       const a=r['Activity Type']||'Other';
       memberData[n].acts[a]=(memberData[n].acts[a]||0)+1;
     });
-    const sorted=Object.entries(memberData).filter(([n])=>!lbQ||n.toLowerCase().includes(lbQ)).sort((a,b)=>b[1].pts-a[1].pts);
+    const sorted=Object.entries(memberData).sort((a,b)=>b[1].pts-a[1].pts);
     const maxPts=sorted[0]?.[1]?.pts||1;
     const lb=document.getElementById('lbList');
 
@@ -3600,7 +3389,6 @@
       return;
     }
 
-    const sk=document.getElementById('lbSkeleton'); if(sk) sk.style.display='none';
     lb.innerHTML=sorted.map(([name,d],i)=>{
       const rank=i+1, tier=getTier(d.pts);
       const color=getAvColor(name);
@@ -3813,19 +3601,14 @@
   // ══════════════════════════════════════════════════════
   function renderMembersPage(){
     const query=(document.getElementById('membersSearch')?.value||'').toLowerCase();
-    const sortBy=(document.getElementById('membersSort')?.value||'name');
-    const rows=filterByMonth(allRows,lbDate);
-    const mPts={};
-    rows.forEach(r=>{ if(r['Member Name']) mPts[r['Member Name']]=(mPts[r['Member Name']]||0)+(parseInt(r['Points Earned'])||0); });
     const filtered=MEMBERS.filter(m=>
       m.name.toLowerCase().includes(query)||
       (m.company||'').toLowerCase().includes(query)||
       (m.position||'').toLowerCase().includes(query)
-    ).sort((a,b)=>{
-      if(sortBy==='pts') return (mPts[b.name]||0)-(mPts[a.name]||0);
-      if(sortBy==='company') return (a.company||'zzz').localeCompare(b.company||'zzz');
-      return a.name.localeCompare(b.name);
-    });
+    );
+    const rows=filterByMonth(allRows,lbDate);
+    const mPts={};
+    rows.forEach(r=>{ if(r['Member Name']) mPts[r['Member Name']]=(mPts[r['Member Name']]||0)+(parseInt(r['Points Earned'])||0); });
 
     const grid=document.getElementById('membersGrid');
     if(!filtered.length){
@@ -3857,7 +3640,7 @@
           <div class="mpc-body">
             <div class="mpc-row"><span class="mpc-ico">🏢</span><span class="mpc-txt ${m.company?'':'mpc-na'}">${m.company||'Company not set'}</span></div>
             <div class="mpc-row"><span class="mpc-ico">📧</span><span class="mpc-txt ${m.email?'':'mpc-na'}">${m.email?'<a href="mailto:'+m.email+'" onclick="event.stopPropagation()">'+m.email+'</a>':'Email not set'}</span></div>
-            <div class="mpc-row"><span class="mpc-ico">📞</span><span class="mpc-txt ${m.phone?'':'mpc-na'}">${m.phone?'<a href="tel:'+m.phone+'" onclick="event.stopPropagation()">'+m.phone+'</a> <button onclick="event.stopPropagation();navigator.clipboard&&navigator.clipboard.writeText(\'' + m.phone + '\').then(()=>showToast(\'📋 Phone copied!\'))" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-soft);padding:0 3px;" title="Copy">📋</button>':'Phone not set'}</span></div>
+            <div class="mpc-row"><span class="mpc-ico">📞</span><span class="mpc-txt ${m.phone?'':'mpc-na'}">${m.phone?'<a href="tel:'+m.phone+'" onclick="event.stopPropagation()">'+m.phone+'</a>':'Phone not set'}</span></div>
           </div>
           <div class="mpc-foot">
             <span class="mpc-ft-lbl">This Month</span>
@@ -3896,15 +3679,7 @@
     if(sheetMembers && sheetMembers.length) {
       const cacheAge = Date.now() - parseInt(localStorage.getItem(MEMBERS_CACHE_TS)||'0');
       if(cacheAge > 10 * 60 * 1000 || !cached) {
-        // Restore photos/logos from local cache — CSV cannot store base64 images
-        const localCache = loadMembersCache() || [];
-        MEMBERS = sheetMembers.map(sm => {
-          const local = localCache.find(lm => lm.name === sm.name);
-          return Object.assign({}, sm, {
-            photo: (local && local.photo) ? local.photo : (sm.photo || ''),
-            logo:  (local && local.logo)  ? local.logo  : (sm.logo  || ''),
-          });
-        });
+        MEMBERS = sheetMembers;
         populateDropdowns();
         populateMemberLoginSelect();
         renderMembersPage();
@@ -3918,19 +3693,9 @@
     await loadAttendanceFromSheet();
     await loadFinancesFromSheet();
     await loadEplFromSheet();
-    await loadMemberPhotosFromSheet(); // FIX: load photos so all devices see avatars
     renderAttendancePage();
     renderCommsPage();
-    // Load submissions first so EPL activity points are correct
-    await loadAllData();
-    // Now render EPL with full data — if user is already on EPL tab, refresh it
-    if(document.getElementById('lbSectionEPL') &&
-       document.getElementById('lbSectionEPL').classList.contains('active')){
-      renderEPL();
-    }
-    // Flush any queued offline submissions and show pending badge
-    updateQueueBadge();
-    if(navigator.onLine) queueFlush();
+    loadAllData();
   })();
 
   // ══════════════════════════════════════════════════════
@@ -3958,22 +3723,6 @@
   }
 
   function renderAnalytics(){
-    if(!allRows.length){
-      const grid=document.querySelector('.analytics-inner');
-      if(grid){
-        const existing=document.getElementById('analyticsEmpty');
-        if(!existing){
-          const empty=document.createElement('div');
-          empty.id='analyticsEmpty';
-          empty.style.cssText='text-align:center;padding:60px 20px;color:var(--text-soft);';
-          empty.innerHTML='<div style="font-size:40px;margin-bottom:12px">📊</div><div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px">No data yet</div><div style="font-size:13px">Analytics will appear once members start logging activities.</div>';
-          grid.prepend(empty);
-        }
-      }
-      return;
-    }
-    const emptyEl=document.getElementById('analyticsEmpty');
-    if(emptyEl) emptyEl.remove();
     populateAnalyticsSelects();
     renderTrendChart();
     renderBreakdownChart();
@@ -4172,10 +3921,8 @@
     const key=getWeekKey(attDate);
     const allAtt=loadAttendance();
     attState=allAtt[key]||{};
-    const attQ=(document.getElementById('attSearch')?.value||'').toLowerCase();
     const grid=document.getElementById('attMemberGrid');
-    const filteredMembers=MEMBERS.filter(m=>!attQ||m.name.toLowerCase().includes(attQ));
-    grid.innerHTML=filteredMembers.map(m=>{
+    grid.innerHTML=MEMBERS.map(m=>{
       const st=attState[m.name]||'none';
       const safeId='attm-'+attSafeId(m.name);
       const safeName=m.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
@@ -4940,18 +4687,6 @@
     fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:params}).catch(e=>console.warn(e));
   }
 
-  function bulkMarkFees(newStatus){
-    if(!isAdmin){ showToast('Only admin can update fee status.',true); return; }
-    const word = newStatus==='paid' ? 'ALL PAID' : 'ALL UNPAID';
-    if(!confirm('Mark ' + word + ' for ' + getMonthLabel(finDate) + '? This will overwrite all individual statuses.')) return;
-    const mk = finMonthKey(finDate);
-    const st = finGetStatus(mk);
-    MEMBERS.forEach(function(m){ st[m.name] = newStatus; });
-    finSetStatus(mk, st);
-    renderFinancesPage();
-    showToast(newStatus==='paid' ? '✅ All members marked as Paid!' : '❌ All members marked as Unpaid!');
-  }
-
   function toggleFeeStatus(memberName){
     if(!isAdmin){ showToast('Only admin can update fee status.',true); return; }
     const mk=finMonthKey(finDate);
@@ -5027,10 +4762,6 @@
     const txnForm=document.getElementById('finTxnForm');
     if(adminSettings) adminSettings.style.display=isAdmin?'block':'none';
     if(txnForm) txnForm.style.display=isAdmin?'block':'none';
-    const allPaidBtn=document.getElementById('finMarkAllPaidBtn');
-    const allUnpaidBtn=document.getElementById('finMarkAllUnpaidBtn');
-    if(allPaidBtn) allPaidBtn.style.display=isAdmin?'inline-flex':'none';
-    if(allUnpaidBtn) allUnpaidBtn.style.display=isAdmin?'inline-flex':'none';
 
     // Fee input prefill
     if(isAdmin){
@@ -5127,56 +4858,42 @@
   // Push full EPL JSON blob to Apps Script (action: saveEpl)
   function syncEplToSheet(d){
     try{
-      const now = Date.now();
-      const payload = Object.assign({}, d, { _savedAt: now });
+      const payload = Object.assign({}, d, { _savedAt: Date.now() });
       const params = new URLSearchParams();
       params.append('payload', JSON.stringify({ action:'saveEpl', data: payload }));
       fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body: params })
-        .then(()=>{
-          // Update sync label so admin sees data was pushed
-          const lbl = document.getElementById('eplSyncLabel');
-          if(lbl){
-            const t = new Date(now).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-            lbl.textContent = 'Saved to sheet at ' + t;
-          }
-        })
         .catch(e => console.warn('EPL sync error:', e));
     } catch(e){ console.warn('EPL sync error:', e); }
   }
 
   // Load EPL data from Apps Script via GET ?action=getEpl
-  // Google Apps Script redirects GET requests — we must follow redirects
-  // Falls back to localStorage cache silently if fetch fails
+  // Falls back to localStorage cache if the fetch fails
   async function loadEplFromSheet(){
     try{
       const url = SCRIPT_URL + '?action=getEpl&t=' + Date.now();
-      // 'follow' handles the Apps Script 302 redirect automatically
-      const res = await fetch(url, { redirect: 'follow' });
+      const res  = await fetch(url);
+      if(!res.ok) throw new Error('HTTP ' + res.status);
       const text = await res.text();
       if(!text || !text.trim()) return;
 
+      // Apps Script returns JSON: { status:'ok', data: { ...eplObject } }
       let parsed;
-      try{ parsed = JSON.parse(text); } catch(e){
-        console.warn('EPL parse error:', e, text.slice(0,200));
-        return;
+      try{ parsed = JSON.parse(text); } catch(e){ return; }
+
+      if(parsed && parsed.data && typeof parsed.data === 'object'){
+        // Merge sheet data over local cache so locally-unsaved edits aren't lost
+        const local  = eplGet();
+        const sheetTs  = parsed.data._savedAt || 0;
+        const localTs  = parseInt(localStorage.getItem(EPL_CACHE_TS)||'0');
+
+        // Sheet wins if it was saved more recently than our local copy
+        const merged = (sheetTs >= localTs) ? Object.assign({}, local, parsed.data) : Object.assign({}, parsed.data, local);
+        delete merged._savedAt;
+        localStorage.setItem(EPL_KEY, JSON.stringify(merged));
+        localStorage.setItem(EPL_CACHE_TS, String(sheetTs || Date.now()));
       }
-
-      // Must have valid data object with at least one meaningful key
-      if(!parsed || !parsed.data || typeof parsed.data !== 'object') return;
-      const d = parsed.data;
-      if(!Object.keys(d).length) return;
-
-      // Sheet data ALWAYS wins during a load — that is the source of truth
-      // Only keep _savedAt for timestamp tracking, don't store it in EPL data
-      const sheetTs = d._savedAt || Date.now();
-      const clean = Object.assign({}, d);
-      delete clean._savedAt;
-
-      localStorage.setItem(EPL_KEY, JSON.stringify(clean));
-      localStorage.setItem(EPL_CACHE_TS, String(sheetTs));
-      console.log('EPL loaded from sheet:', Object.keys(clean));
     } catch(e){
-      console.warn('loadEplFromSheet error (using local cache):', e.message || e);
+      console.warn('loadEplFromSheet error (will use local cache):', e);
     }
   }
 
@@ -5195,25 +4912,12 @@
     };
   }
 
-  let _eplAutoRefresh=null;
   function switchLbView(view){
     document.getElementById('lbSectionLeaderboard').classList.toggle('active', view==='leaderboard');
     document.getElementById('lbSectionEPL').classList.toggle('active', view==='epl');
     document.getElementById('lbToggleLeaderboard').classList.toggle('active', view==='leaderboard');
     document.getElementById('lbToggleEPL').classList.toggle('active', view==='epl');
-    if(view==='epl'){
-      renderEPL();
-      loadEplFromSheet().then(()=>{ renderEPL(); });
-      // Auto-refresh EPL every 2 minutes while tab is open
-      if(_eplAutoRefresh) clearInterval(_eplAutoRefresh);
-      _eplAutoRefresh = setInterval(()=>{
-        if(document.getElementById('lbSectionEPL').classList.contains('active')){
-          loadEplFromSheet().then(()=>renderEPL());
-        }
-      }, 2 * 60 * 1000);
-    } else {
-      if(_eplAutoRefresh){ clearInterval(_eplAutoRefresh); _eplAutoRefresh=null; }
-    }
+    if(view==='epl') renderEPL();
   }
 
   function saveEplSeason(){
@@ -5248,27 +4952,20 @@
     eplSet(d); renderEPL(); showToast('✅ Team assignments saved!');
   }
 
-  // Manual refresh — pull latest EPL + submissions from server, then re-render
+  // Manual refresh — pull latest EPL data from sheet across all devices
   async function refreshEPLFromSheet(){
     const btn = document.getElementById('eplRefreshBtn');
     const lbl = document.getElementById('eplSyncLabel');
     if(btn){ btn.disabled=true; btn.textContent='⏳ Syncing…'; }
     if(lbl) lbl.textContent = 'Syncing…';
-    try{
-      // Fetch both EPL config and latest submissions in parallel
-      await Promise.all([
-        loadEplFromSheet(),
-        loadAllData()
-      ]);
-      renderEPL();
-      const now = new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-      if(lbl) lbl.textContent = 'Synced at ' + now;
-      showToast('✅ EPL synced from server!');
-    } catch(e){
-      if(lbl) lbl.textContent = 'Sync failed — try again';
-      showToast('⚠️ Sync failed. Check connection.', true);
-    }
+    // Force timestamp to 0 so sheet data always wins on manual refresh
+    localStorage.setItem(EPL_CACHE_TS, '0');
+    await loadEplFromSheet();
+    renderEPL();
     if(btn){ btn.disabled=false; btn.textContent='🔄 Sync'; }
+    const now = new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+    if(lbl) lbl.textContent = 'Synced at ' + now;
+    showToast('✅ EPL synced from server!');
   }
 
   function addEplBonus(){
@@ -6072,35 +5769,18 @@
     document.getElementById('memberEditModal').classList.remove('open');
   }
 
-  // Compress image to max 200x200px JPEG at 0.7 quality before storing.
-  // This keeps base64 output under ~30KB — well within Apps Script limits.
-  function compressImage(file, maxPx, quality, callback){
-    const reader = new FileReader();
-    reader.onload = function(e){
-      const img = new Image();
-      img.onload = function(){
-        const canvas = document.createElement('canvas');
-        const scale  = Math.min(1, maxPx / Math.max(img.width, img.height));
-        canvas.width  = Math.round(img.width  * scale);
-        canvas.height = Math.round(img.height * scale);
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        callback(canvas.toDataURL('image/jpeg', quality));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-
   function handlePhotoUpload(type, input){
     const file = input.files[0];
     if(!file) return;
-    // Accept any size — canvas will compress it down
-    const isProfile = (type === 'profile');
-    const maxPx     = isProfile ? 200 : 300; // profile 200px, logo 300px
-    const quality   = 0.75;
-    compressImage(file, maxPx, quality, function(dataUrl){
-      if(isProfile){
+    if(file.size > 500 * 1024){
+      showToast('⚠️ Image too large. Max 500KB.', true);
+      input.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const dataUrl = e.target.result;
+      if(type === 'profile'){
         const preview  = document.getElementById('meditPhotoPreview');
         const initials = document.getElementById('meditPhotoInitials');
         const clear    = document.getElementById('meditPhotoClear');
@@ -6117,7 +5797,8 @@
         initials.style.display = 'none';
         clear.style.display = 'inline';
       }
-    });
+    };
+    reader.readAsDataURL(file);
   }
 
   function clearPhoto(type){
@@ -6189,10 +5870,7 @@
     const btn = document.querySelector('.medit-save-btn');
     btn.textContent = '⏳ Saving…'; btn.disabled = true;
     try {
-      // Save member data (without photos — they go separately)
       await saveMembers();
-      // Save photos in a separate request so they don't exceed payload limit
-      await saveMemberPhotos(MEMBERS[idx].name);
       populateDropdowns();
       populateMemberLoginSelect();
       renderMembersPage();
@@ -6200,10 +5878,9 @@
       if(emailFld && MEMBERS[idx].email) emailFld.value = MEMBERS[idx].email;
       msg.textContent = '✅ Profile updated successfully!';
       msg.className = 'medit-msg ok';
-      showToast('✅ Profile & photo saved!');
+      showToast('✅ Profile saved!');
       setTimeout(() => closeMemberProfileEdit(), 1800);
     } catch(e){
-      console.warn('saveMemberProfileEdit error:', e);
       msg.textContent = '⚠️ Saved locally. Sheet sync may have failed.';
       msg.className = 'medit-msg fail';
     }
