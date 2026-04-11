@@ -4179,6 +4179,15 @@
       console.warn('Submit error:', e);
     }
     updateQueueBadge();
+
+    // ── Optimistic update: add row to allRows immediately ──
+    // Also persist to local cache so it survives re-fetches
+    // until Google's CSV cache catches up (usually 1-2 min)
+    localRowsAdd(data);
+    allRows.push(data);
+    renderLeaderboard();
+    if(isAdmin){ renderAdminDash(); renderAdminHomeDash(); }
+
     document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active'));
     document.getElementById('tyCard').classList.add('show');
     document.getElementById('fNavWrap').style.display='none';
@@ -4187,11 +4196,26 @@
     document.getElementById('tyTierLbl').textContent=getTier(pts).label;
     updateFProgress(11);
     clearDraft();
-    if(navigator.onLine) showToast('✅ Activity logged successfully!');
+    if(navigator.onLine) showToast('✅ Activity logged! Points updated.');
+
+    // ── Background re-fetch after 90s so real CSV data syncs in
+    // once Google refreshes its published CSV cache
+    if(navigator.onLine){
+      setTimeout(()=>{
+        loadAllData().then(()=>{
+          renderLeaderboard();
+          if(isAdmin){ renderAdminDash(); renderAdminHomeDash(); }
+        });
+      }, 90000); // 90 seconds — Google CSV cache typically refreshes within 1-2 min
+    }
+
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
   function restartForm(){
+    // Re-render leaderboard with latest data (including optimistically added rows)
+    renderLeaderboard();
+    if(isAdmin){ renderAdminDash(); renderAdminHomeDash(); }
     document.querySelectorAll('#page-form input[type="text"],#page-form input[type="email"],#page-form input[type="tel"],#page-form input[type="date"],#page-form input[type="number"],#page-form textarea,#page-form select').forEach(e=>e.value='');
     document.querySelectorAll('#page-form input[type="radio"],#page-form input[type="checkbox"]').forEach(e=>e.checked=false);
     document.querySelectorAll('.ir-opt').forEach(e=>e.classList.remove('sel'));
@@ -4259,6 +4283,31 @@
     });
   }
 
+  // Local submissions cache — keeps optimistically added rows
+  // until the real CSV catches up after Google's cache delay
+  const LOCAL_ROWS_KEY = 'aarohan_local_rows';
+  const LOCAL_ROWS_TS  = 'aarohan_local_rows_ts';
+
+  function localRowsGet(){ try{ return JSON.parse(localStorage.getItem(LOCAL_ROWS_KEY)||'[]'); }catch(e){ return []; } }
+  function localRowsAdd(row){
+    const rows = localRowsGet();
+    rows.push(Object.assign({}, row, { _local: true }));
+    localStorage.setItem(LOCAL_ROWS_KEY, JSON.stringify(rows));
+    localStorage.setItem(LOCAL_ROWS_TS, Date.now().toString());
+  }
+  function localRowsPurge(sheetRows){
+    // Remove local rows that now appear in the real sheet data
+    // Match by Member Name + Activity Date + Activity Type
+    const local = localRowsGet().filter(function(lr){
+      return !sheetRows.some(function(sr){
+        return sr['Member Name']===lr['Member Name'] &&
+               sr['Activity Date']===lr['Activity Date'] &&
+               sr['Activity Type']===lr['Activity Type'];
+      });
+    });
+    localStorage.setItem(LOCAL_ROWS_KEY, JSON.stringify(local));
+  }
+
   async function fetchSheetData(){
     const res = await fetch(CSV_URL + '&t=' + Date.now());
     const text = await res.text();
@@ -4266,7 +4315,20 @@
   }
 
   async function loadAllData(){
-    try { allRows = await fetchSheetData(); } catch(e){ console.warn('CSV fetch error:', e); allRows=[]; }
+    let sheetRows = [];
+    try {
+      sheetRows = await fetchSheetData();
+    } catch(e){
+      console.warn('CSV fetch error:', e);
+      sheetRows = [];
+    }
+
+    // Merge: purge local rows now in the sheet, then combine
+    if(sheetRows.length) localRowsPurge(sheetRows);
+    const localRows = localRowsGet();
+    // Combine sheet rows with any pending local rows not yet in CSV
+    allRows = sheetRows.concat(localRows);
+
     renderLeaderboard();
     if(isAdmin){
       renderAdminDash();
@@ -4660,6 +4722,12 @@
     renderCommsPage();
     // Load submissions first so EPL activity points are correct
     await loadAllData();
+    // Merge any locally cached pending submissions not yet in CSV
+    const _pendingLocal = localRowsGet();
+    if(_pendingLocal.length){
+      // They are already merged inside loadAllData, but show a badge hint
+      updateQueueBadge();
+    }
     // Now render EPL with full data — if user is already on EPL tab, refresh it
     if(document.getElementById('lbSectionEPL') &&
        document.getElementById('lbSectionEPL').classList.contains('active')){
