@@ -1364,6 +1364,74 @@
     .adm-qa-icon { font-size:22px; }
     .adm-qa-label { font-size:11px; font-weight:700; color:var(--ink); letter-spacing:0.01em; }
     .adm-qa-sub { font-size:10px; color:var(--text-soft); }
+
+    /* ══════════════════════════════════════
+       GUEST PIPELINE
+    ══════════════════════════════════════ */
+    .pipeline-page{background:var(--bg);min-height:100vh;padding:24px 16px 80px;}
+    .pipeline-inner{max-width:1200px;margin:0 auto;}
+    .pipeline-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px;}
+    .pipeline-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;}
+    .pipeline-title span{color:var(--gold);}
+    .pipeline-sub{font-size:12px;color:var(--text-soft);margin-top:2px;}
+    .pipeline-search{padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;outline:none;background:var(--card-bg);color:var(--ink);width:180px;transition:border-color .2s;}
+    .pipeline-search:focus{border-color:var(--blue);}
+    .pipeline-add-btn{background:var(--navy);color:var(--gold);border:1px solid rgba(201,162,39,0.3);border-radius:6px;padding:8px 16px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
+    .pipeline-add-btn:hover{background:var(--navy-light);}
+    .pipeline-stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px;}
+    @media(max-width:640px){.pipeline-stats-grid{grid-template-columns:repeat(3,1fr);}}
+    .pl-stat{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+    .pl-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+    .pl-stat-blue::before{background:var(--blue);}
+    .pl-stat-orange::before{background:var(--orange);}
+    .pl-stat-gold::before{background:var(--gold);}
+    .pl-stat-teal::before{background:var(--teal);}
+    .pl-stat-purple::before{background:#7b2fff;}
+    .pl-stat-val{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1;margin-bottom:4px;}
+    .pl-stat-lbl{font-size:11px;color:var(--text-soft);font-family:'Space Grotesk',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;}
+    .pipeline-board{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:start;}
+    @media(max-width:900px){.pipeline-board{grid-template-columns:repeat(3,1fr);}}
+    @media(max-width:600px){.pipeline-board{grid-template-columns:1fr 1fr;}}
+    @media(max-width:380px){.pipeline-board{grid-template-columns:1fr;}}
+    .pl-col{background:#f8f9fc;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;min-height:180px;}
+    .pl-col-header{display:flex;align-items:center;gap:7px;padding:10px 12px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;border-bottom:1px solid var(--border);}
+    .pl-col-title{flex:1;}
+    .pl-col-count{background:rgba(0,0,0,0.08);border-radius:100px;padding:1px 7px;font-size:11px;}
+    .pl-col-visited{background:rgba(37,99,168,0.08);color:var(--blue);border-bottom-color:rgba(37,99,168,0.2);}
+    .pl-col-followed{background:rgba(212,134,42,0.1);color:var(--orange);border-bottom-color:rgba(212,134,42,0.2);}
+    .pl-col-interested{background:rgba(201,162,39,0.12);color:#8a6800;border-bottom-color:rgba(201,162,39,0.25);}
+    .pl-col-inducted{background:rgba(26,138,120,0.1);color:var(--teal);border-bottom-color:rgba(26,138,120,0.2);}
+    .pl-col-notinterested{background:rgba(192,65,90,0.07);color:var(--pink);border-bottom-color:rgba(192,65,90,0.15);}
+    .pl-cards{padding:8px;display:flex;flex-direction:column;gap:7px;}
+    .pl-card{background:var(--card-bg);border:1px solid var(--border);border-radius:9px;padding:10px 11px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow);}
+    .pl-card:hover{border-color:var(--blue);transform:translateY(-1px);box-shadow:0 4px 14px rgba(11,20,38,0.1);}
+    .pl-card-name{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .pl-card-cat{font-size:11px;color:var(--text-soft);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .pl-card-footer{display:flex;align-items:center;justify-content:space-between;gap:6px;}
+    .pl-card-ref{font-size:10px;color:var(--text-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .pl-card-wa{background:#25d366;color:#fff;border:none;border-radius:4px;padding:3px 8px;font-size:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;cursor:pointer;flex-shrink:0;}
+    .pl-card-wants{display:inline-block;font-size:9px;font-family:'Space Grotesk',sans-serif;font-weight:700;padding:2px 6px;border-radius:3px;margin-bottom:5px;}
+    .pl-card-wants.yes{background:rgba(26,138,120,0.1);color:var(--teal);}
+    .pl-card-wants.no{background:rgba(192,65,90,0.08);color:var(--pink);}
+    .pl-card-days{font-size:9px;font-family:'Space Grotesk',sans-serif;font-weight:600;padding:2px 6px;border-radius:3px;flex-shrink:0;}
+    .pl-card-days.overdue{background:rgba(192,65,90,0.1);color:var(--pink);}
+    .pl-card-days.soon{background:rgba(212,134,42,0.1);color:var(--orange);}
+    .pl-card-days.fresh{background:rgba(26,138,120,0.1);color:var(--teal);}
+    .gd-status-btn{padding:6px 12px;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid;transition:all .15s;}
+    .gd-status-btn[data-s=visited]{border-color:var(--blue);color:var(--blue);}
+    .gd-status-btn[data-s=visited].active{background:var(--blue);color:#fff;}
+    .gd-status-btn[data-s=followed]{border-color:var(--orange);color:var(--orange);}
+    .gd-status-btn[data-s=followed].active{background:var(--orange);color:#fff;}
+    .gd-status-btn[data-s=interested]{border-color:var(--gold);color:#8a6800;}
+    .gd-status-btn[data-s=interested].active{background:var(--gold);color:var(--navy);}
+    .gd-status-btn[data-s=inducted]{border-color:var(--teal);color:var(--teal);}
+    .gd-status-btn[data-s=inducted].active{background:var(--teal);color:#fff;}
+    .gd-status-btn[data-s=notinterested]{border-color:var(--pink);color:var(--pink);}
+    .gd-status-btn[data-s=notinterested].active{background:var(--pink);color:#fff;}
+    .gd-info-row{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid #f5f7fb;font-size:13px;}
+    .gd-info-row:last-child{border-bottom:none;}
+    .gd-info-lbl{width:90px;flex-shrink:0;color:var(--text-soft);font-size:12px;}
+    .gd-info-val{flex:1;color:var(--ink);word-break:break-word;}
   </style>
 </head>
 <body>
@@ -1622,7 +1690,7 @@
       <button class="nav-tab" onclick="showPage('comms')">📣 Comms</button>
       <button class="nav-tab" onclick="showPage('members')">👥 Members</button>
       <button class="nav-tab" onclick="showPage('finances')">💰 Finances</button>
-      <button class="nav-tab" onclick="showPage('guest')">🎟 Guest Register</button>
+      <button class="nav-tab" onclick="showPage('guest')">🔍 Guest Pipeline</button>
       <button class="nav-tab admin-tab" onclick="showPage('admin')">🔐 Admin</button>
     </div>
     <div class="nav-right">
@@ -1673,7 +1741,7 @@
         <span class="ditem-icon">💰</span><span class="ditem-label">Finances</span>
       </button>
       <button class="nav-drawer-item" id="ditem-guest" onclick="drawerNav('guest')">
-        <span class="ditem-icon">🎟</span><span class="ditem-label">Guest Registration</span>
+        <span class="ditem-icon">🎟</span><span class="ditem-label">Guest Pipeline</span>
       </button>
       <div class="nav-drawer-divider"></div>
       <button class="nav-drawer-item" id="ditem-admin" onclick="drawerNav('admin')">
@@ -2578,145 +2646,114 @@
 
 <!-- ══════════════ PAGE: GUEST REGISTRATION ══════════════ -->
 <div class="page" id="page-guest">
-<div class="guest-page">
-  <div class="guest-wrap">
+<div class="pipeline-page">
+  <div class="pipeline-inner">
 
-    <!-- Hero -->
-    <div class="guest-hero">
-      <div class="guest-hero-orb"></div>
-      <div class="guest-badge">◆ Guest Registration</div>
-      <div class="guest-hero-title">Welcome to<br/><span>EducationKnot</span> Aarohan</div>
-      <div class="guest-hero-sub">Thank you for attending our chapter meeting as a guest. Please fill in this form so we can keep in touch and help you learn more about our community.</div>
-      <div class="guest-hero-note"><em>*</em> Indicates required field</div>
+    <div class="pipeline-header">
+      <div>
+        <div class="pipeline-title">🔍 <span>Guest</span> Pipeline</div>
+        <div class="pipeline-sub">Track every guest from first visit to membership induction</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input id="pipelineSearch" class="pipeline-search" placeholder="🔍 Search guests…" oninput="renderPipeline()"/>
+        <button class="pipeline-add-btn" id="pipelineAddBtn" style="display:none" onclick="openAddGuestModal()">+ Add Guest</button>
+        <button class="ref-btn" onclick="loadPipelineFromSheet().then(renderPipeline)">↻ Refresh</button>
+      </div>
     </div>
 
-    <!-- Thank You screen (hidden until submit) -->
-    <div class="guest-ty" id="guestTy">
-      <div class="guest-ty-icon">🎉</div>
-      <div class="guest-ty-title">Thank You for Registering!</div>
-      <div class="guest-ty-sub">Your details have been submitted successfully. The Aarohan team will get in touch with you shortly. We hope you enjoyed the meeting!</div>
-      <button class="guest-ty-again" onclick="resetGuestForm()">← Submit Another Response</button>
+    <div id="pipelineStats" style="display:none">
+      <div class="pipeline-stats-grid">
+        <div class="pl-stat pl-stat-blue"><div class="pl-stat-val" id="plStatTotal">0</div><div class="pl-stat-lbl">Total Guests</div></div>
+        <div class="pl-stat pl-stat-orange"><div class="pl-stat-val" id="plStatFollowed">0</div><div class="pl-stat-lbl">Followed Up</div></div>
+        <div class="pl-stat pl-stat-gold"><div class="pl-stat-val" id="plStatInterested">0</div><div class="pl-stat-lbl">Interested</div></div>
+        <div class="pl-stat pl-stat-teal"><div class="pl-stat-val" id="plStatInducted">0</div><div class="pl-stat-lbl">Inducted</div></div>
+        <div class="pl-stat pl-stat-purple"><div class="pl-stat-val" id="plStatConversion">0%</div><div class="pl-stat-lbl">Conversion</div></div>
+      </div>
     </div>
 
-    <!-- Form cards (hidden after submit) -->
-    <div id="guestFormBody">
-
-      <!-- Section 1: Personal Details -->
-      <div class="guest-card">
-        <div class="guest-card-header">
-          <div class="guest-card-num">1</div>
-          <div class="guest-card-title">Personal & Business Details</div>
-        </div>
-        <div class="guest-card-body">
-          <div class="gf">
-            <label class="gl">Today's Date <span class="req">*</span></label>
-            <input type="date" id="gDate" class=""/>
-            <p class="err" id="gDateErr">Please select the date.</p>
-          </div>
-          <div class="g2col">
-            <div class="gf">
-              <label class="gl">Applicant's Name <span class="req">*</span></label>
-              <input type="text" id="gName" placeholder="Your full name"/>
-              <p class="err" id="gNameErr">Please enter your name.</p>
-            </div>
-            <div class="gf">
-              <label class="gl">Business Phone <span class="req">*</span></label>
-              <input type="tel" id="gPhone" placeholder="+91 XXXXX XXXXX"/>
-              <p class="err" id="gPhoneErr">Please enter your phone number.</p>
-            </div>
-          </div>
-          <div class="g2col">
-            <div class="gf">
-              <label class="gl">Email ID <span class="req">*</span></label>
-              <input type="email" id="gEmail" placeholder="you@example.com"/>
-              <p class="err" id="gEmailErr">Please enter a valid email.</p>
-            </div>
-            <div class="gf">
-              <label class="gl">Website <span class="req">*</span>
-                <span class="hint">Enter your school / company website</span>
-              </label>
-              <input type="text" id="gWebsite" placeholder="www.yourwebsite.com"/>
-              <p class="err" id="gWebsiteErr">Please enter your website.</p>
-            </div>
-          </div>
-          <div class="gf">
-            <label class="gl">Business Category <span class="req">*</span>
-              <span class="hint">e.g. School, College, Coaching, EdTech, Training…</span>
-            </label>
-            <input type="text" id="gCategory" placeholder="Enter your business category"/>
-            <p class="err" id="gCategoryErr">Please enter your business category.</p>
-          </div>
-          <div class="gf">
-            <label class="gl">Referred By <span class="req">*</span>
-              <span class="hint">Which member invited you to today's meeting?</span>
-            </label>
-            <select id="gReferredBy">
-              <option value="">— Select member who invited you —</option>
-            </select>
-            <p class="err" id="gReferredByErr">Please select who referred you.</p>
-          </div>
-        </div>
+    <div class="pipeline-board" id="pipelineBoard">
+      <div class="pl-col">
+        <div class="pl-col-header pl-col-visited"><span>👋</span><span class="pl-col-title">Visited</span><span class="pl-col-count" id="plCount-visited">0</span></div>
+        <div class="pl-cards" id="plCards-visited"></div>
       </div>
-
-      <!-- Section 2: Community Questions -->
-      <div class="guest-card">
-        <div class="guest-card-header">
-          <div class="guest-card-num">2</div>
-          <div class="guest-card-title">About the Community</div>
-        </div>
-        <div class="guest-card-body">
-
-          <div class="gf">
-            <label class="gl">Have you understood the process and criteria for being a member of the community? <span class="req">*</span></label>
-            <div class="guest-radio-group" id="grUnderstood">
-              <label class="guest-radio" onclick="selectGuestRadio(this,'grUnderstood','Yes')"><input type="radio" name="grUnderstood" value="Yes"/>✅ Yes</label>
-              <label class="guest-radio" onclick="selectGuestRadio(this,'grUnderstood','No')"><input type="radio" name="grUnderstood" value="No"/>❌ No</label>
-            </div>
-            <p class="err" id="grUnderstoodErr">Please select an option.</p>
-          </div>
-
-          <div class="gf">
-            <label class="gl">Do you see value in being part of this community? <span class="req">*</span></label>
-            <div class="guest-radio-group" id="grValue">
-              <label class="guest-radio" onclick="selectGuestRadio(this,'grValue','Yes')"><input type="radio" name="grValue" value="Yes"/>✅ Yes</label>
-              <label class="guest-radio" onclick="selectGuestRadio(this,'grValue','No')"><input type="radio" name="grValue" value="No"/>❌ No</label>
-            </div>
-            <p class="err" id="grValueErr">Please select an option.</p>
-          </div>
-
-          <div class="gf">
-            <label class="gl">Would you like to be part of this community? <span class="req">*</span></label>
-            <div class="guest-radio-group" id="grJoin">
-              <label class="guest-radio" onclick="selectGuestRadio(this,'grJoin','Yes')"><input type="radio" name="grJoin" value="Yes"/>✅ Yes, I'd love to join!</label>
-              <label class="guest-radio" onclick="selectGuestRadio(this,'grJoin','No')"><input type="radio" name="grJoin" value="No"/>❌ Not right now</label>
-            </div>
-            <p class="err" id="grJoinErr">Please select an option.</p>
-          </div>
-
-          <div class="gf">
-            <label class="gl">Your Feedback <span class="req">*</span>
-              <span class="hint">Share your thoughts about today's meeting and the community</span>
-            </label>
-            <textarea id="gFeedback" placeholder="Tell us what you thought about today's session, what impressed you, or any suggestions…" style="min-height:100px"></textarea>
-            <p class="err" id="gFeedbackErr">Please share your feedback.</p>
-          </div>
-
-        </div>
+      <div class="pl-col">
+        <div class="pl-col-header pl-col-followed"><span>📞</span><span class="pl-col-title">Followed Up</span><span class="pl-col-count" id="plCount-followed">0</span></div>
+        <div class="pl-cards" id="plCards-followed"></div>
       </div>
-
-      <!-- Submit -->
-      <div style="margin-top:4px">
-        <button class="guest-submit-btn" id="gSubmitBtn" onclick="submitGuestForm()">
-          <span id="gSubmitLabel">Submit Registration →</span>
-        </button>
-        <p style="text-align:center;font-size:11px;color:var(--text-soft);margin-top:10px">🔒 Your information is securely stored and will only be used by the Aarohan chapter team.</p>
+      <div class="pl-col">
+        <div class="pl-col-header pl-col-interested"><span>💡</span><span class="pl-col-title">Interested</span><span class="pl-col-count" id="plCount-interested">0</span></div>
+        <div class="pl-cards" id="plCards-interested"></div>
       </div>
+      <div class="pl-col">
+        <div class="pl-col-header pl-col-inducted"><span>🎓</span><span class="pl-col-title">Inducted</span><span class="pl-col-count" id="plCount-inducted">0</span></div>
+        <div class="pl-cards" id="plCards-inducted"></div>
+      </div>
+      <div class="pl-col">
+        <div class="pl-col-header pl-col-notinterested"><span>❌</span><span class="pl-col-title">Not Interested</span><span class="pl-col-count" id="plCount-notinterested">0</span></div>
+        <div class="pl-cards" id="plCards-notinterested"></div>
+      </div>
+    </div>
 
-    </div><!-- end guestFormBody -->
+    <div id="pipelineNoAccess" style="display:none;text-align:center;padding:60px 20px">
+      <div style="font-size:40px;margin-bottom:12px">🔍</div>
+      <div style="font-family:Space Grotesk,sans-serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px">Guest Pipeline</div>
+      <div style="font-size:13px;color:var(--text-soft)">Log in as a member or admin to view and manage the guest pipeline.</div>
+    </div>
 
   </div>
 </div>
 </div>
+
+<!-- ADD GUEST MODAL -->
+<div class="modal-overlay" id="addGuestModal">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-header">
+      <div><div class="modal-name" style="font-size:16px">Add Guest to Pipeline</div><div class="modal-meta">Manually add a guest who attended a meeting</div></div>
+      <button class="modal-close" onclick="closeAddGuestModal()">✕</button>
+    </div>
+    <div class="modal-body" style="padding:20px 24px 24px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div><label class="mef-label">Full Name *</label><input id="agName" class="mef-input" placeholder="Guest full name"/></div>
+        <div><label class="mef-label">Phone *</label><input id="agPhone" class="mef-input" placeholder="+91 XXXXX XXXXX"/></div>
+        <div><label class="mef-label">Email</label><input id="agEmail" class="mef-input" type="email" placeholder="email@example.com"/></div>
+        <div><label class="mef-label">Business Category</label><input id="agCategory" class="mef-input" placeholder="e.g. School, EdTech"/></div>
+        <div><label class="mef-label">Referred By</label>
+          <select id="agReferredBy" class="mef-input" style="cursor:pointer"><option value="">— Select member —</option></select>
+        </div>
+        <div><label class="mef-label">Visit Date</label><input id="agDate" type="date" class="mef-input"/></div>
+      </div>
+      <div style="margin-bottom:14px"><label class="mef-label">Notes</label><textarea id="agNotes" class="mef-input" style="min-height:60px;resize:vertical;width:100%" placeholder="Any notes about this guest…"></textarea></div>
+      <div id="agErr" style="font-size:12px;color:var(--pink);margin-bottom:10px;display:none"></div>
+      <button onclick="saveAddGuest()" style="width:100%;padding:11px;background:var(--navy);color:var(--gold);font-family:Space Grotesk,sans-serif;font-size:13px;font-weight:700;border:1px solid rgba(201,162,39,0.3);border-radius:8px;cursor:pointer">Add to Pipeline →</button>
+    </div>
+  </div>
+</div>
+
+<!-- GUEST DETAIL MODAL -->
+<div class="modal-overlay" id="guestDetailModal">
+  <div class="modal-box" style="max-width:500px">
+    <div class="modal-header">
+      <div class="modal-av" id="gdAv"></div>
+      <div><div class="modal-name" id="gdName"></div><div class="modal-meta" id="gdMeta"></div></div>
+      <button class="modal-close" onclick="closeGuestDetailModal()">✕</button>
+    </div>
+    <div class="modal-body" style="padding:16px 24px 24px">
+      <div style="margin-bottom:14px">
+        <div class="mef-label" style="margin-bottom:8px">Pipeline Status</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap" id="gdStatusBtns"></div>
+      </div>
+      <div id="gdInfo" style="margin-bottom:14px"></div>
+      <div style="margin-bottom:12px">
+        <div class="mef-label" style="margin-bottom:5px">Notes</div>
+        <textarea id="gdNotes" class="mef-input" style="min-height:70px;resize:vertical;width:100%" placeholder="Add notes about this guest…"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px" id="gdActions"></div>
+      <div id="gdAdminActions" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      <div style="margin-top:14px" id="gdFollowupLog"></div>
+    </div>
+  </div>
+</div>
+
 
 <!-- ══════════════ PAGE: ANALYTICS ══════════════ -->
 <div class="page" id="page-analytics">
@@ -3673,6 +3710,7 @@
     if(editBtn) editBtn.style.display='inline-block';
     // Auto-select name in form and lock it
     setTimeout(restoreDraft, 500); // restore any saved draft
+    if(document.getElementById('page-guest').classList.contains('active')) renderPipeline();
     const sel = document.getElementById('fMember');
     if(sel){ sel.value = member.name; sel.disabled = true; }
     // Auto-fill email if available
@@ -4319,6 +4357,7 @@
       document.getElementById('logoutBtn').classList.add('show');
       document.getElementById('loginErr').classList.remove('show');
       loadAllData().then(()=>renderAdminHomeDash());
+      loadPipelineFromSheet().then(renderPipeline);
       renderAdminMemberList();
       // Show dashboard by default
       const admSubNav=document.getElementById('admSubNav');
@@ -6407,123 +6446,307 @@
   // ══════════════════════════════════════════════════════
   //  GUEST REGISTRATION
   // ══════════════════════════════════════════════════════
-  const GUEST_SHEET = 'GuestRegistrations';
 
-  function renderGuestPage(){
-    // Set today's date
-    const dateEl = document.getElementById('gDate');
-    if(dateEl && !dateEl.value) dateEl.value = new Date().toISOString().split('T')[0];
-    // Populate referred-by dropdown with member names
-    const sel = document.getElementById('gReferredBy');
-    if(sel){
-      const cur = sel.value;
-      sel.innerHTML = '<option value="">— Select member who invited you —</option>'
-        + MEMBERS.map(m=>`<option value="${m.name}"${cur===m.name?' selected':''}>${m.name}</option>`).join('');
+  // ══════════════════════════════════════════════════════
+  //  GUEST PIPELINE
+  // ══════════════════════════════════════════════════════
+  const PIPELINE_KEY = 'aarohan_pipeline';
+  const PIPELINE_TS  = 'aarohan_pipeline_ts';
+
+  function pipelineGet(){ try{ return JSON.parse(localStorage.getItem(PIPELINE_KEY)||'{}'); }catch(e){ return {}; } }
+
+  function pipelineSet(d){
+    localStorage.setItem(PIPELINE_KEY, JSON.stringify(d));
+    localStorage.setItem(PIPELINE_TS, Date.now().toString());
+    try{
+      const payload = Object.assign({}, d, { _savedAt: Date.now() });
+      const params = new URLSearchParams();
+      params.append('payload', JSON.stringify({ action:'savePipeline', data: payload }));
+      fetch(SCRIPT_URL,{ method:'POST', mode:'no-cors', body: params }).catch(e=>console.warn('Pipeline sync:',e));
+    } catch(e){ console.warn('Pipeline sync:',e); }
+  }
+
+  async function loadPipelineFromSheet(){
+    try{
+      const res  = await fetch(SCRIPT_URL + '?action=getPipeline&t=' + Date.now(), { redirect:'follow' });
+      const text = await res.text();
+      if(!text||!text.trim()) return;
+      let parsed; try{ parsed=JSON.parse(text); }catch(e){ return; }
+      if(parsed && parsed.data && typeof parsed.data==='object' && Object.keys(parsed.data).length){
+        const sheetTs = parsed.data._savedAt || 0;
+        const localTs = parseInt(localStorage.getItem(PIPELINE_TS)||'0');
+        if(sheetTs >= localTs){
+          const clean = Object.assign({}, parsed.data); delete clean._savedAt;
+          localStorage.setItem(PIPELINE_KEY, JSON.stringify(clean));
+          localStorage.setItem(PIPELINE_TS, String(sheetTs));
+        }
+      }
+      // Auto-ingest guests submitted via landing page form
+      if(parsed && parsed.guests && Array.isArray(parsed.guests)) ingestSheetGuests(parsed.guests);
+    }catch(e){ console.warn('loadPipelineFromSheet:',e); }
+  }
+
+  function ingestSheetGuests(sheetGuests){
+    const pipeline = pipelineGet();
+    let changed = false;
+    sheetGuests.forEach(function(g){
+      const name = (g.Name||g.name||'').trim();
+      if(!name) return;
+      const phone = (g.Phone||g.phone||'').replace(/[^0-9]/g,'');
+      const key = 'g_' + name.toLowerCase().replace(/[^a-z0-9]/g,'_') + (phone?'_'+phone.slice(-4):'');
+      if(!pipeline[key]){
+        pipeline[key] = {
+          id: key, name, phone: g.Phone||g.phone||'', email: g.Email||g.email||'',
+          category: g['Business Category']||g.category||'',
+          referredBy: g['Referred By']||g.referredBy||'',
+          visitDate:  g.Date||g.date||'', website: g.Website||g.website||'',
+          wantsToJoin: g['Wants to Join']||g.wantToJoin||'',
+          feedback: g.Feedback||g.feedback||'', status:'visited',
+          notes:'', followupLog:[], addedAt: g.Timestamp||new Date().toISOString(),
+        };
+        changed = true;
+      }
+    });
+    if(changed) pipelineSet(pipeline);
+  }
+
+  function pipelineId(){ return 'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+  const PL_STATUSES = [
+    {key:'visited',label:'👋 Visited'},{key:'followed',label:'📞 Followed Up'},
+    {key:'interested',label:'💡 Interested'},{key:'inducted',label:'🎓 Inducted'},
+    {key:'notinterested',label:'❌ Not Interested'},
+  ];
+
+  function renderPipeline(){
+    const loggedIn = loggedInMember || isAdmin;
+    const noAccess = document.getElementById('pipelineNoAccess');
+    const board    = document.getElementById('pipelineBoard');
+    const stats    = document.getElementById('pipelineStats');
+    const addBtn   = document.getElementById('pipelineAddBtn');
+    if(!loggedIn){
+      if(noAccess) noAccess.style.display='block';
+      if(board)    board.style.display='none';
+      if(stats)    stats.style.display='none';
+      if(addBtn)   addBtn.style.display='none';
+      return;
+    }
+    if(noAccess) noAccess.style.display='none';
+    if(board)    board.style.display='grid';
+    if(stats)    stats.style.display = isAdmin?'block':'none';
+    if(addBtn)   addBtn.style.display = isAdmin?'inline-flex':'none';
+
+    const q = (document.getElementById('pipelineSearch')?.value||'').toLowerCase();
+    const pipeline = pipelineGet();
+    const all = Object.values(pipeline).filter(function(g){
+      return !q || (g.name||'').toLowerCase().includes(q) ||
+             (g.category||'').toLowerCase().includes(q) ||
+             (g.referredBy||'').toLowerCase().includes(q);
+    });
+
+    PL_STATUSES.forEach(function(s){
+      const col     = document.getElementById('plCards-'+s.key);
+      const counter = document.getElementById('plCount-'+s.key);
+      const list = all.filter(function(g){ return g.status===s.key; })
+                      .sort(function(a,b){ return new Date(b.addedAt||0)-new Date(a.addedAt||0); });
+      if(counter) counter.textContent = list.length;
+      if(!col) return;
+      if(!list.length){
+        col.innerHTML='<div style="font-size:11px;color:var(--text-soft);font-style:italic;text-align:center;padding:16px 8px">No guests here</div>';
+        return;
+      }
+      col.innerHTML = list.map(renderGuestCard).join('');
+    });
+
+    if(isAdmin){
+      const total      = Object.values(pipeline).length;
+      const followed   = Object.values(pipeline).filter(function(g){return g.status==='followed';}).length;
+      const interested = Object.values(pipeline).filter(function(g){return g.status==='interested';}).length;
+      const inducted   = Object.values(pipeline).filter(function(g){return g.status==='inducted';}).length;
+      const conv       = total ? Math.round(inducted/total*100) : 0;
+      ['plStatTotal','plStatFollowed','plStatInterested','plStatInducted'].forEach(function(id,i){
+        const el=document.getElementById(id);
+        if(el) el.textContent=[total,followed,interested,inducted][i];
+      });
+      const convEl=document.getElementById('plStatConversion');
+      if(convEl) convEl.textContent=conv+'%';
     }
   }
 
-  function selectGuestRadio(el, groupId, value){
-    // Clear all in group
-    document.querySelectorAll(`#${groupId} .guest-radio`).forEach(r=>{
-      r.classList.remove('selected','selected-yes','selected-no');
-    });
-    // Mark selected
-    el.classList.add('selected', value==='Yes'?'selected-yes':'selected-no');
-    el.querySelector('input').checked = true;
-    // Hide error
-    const errEl = document.getElementById(groupId+'Err');
-    if(errEl) errEl.classList.remove('show');
+  function escH(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function renderGuestCard(g){
+    const phone = (g.phone||'').replace(/[^0-9]/g,'');
+    const waUrl = phone ? 'https://wa.me/'+(phone.startsWith('91')?phone:'91'+phone) : '';
+    const daysAgo = g.visitDate ? Math.floor((Date.now()-new Date(g.visitDate).getTime())/86400000) : null;
+    const daysCls = daysAgo===null?'':daysAgo>14?'overdue':daysAgo>7?'soon':'fresh';
+    const daysLbl = daysAgo===null?'':daysAgo===0?'Today':daysAgo+'d ago';
+    const wantsCls= g.wantsToJoin==='Yes'?'yes':g.wantsToJoin==='No'?'no':'';
+    const wantsLbl= g.wantsToJoin==='Yes'?'✅ Wants to join':g.wantsToJoin==='No'?'❌ Not now':'';
+    const sid = g.id.replace(/[^a-zA-Z0-9_]/g,'_');
+    return '<div class="pl-card" onclick="openGuestDetail(\'' + escH(g.id) + '\')">'
+      +(wantsLbl?'<div class="pl-card-wants '+wantsCls+'">'+wantsLbl+'</div>':'')
+      +'<div class="pl-card-name">'+escH(g.name)+'</div>'
+      +'<div class="pl-card-cat">'+escH(g.category||'No category')+'</div>'
+      +'<div class="pl-card-footer">'
+      +  '<span class="pl-card-ref">via '+escH((g.referredBy||'').split(' ')[0]||'—')+'</span>'
+      +  (daysLbl?'<span class="pl-card-days '+daysCls+'">'+daysLbl+'</span>':'')
+      +  (waUrl&&isAdmin?'<button class="pl-card-wa" onclick="event.stopPropagation();window.open(\'' + waUrl + '\',\'_blank\')">WA</button>':'')
+      +'</div></div>';
   }
 
-  function guestVal(id, errId, checkFn){
-    const el = document.getElementById(id);
-    const err = document.getElementById(errId);
-    const val = el ? el.value.trim() : '';
-    const ok = checkFn ? checkFn(val) : val.length > 0;
-    if(el) el.classList.toggle('error', !ok);
-    if(err) err.classList.toggle('show', !ok);
-    return ok;
+  // ── Add Guest Modal ──────────────────────────────────
+  function openAddGuestModal(){
+    if(!isAdmin){ showToast('Only admin can manually add guests.',true); return; }
+    const sel=document.getElementById('agReferredBy');
+    if(sel) sel.innerHTML='<option value="">— Select member —</option>'
+      +MEMBERS.map(function(m){ return '<option value="'+m.name+'">'+m.name+'</option>'; }).join('');
+    const d=document.getElementById('agDate');
+    if(d) d.value=new Date().toISOString().split('T')[0];
+    ['agName','agPhone','agEmail','agCategory','agNotes'].forEach(function(id){ const el=document.getElementById(id);if(el)el.value=''; });
+    document.getElementById('agErr').style.display='none';
+    document.getElementById('addGuestModal').classList.add('open');
   }
 
-  function guestRadioVal(name, errId){
-    const checked = document.querySelector(`input[name="${name}"]:checked`);
-    const err = document.getElementById(errId);
-    const ok = !!checked;
-    if(err) err.classList.toggle('show', !ok);
-    return ok;
-  }
+  function closeAddGuestModal(){ document.getElementById('addGuestModal').classList.remove('open'); }
 
-  function validateGuestForm(){
-    let ok = true;
-    if(!guestVal('gDate','gDateErr')) ok=false;
-    if(!guestVal('gName','gNameErr')) ok=false;
-    if(!guestVal('gPhone','gPhoneErr')) ok=false;
-    if(!guestVal('gEmail','gEmailErr', v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))) ok=false;
-    if(!guestVal('gWebsite','gWebsiteErr')) ok=false;
-    if(!guestVal('gCategory','gCategoryErr')) ok=false;
-    if(!guestVal('gReferredBy','gReferredByErr')) ok=false;
-    if(!guestRadioVal('grUnderstood','grUnderstoodErr')) ok=false;
-    if(!guestRadioVal('grValue','grValueErr')) ok=false;
-    if(!guestRadioVal('grJoin','grJoinErr')) ok=false;
-    if(!guestVal('gFeedback','gFeedbackErr')) ok=false;
-    return ok;
-  }
-
-  async function submitGuestForm(){
-    if(!validateGuestForm()) return;
-    const btn = document.getElementById('gSubmitBtn');
-    const lbl = document.getElementById('gSubmitLabel');
-    btn.disabled = true;
-    lbl.textContent = '⏳ Submitting…';
-
-    const data = {
-      action: 'saveGuestRegistration',
-      'Timestamp':    new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
-      'Date':         document.getElementById('gDate').value,
-      'Chapter Name': 'Aarohan',
-      'Name':         document.getElementById('gName').value.trim(),
-      'Phone':        document.getElementById('gPhone').value.trim(),
-      'Email':        document.getElementById('gEmail').value.trim(),
-      'Website':      document.getElementById('gWebsite').value.trim(),
-      'Business Category': document.getElementById('gCategory').value.trim(),
-      'Referred By':  document.getElementById('gReferredBy').value,
-      'Understood Process': document.querySelector('input[name="grUnderstood"]:checked')?.value||'',
-      'Sees Value':   document.querySelector('input[name="grValue"]:checked')?.value||'',
-      'Wants to Join':document.querySelector('input[name="grJoin"]:checked')?.value||'',
-      'Feedback':     document.getElementById('gFeedback').value.trim(),
+  function saveAddGuest(){
+    const name=(document.getElementById('agName')?.value||'').trim();
+    const phone=(document.getElementById('agPhone')?.value||'').trim();
+    const err=document.getElementById('agErr');
+    if(!name||!phone){ err.textContent='Name and phone are required.'; err.style.display='block'; return; }
+    err.style.display='none';
+    const id=pipelineId();
+    const pipeline=pipelineGet();
+    pipeline[id]={
+      id, name, phone, email:(document.getElementById('agEmail')?.value||'').trim(),
+      category:(document.getElementById('agCategory')?.value||'').trim(),
+      referredBy:document.getElementById('agReferredBy')?.value||'',
+      visitDate:document.getElementById('agDate')?.value||'',
+      website:'', wantsToJoin:'', feedback:'', status:'visited',
+      notes:(document.getElementById('agNotes')?.value||'').trim(),
+      followupLog:[], addedAt:new Date().toISOString(),
     };
-
-    try{
-      const params = new URLSearchParams();
-      params.append('payload', JSON.stringify(data));
-      await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:params });
-    } catch(e){ console.warn('Guest submit error:', e); }
-
-    // Show thank you
-    document.getElementById('guestFormBody').style.display = 'none';
-    document.getElementById('guestTy').classList.add('show');
-    window.scrollTo({top:0, behavior:'smooth'});
-    btn.disabled = false;
-    lbl.textContent = 'Submit Registration →';
+    pipelineSet(pipeline);
+    closeAddGuestModal();
+    renderPipeline();
+    showToast('Guest added to pipeline!');
   }
 
-  function resetGuestForm(){
-    // Reset all fields
-    ['gDate','gName','gPhone','gEmail','gWebsite','gCategory','gFeedback'].forEach(id=>{
-      const el=document.getElementById(id); if(el) el.value='';
-    });
-    document.getElementById('gReferredBy').value='';
-    document.querySelectorAll('.guest-radio').forEach(r=>r.classList.remove('selected','selected-yes','selected-no'));
-    document.querySelectorAll('.guest-radio input').forEach(r=>r.checked=false);
-    document.querySelectorAll('.err').forEach(e=>e.classList.remove('show'));
-    document.querySelectorAll('.error').forEach(e=>e.classList.remove('error'));
-    document.getElementById('guestTy').classList.remove('show');
-    document.getElementById('guestFormBody').style.display='';
-    renderGuestPage();
-    window.scrollTo({top:0, behavior:'smooth'});
+  document.getElementById('addGuestModal').addEventListener('click',function(e){ if(e.target===this) closeAddGuestModal(); });
+
+  // ── Guest Detail Modal ───────────────────────────────
+  let _curGuestId=null;
+
+  function openGuestDetail(gid){
+    const pipeline=pipelineGet(); const g=pipeline[gid]; if(!g) return;
+    _curGuestId=gid;
+    const av=document.getElementById('gdAv');
+    if(av){ av.textContent=getInitials(g.name); av.style.background=getAvColor(g.name); av.style.fontSize='16px'; av.style.fontWeight='700'; av.style.color='var(--navy)'; av.style.fontFamily='Space Grotesk,sans-serif'; }
+    const nameEl=document.getElementById('gdName'); if(nameEl) nameEl.textContent=g.name;
+    const metaEl=document.getElementById('gdMeta'); if(metaEl) metaEl.textContent=(g.category||'')+(g.referredBy?' · via '+g.referredBy.split(' ')[0]:'');
+
+    const btnWrap=document.getElementById('gdStatusBtns');
+    if(btnWrap) btnWrap.innerHTML=PL_STATUSES.map(function(s){
+      return '<button class="gd-status-btn'+(g.status===s.key?' active':'')+'" data-s="'+s.key+'" onclick="setGuestStatus(\'' +gid+ '\',\'' +s.key+ '\')">'+s.label+'</button>';
+    }).join('');
+
+    const infoEl=document.getElementById('gdInfo');
+    const phone=(g.phone||'').replace(/[^0-9]/g,'');
+    if(infoEl){
+      const rows=[
+        ['Phone', g.phone?'<a href="tel:'+g.phone+'" style="color:var(--teal)">'+escH(g.phone)+'</a>':'—'],
+        ['Email', g.email?'<a href="mailto:'+g.email+'" style="color:var(--teal)">'+escH(g.email)+'</a>':'—'],
+        ['Visited', g.visitDate?new Date(g.visitDate).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—'],
+        ['Wants to join', g.wantsToJoin||'—'],
+        ['Category', g.category||'—'],
+        ['Referred By', g.referredBy||'—'],
+        ['Feedback', g.feedback?'<em style="color:var(--text-muted)">'+escH(g.feedback.slice(0,120))+(g.feedback.length>120?'…':'')+'</em>':'—'],
+      ];
+      infoEl.innerHTML='<div style="border:1px solid var(--border);border-radius:8px;padding:4px 12px;">'
+        +rows.map(function(r){ return '<div class="gd-info-row"><div class="gd-info-lbl">'+r[0]+'</div><div class="gd-info-val">'+r[1]+'</div></div>'; }).join('')
+        +'</div>';
+    }
+
+    const notesEl=document.getElementById('gdNotes'); if(notesEl) notesEl.value=g.notes||'';
+
+    const waBase = phone ? 'https://wa.me/'+(phone.startsWith('91')?phone:'91'+phone) : '';
+    const first  = g.name.split(' ')[0];
+    const followMsg = 'Hi '+first+'! This is a follow-up from our EKnot Aarohan chapter meeting. It was great having you! Would you like to learn more about joining our community?';
+    const inductMsg = 'Congratulations '+first+'! We are thrilled to welcome you as a new member of EKnot Aarohan Chapter! Please complete your membership formalities at the earliest.';
+
+    const actEl=document.getElementById('gdActions');
+    if(actEl) actEl.innerHTML=
+      (waBase?'<a href="'+waBase+'?text='+encodeURIComponent(followMsg)+'" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:#25d366;color:#fff;border:none;border-radius:6px;padding:8px 12px;font-family:Space Grotesk,sans-serif;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none">📞 Follow-up WA</a>':'')
+      +(waBase?'<a href="'+waBase+'?text='+encodeURIComponent(inductMsg)+'" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:var(--teal);color:#fff;border:none;border-radius:6px;padding:8px 12px;font-family:Space Grotesk,sans-serif;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none">🎓 Induction WA</a>':'')
+      +'<button onclick="saveGuestNotes(\'' +gid+ '\')" style="background:var(--navy);color:var(--gold);border:1px solid rgba(201,162,39,0.3);border-radius:6px;padding:8px 12px;font-family:Space Grotesk,sans-serif;font-size:11px;font-weight:700;cursor:pointer">💾 Save Notes</button>';
+
+    const admEl=document.getElementById('gdAdminActions');
+    if(admEl) admEl.innerHTML=isAdmin
+      ?'<button onclick="logFollowup(\'' +gid+ '\')" style="background:rgba(37,99,168,0.1);color:var(--blue);border:1px solid rgba(37,99,168,0.25);border-radius:6px;padding:7px 12px;font-family:Space Grotesk,sans-serif;font-size:11px;font-weight:700;cursor:pointer">+ Log Follow-up</button>'
+        +'<button onclick="deleteGuest(\'' +gid+ '\')" style="background:rgba(192,65,90,0.08);color:var(--pink);border:1px solid rgba(192,65,90,0.2);border-radius:6px;padding:7px 12px;font-family:Space Grotesk,sans-serif;font-size:11px;font-weight:700;cursor:pointer;margin-left:auto">🗑 Remove</button>'
+      :'';
+
+    renderFollowupLog(g);
+    document.getElementById('guestDetailModal').classList.add('open');
   }
 
-  function exportPDF(){
+  function renderFollowupLog(g){
+    const el=document.getElementById('gdFollowupLog'); if(!el) return;
+    const log=g.followupLog||[];
+    if(!log.length){ el.innerHTML=''; return; }
+    el.innerHTML='<div style="font-family:Space Grotesk,sans-serif;font-size:10px;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Follow-up Log</div>'
+      +'<div style="display:flex;flex-direction:column;gap:4px">'
+      +log.slice().reverse().map(function(l){
+        return '<div style="font-size:11px;padding:5px 8px;background:#f8f9fc;border-radius:5px;border:1px solid var(--border);color:var(--text-muted)"><strong style="color:var(--ink)">'+l.date+'</strong> — '+escH(l.note)+'</div>';
+      }).join('')+'</div>';
+  }
+
+  function setGuestStatus(gid, newStatus){
+    const pipeline=pipelineGet(); if(!pipeline[gid]) return;
+    pipeline[gid].status=newStatus;
+    const log=pipeline[gid].followupLog=pipeline[gid].followupLog||[];
+    log.push({date:new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short'}),note:'Status → '+newStatus});
+    pipelineSet(pipeline);
+    document.querySelectorAll('#gdStatusBtns .gd-status-btn').forEach(function(b){ b.classList.toggle('active',b.dataset.s===newStatus); });
+    renderFollowupLog(pipeline[gid]);
+    renderPipeline();
+    showToast('Status updated to '+newStatus+'!');
+  }
+
+  function saveGuestNotes(gid){
+    const pipeline=pipelineGet(); if(!pipeline[gid]) return;
+    pipeline[gid].notes=document.getElementById('gdNotes')?.value||'';
+    pipelineSet(pipeline);
+    showToast('Notes saved!');
+  }
+
+  function logFollowup(gid){
+    if(!isAdmin) return;
+    const note=prompt('Follow-up note:');
+    if(!note||!note.trim()) return;
+    const pipeline=pipelineGet(); if(!pipeline[gid]) return;
+    const log=pipeline[gid].followupLog=pipeline[gid].followupLog||[];
+    log.push({date:new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short'}),note:note.trim()});
+    pipelineSet(pipeline);
+    renderFollowupLog(pipeline[gid]);
+    showToast('Follow-up logged!');
+  }
+
+  function deleteGuest(gid){
+    if(!isAdmin) return;
+    if(!confirm('Remove this guest from the pipeline?')) return;
+    const pipeline=pipelineGet(); delete pipeline[gid]; pipelineSet(pipeline);
+    closeGuestDetailModal(); renderPipeline(); showToast('Guest removed.');
+  }
+
+  function closeGuestDetailModal(){ document.getElementById('guestDetailModal').classList.remove('open'); _curGuestId=null; }
+  document.getElementById('guestDetailModal').addEventListener('click',function(e){ if(e.target===this) closeGuestDetailModal(); });
+
+  // Wire showPage guest → pipeline
+  function renderGuestPage(){ renderPipeline(); loadPipelineFromSheet().then(renderPipeline); }
+
+    function exportPDF(){
     const rows=filterByMonth(allRows,adminDate);
     const mData={};
     getMemberNames().forEach(m=>{mData[m]={pts:0,count:0};});
