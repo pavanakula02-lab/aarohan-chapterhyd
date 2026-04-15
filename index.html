@@ -2486,7 +2486,7 @@
           <div class="m-label" id="finMonthLabel">—</div>
           <button class="m-btn" onclick="finChangeMonth(1)">›</button>
         </div>
-        <button class="ref-btn" onclick="renderFinancesPage()">↻ Refresh</button>
+        <button class="ref-btn" onclick="loadFinancesFromSheet().then(()=>renderFinancesPage())">↻ Sync</button>
       </div>
     </div>
 
@@ -3807,7 +3807,10 @@
     if(p==='analytics'){ loadAllData().then(()=>renderAnalytics()); }
     if(p==='attendance'){ renderAttendancePage(); }
     if(p==='comms'){ renderCommsPage(); }
-    if(p==='finances'){ renderFinancesPage(); }
+    if(p==='finances'){
+      renderFinancesPage(); // render cached data immediately
+      loadFinancesFromSheet().then(()=>renderFinancesPage()); // then sync from sheet
+    }
     if(p==='guest'){ renderGuestPage(); }
     if(p==='admin' && isAdmin){
       renderAdminHomeDash();
@@ -5663,18 +5666,29 @@
 
   // finDate declared at top-level above
 
-  // Load all finances data from sheet CSV into localStorage on startup
+  // Load all finances data from Apps Script GET (real-time, no CSV cache delay)
+  // Falls back to localStorage if fetch fails — never wipes existing data
   async function loadFinancesFromSheet(){
     try{
-      const res = await fetch(FINANCES_CSV + '&t=' + Date.now());
-      if(!res.ok) return;
+      const url = SCRIPT_URL + '?action=getFinances&t=' + Date.now();
+      const res  = await fetch(url, { redirect:'follow' });
       const text = await res.text();
       if(!text || !text.trim()) return;
-      const rows = parseCSV(text);
+
+      let parsed;
+      try{ parsed = JSON.parse(text); } catch(e){ return; }
+
+      // If Apps Script doesn't have getFinances yet, fall back to CSV
+      if(!parsed || parsed.status === 'error'){
+        await _loadFinancesFromCSV();
+        return;
+      }
+
+      const rows = parsed.rows || [];
       if(!rows.length) return;
 
       const feeMap={}, statusMap={}, txnMap={};
-      rows.forEach(r=>{
+      rows.forEach(function(r){
         const mk   = r.monthKey || r.monthkey || '';
         const type = r.type     || '';
         const key  = r.key      || '';
@@ -5690,10 +5704,37 @@
           try{ txnMap[mk].push(JSON.parse(val)); }catch(e){}
         }
       });
+      // Only update localStorage if we got actual data back
       if(Object.keys(feeMap).length)    localStorage.setItem(FIN_FEE_KEY,    JSON.stringify(feeMap));
       if(Object.keys(statusMap).length) localStorage.setItem(FIN_STATUS_KEY, JSON.stringify(statusMap));
       if(Object.keys(txnMap).length)    localStorage.setItem(FIN_TXN_KEY,    JSON.stringify(txnMap));
-    } catch(e){ console.warn('loadFinancesFromSheet error:', e); }
+    } catch(e){
+      console.warn('loadFinancesFromSheet error, trying CSV fallback:', e);
+      await _loadFinancesFromCSV();
+    }
+  }
+
+  // CSV fallback — still works even if getFinances GET isn't deployed yet
+  async function _loadFinancesFromCSV(){
+    try{
+      const res = await fetch(FINANCES_CSV + '&t=' + Date.now());
+      if(!res.ok) return;
+      const text = await res.text();
+      if(!text || !text.trim()) return;
+      const rows = parseCSV(text);
+      if(!rows.length) return;
+      const feeMap={}, statusMap={}, txnMap={};
+      rows.forEach(function(r){
+        const mk=r.monthKey||r.monthkey||'', type=r.type||'', key=r.key||'', val=r.value||'';
+        if(!mk||!type) return;
+        if(type==='fee')     { feeMap[mk]=parseFloat(val)||0; }
+        else if(type==='status'){ if(!statusMap[mk])statusMap[mk]={}; statusMap[mk][key]=val; }
+        else if(type==='txn')  { if(!txnMap[mk])txnMap[mk]=[]; try{txnMap[mk].push(JSON.parse(val));}catch(e){} }
+      });
+      if(Object.keys(feeMap).length)    localStorage.setItem(FIN_FEE_KEY,    JSON.stringify(feeMap));
+      if(Object.keys(statusMap).length) localStorage.setItem(FIN_STATUS_KEY, JSON.stringify(statusMap));
+      if(Object.keys(txnMap).length)    localStorage.setItem(FIN_TXN_KEY,    JSON.stringify(txnMap));
+    } catch(e){ console.warn('_loadFinancesFromCSV error:', e); }
   }
 
   function finMonthKey(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
@@ -5720,12 +5761,21 @@
     try{ const d=JSON.parse(localStorage.getItem(FIN_TXN_KEY)||'{}'); return d[monthKey]||[]; }catch(e){return [];}
   }
   function finSetTxns(monthKey,txns){
-    try{ const d=JSON.parse(localStorage.getItem(FIN_TXN_KEY)||'{}'); d[monthKey]=txns; localStorage.setItem(FIN_TXN_KEY,JSON.stringify(d));
-      // Sync to sheet
+    try{
+      // 1. Save to localStorage immediately (optimistic)
+      const d=JSON.parse(localStorage.getItem(FIN_TXN_KEY)||'{}');
+      d[monthKey]=txns;
+      localStorage.setItem(FIN_TXN_KEY,JSON.stringify(d));
+      // 2. Push to Apps Script sheet
       const params=new URLSearchParams();
       params.append('payload',JSON.stringify({action:'saveFinanceTxns',monthKey,txns}));
       fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:params}).catch(e=>console.warn(e));
-    }catch(e){}
+      // 3. Re-fetch from sheet after 3s so other devices can see it
+      //    (short delay gives Apps Script time to write before we read back)
+      setTimeout(()=>{
+        loadFinancesFromSheet().then(()=>renderFinancesPage());
+      }, 3000);
+    }catch(e){ console.warn('finSetTxns error:',e); }
   }
 
   function finChangeMonth(dir){
@@ -5890,25 +5940,29 @@
     const income=txns.filter(t=>t.type==='income');
     const expenses=txns.filter(t=>t.type==='expense');
 
+    // Map income/expense back to original full-array index for correct deletion
+    const incomeWithIdx  = income.map(t=>({t, origIdx: txns.indexOf(t)}));
+    const expenseWithIdx = expenses.map(t=>({t, origIdx: txns.indexOf(t)}));
+
     const incomeEl=document.getElementById('txnIncomeList');
-    incomeEl.innerHTML=income.length
-      ?income.map((t,i)=>`<div class="txn-item">
+    incomeEl.innerHTML=incomeWithIdx.length
+      ?incomeWithIdx.map(({t,origIdx})=>`<div class="txn-item">
           <div class="txn-type-dot income"></div>
-          <div class="txn-desc">${t.desc}</div>
-          <div class="txn-date">${t.date}</div>
-          <div class="txn-amount income">+₹${t.amt.toLocaleString('en-IN')}</div>
-          ${isAdmin?`<button class="txn-del" onclick="deleteTransaction('${mk}',${txns.indexOf(t)})" title="Delete">🗑</button>`:''}
+          <div class="txn-desc">${t.desc||'—'}</div>
+          <div class="txn-date">${t.date||''}</div>
+          <div class="txn-amount income">+₹${(t.amt||0).toLocaleString('en-IN')}</div>
+          ${isAdmin?`<button class="txn-del" onclick="deleteTransaction('${mk}',${origIdx})" title="Delete">🗑</button>`:''}
         </div>`).join('')
       :'<div class="fin-empty">No income recorded this month.</div>';
 
     const expenseEl=document.getElementById('txnExpenseList');
-    expenseEl.innerHTML=expenses.length
-      ?expenses.map((t,i)=>`<div class="txn-item">
+    expenseEl.innerHTML=expenseWithIdx.length
+      ?expenseWithIdx.map(({t,origIdx})=>`<div class="txn-item">
           <div class="txn-type-dot expense"></div>
-          <div class="txn-desc">${t.desc}</div>
-          <div class="txn-date">${t.date}</div>
-          <div class="txn-amount expense">-₹${t.amt.toLocaleString('en-IN')}</div>
-          ${isAdmin?`<button class="txn-del" onclick="deleteTransaction('${mk}',${txns.indexOf(t)})" title="Delete">🗑</button>`:''}
+          <div class="txn-desc">${t.desc||'—'}</div>
+          <div class="txn-date">${t.date||''}</div>
+          <div class="txn-amount expense">-₹${(t.amt||0).toLocaleString('en-IN')}</div>
+          ${isAdmin?`<button class="txn-del" onclick="deleteTransaction('${mk}',${origIdx})" title="Delete">🗑</button>`:''}
         </div>`).join('')
       :'<div class="fin-empty">No expenses recorded this month.</div>';
   }
